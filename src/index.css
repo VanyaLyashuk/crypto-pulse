@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+td {
+  z-index: 10;
+  position: relative;
+}
+td:after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+td:after {
+  top: -1px;
+  border-top: 1px solid #e5e7eb;
+}

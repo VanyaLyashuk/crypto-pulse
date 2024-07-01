@@ -104,19 +104,18 @@ const CryptoTable: React.FC = () => {
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const stickyCellClasses = "sticky left-0 bg-white z-10 min-w-[130px]";
+  const stickyCellClasses = "sticky left-0 bg-white min-w-[130px]";
 
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
-      <table className="min-w-full divide-y divide-gray-300 shadow table-auto sm:rounded-lg">
+      <table className="min-w-full shadow table-auto sm:rounded-lg">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 const cellClasses = clsx(
                   "px-3 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group",
-                  { [stickyCellClasses]: header.column.id === "coin" }
-                );
+                  { [`${stickyCellClasses} z-20`]: header.column.id === "coin" }                );
                 return (
                   <th
                     key={header.id}
@@ -149,7 +148,7 @@ const CryptoTable: React.FC = () => {
             </tr>
           ))}
         </thead>
-        <tbody className="bg-white divide-y divide-gray-200">
+        <tbody className="bg-white ">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => {
@@ -157,7 +156,7 @@ const CryptoTable: React.FC = () => {
                   "px-3 py-4 text-sm text-gray-500 bg-white",
                   {
                     "w-9": cell.column.id === "favorite",
-                    [stickyCellClasses]: cell.column.id === "coin",
+                    [stickyCellClasses + ' z-20']: cell.column.id === "coin",
                   }
                 );
                 return (
