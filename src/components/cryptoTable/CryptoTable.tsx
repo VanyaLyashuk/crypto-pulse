@@ -5,10 +5,10 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import clsx from "clsx";
 import React, { useMemo } from "react";
 import { FaRegStar } from "react-icons/fa";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import "tailwindcss/tailwind.css";
 import { ICryptoCurrency } from "../../models";
 
 const CryptoTable: React.FC = () => {
@@ -81,18 +81,11 @@ const CryptoTable: React.FC = () => {
               className="w-6 h-6 mr-2"
               style={{ flexShrink: 0 }}
             />
-            <div className="overflow-hidden break-words">{row.original.coin}</div>
+            <div className="overflow-hidden break-words">
+              {row.original.coin}
+            </div>
           </div>
         ),
-        cellProps: {
-          style: {
-            position: "sticky",
-            left: 0,
-            zIndex: 2,
-            backgroundColor: "white",
-            minWidth: "130px",
-          },
-        },
       },
       { header: "Price", accessorKey: "price" },
       { header: "1h", accessorKey: "change1h" },
@@ -111,58 +104,68 @@ const CryptoTable: React.FC = () => {
     getSortedRowModel: getSortedRowModel(),
   });
 
+  const stickyCellClasses = "sticky left-0 bg-white z-10 min-w-[130px]";
+
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
       <table className="min-w-full divide-y divide-gray-300 shadow table-auto sm:rounded-lg">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th
-                  key={header.id}
-                  scope="col"
-                  className="px-3 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group"
-                  onClick={header.column.getToggleSortingHandler()}
-                  style={header.column.columnDef.cellProps?.style || {}}
-                >
-                  <div className="flex items-center">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                    <span>
-                      {header.column.getIsSorted() ? (
-                        header.column.getIsSorted() === "desc" ? (
-                          <IoIosArrowDown />
+              {headerGroup.headers.map((header) => {
+                const cellClasses = clsx(
+                  "px-3 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group",
+                  { [stickyCellClasses]: header.column.id === "coin" }
+                );
+                return (
+                  <th
+                    key={header.id}
+                    scope="col"
+                    className={cellClasses}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    <div className="flex items-center">
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext()
+                          )}
+                      <span>
+                        {header.column.getIsSorted() ? (
+                          header.column.getIsSorted() === "desc" ? (
+                            <IoIosArrowDown />
+                          ) : (
+                            <IoIosArrowUp />
+                          )
                         ) : (
-                          <IoIosArrowUp />
-                        )
-                      ) : (
-                        ""
-                      )}
-                    </span>
-                  </div>
-                </th>
-              ))}
+                          ""
+                        )}
+                      </span>
+                    </div>
+                  </th>
+                );
+              })}
             </tr>
           ))}
         </thead>
         <tbody className="bg-white divide-y divide-gray-200">
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td
-                  key={cell.id}
-                  className={`px-3 py-4 text-sm text-gray-500 bg-white ${
-                    cell.column.id === "favorite" ? "w-9" : ""
-                  }`}
-                  style={cell.column.columnDef.cellProps?.style || {}}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+              {row.getVisibleCells().map((cell) => {
+                const cellClasses = clsx(
+                  "px-3 py-4 text-sm text-gray-500 bg-white",
+                  {
+                    "w-9": cell.column.id === "favorite",
+                    [stickyCellClasses]: cell.column.id === "coin",
+                  }
+                );
+                return (
+                  <td key={cell.id} className={cellClasses}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
