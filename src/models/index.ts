@@ -1,6 +1,12 @@
-import { ICryptoCurrency } from './CryptoCurrency.interface';
+import { ICoinsMarketData } from "./CoinsMarketData.interface";
+import {
+  ITransformedCoinsMarketData,
+  ITransformedPriceChange,
+} from "./TransformedCoinsMarketData.interface";
 
 export type {
-  ICryptoCurrency
+  ICoinsMarketData,
+  ITransformedCoinsMarketData,
+  ITransformedPriceChange
 };
 
