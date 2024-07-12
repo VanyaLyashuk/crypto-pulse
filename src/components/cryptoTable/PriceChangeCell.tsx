@@ -19,6 +19,6 @@ const PriceChangeCell: React.FC<ITransformedPriceChange> = ({
       <span>{value}</span>
     </div>
   );
-};ƒ
+};
 
 export default PriceChangeCell;
