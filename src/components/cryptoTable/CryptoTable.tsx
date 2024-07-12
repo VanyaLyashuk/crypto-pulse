@@ -119,9 +119,9 @@ const CryptoTable: React.FC = () => {
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header) => {
+                {headerGroup.headers.map((header, index) => {
                   const cellClasses = clsx(
-                    "px-2 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group",
+                    "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white cursor-pointer group",
                     { "table-sticky-cell": header.column.id === "name" }
                   );
                   return (
@@ -131,7 +131,9 @@ const CryptoTable: React.FC = () => {
                       className={cellClasses}
                       onClick={header.column.getToggleSortingHandler()}
                     >
-                      <div className="flex items-center gap-0.5">
+                      <div className={clsx("flex items-center gap-0.5", {
+                        "justify-end": index > 2
+                      })}>
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -159,12 +161,13 @@ const CryptoTable: React.FC = () => {
           <tbody className="bg-white ">
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => {
+                {row.getVisibleCells().map((cell, index) => {
                   const cellClasses = clsx(
                     "px-2 py-4 text-sm text-gray-500 bg-white",
                     {
                       "w-8": cell.column.id === "favorite",
                       "table-sticky-cell": cell.column.id === "name",
+                      "text-right": index > 2
                     }
                   );
                   return (
