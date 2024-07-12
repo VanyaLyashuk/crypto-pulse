@@ -11,16 +11,19 @@ import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { ITransformedCoinsMarketData } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
+import CryptoTableSkeleton from "./CryptoTableSkeleton";
 import PriceChangeCell from "./PriceChangeCell";
 
 const CryptoTable: React.FC = () => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
     coinGeckoService._getCoinsListWithMarketData().then((res) => {
       setCoins(res);
+      // setLoading(false);
     });
   }, []);
 
@@ -109,68 +112,75 @@ const CryptoTable: React.FC = () => {
 
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
-      <table className="min-w-full shadow table-auto sm:rounded-lg">
-        <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => {
-                const cellClasses = clsx(
-                  "px-3 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group",
-                  { "table-sticky-cell": header.column.id === "name" }
-                );
-                return (
-                  <th
-                    key={header.id}
-                    scope="col"
-                    className={cellClasses}
-                    onClick={header.column.getToggleSortingHandler()}
-                  >
-                    <div className="flex items-center gap-0.5">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                      <span>
-                        {header.column.getIsSorted() ? (
-                          header.column.getIsSorted() === "desc" ? (
-                            <BiSolidDownArrow className="table-head-arrow" />
+      {loading ? (
+        <CryptoTableSkeleton />
+      ) : (
+        <table className="min-w-full shadow table-auto sm:rounded-lg">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => {
+                  const cellClasses = clsx(
+                    "px-2 py-4 text-sm font-bold tracking-wider text-left text-gray-700 bg-white cursor-pointer group",
+                    { "table-sticky-cell": header.column.id === "name" }
+                  );
+                  return (
+                    <th
+                      key={header.id}
+                      scope="col"
+                      className={cellClasses}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <div className="flex items-center gap-0.5">
+                        {header.isPlaceholder
+                          ? null
+                          : flexRender(
+                              header.column.columnDef.header,
+                              header.getContext()
+                            )}
+                        <span>
+                          {header.column.getIsSorted() ? (
+                            header.column.getIsSorted() === "desc" ? (
+                              <BiSolidDownArrow className="table-head-arrow" />
+                            ) : (
+                              <BiSolidUpArrow className="table-head-arrow" />
+                            )
                           ) : (
-                            <BiSolidUpArrow className="table-head-arrow" />
-                          )
-                        ) : (
-                          ""
-                        )}
-                      </span>
-                    </div>
-                  </th>
-                );
-              })}
-            </tr>
-          ))}
-        </thead>
-        <tbody className="bg-white ">
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => {
-                const cellClasses = clsx(
-                  "px-3 py-4 text-sm text-gray-500 bg-white",
-                  {
-                    "w-9": cell.column.id === "favorite",
-                    "table-sticky-cell": cell.column.id === "name",
-                  }
-                );
-                return (
-                  <td key={cell.id} className={cellClasses}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                );
-              })}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+                            ""
+                          )}
+                        </span>
+                      </div>
+                    </th>
+                  );
+                })}
+              </tr>
+            ))}
+          </thead>
+          <tbody className="bg-white ">
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  const cellClasses = clsx(
+                    "px-2 py-4 text-sm text-gray-500 bg-white",
+                    {
+                      "w-8": cell.column.id === "favorite",
+                      "table-sticky-cell": cell.column.id === "name",
+                    }
+                  );
+                  return (
+                    <td key={cell.id} className={cellClasses}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   );
 };
