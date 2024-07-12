@@ -16,14 +16,15 @@ import PriceChangeCell from "./PriceChangeCell";
 
 const CryptoTable: React.FC = () => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [coinsPerPage, setCoinsPerPage] = useState<number>(50);
+  const [loading, setLoading] = useState<boolean>(true);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
     coinGeckoService._getCoinsListWithMarketData().then((res) => {
       setCoins(res);
-      // setLoading(false);
+      setLoading(false);
     });
   }, []);
 
@@ -113,7 +114,7 @@ const CryptoTable: React.FC = () => {
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
       {loading ? (
-        <CryptoTableSkeleton />
+        <CryptoTableSkeleton coinsPerPage={coinsPerPage}/>
       ) : (
         <table className="min-w-full shadow table-auto sm:rounded-lg">
           <thead>
