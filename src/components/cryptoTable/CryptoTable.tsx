@@ -9,26 +9,27 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
-import { ITransformedCoinsMarketData } from "../../models";
+import { ICoinWithHistoricalData } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
-import CryptoTableSkeleton from "./CryptoTableSkeleton";
+import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import PriceChangeCell from "./PriceChangeCell";
 
 const CryptoTable: React.FC = () => {
-  const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
-  const [coinsPerPage, setCoinsPerPage] = useState<number>(50);
+  const [coins, setCoins] = useState<ICoinWithHistoricalData[]>([]);
+  const [coinsPerPage, setCoinsPerPage] = useState<number>(30);
   const [loading, setLoading] = useState<boolean>(true);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
-    coinGeckoService._getCoinsListWithMarketData().then((res) => {
+    coinGeckoService._getCoinsListWithHistoricalData()
+    .then((res) => {
       setCoins(res);
       setLoading(false);
     });
   }, []);
 
-  const columns: ColumnDef<ITransformedCoinsMarketData>[] = [
+  const columns: ColumnDef<ICoinWithHistoricalData>[] = [
     {
       header: () => "",
       id: "favorite",
