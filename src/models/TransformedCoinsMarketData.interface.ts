@@ -1,7 +1,4 @@
-export interface ITransformedPriceChange {
-  value: string;
-  isNegative: boolean;
-}
+import { ITransformedPriceChange } from "./TransformedPriceChange.interface";
 
 export interface ITransformedCoinsMarketData {
   id: string;
