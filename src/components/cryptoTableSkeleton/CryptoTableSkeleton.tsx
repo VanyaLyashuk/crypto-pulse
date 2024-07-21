@@ -34,6 +34,9 @@ const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({coinsPerPage}
             <th className="px-2 py-4 bg-white" style={{width: '176px'}}>
               <div className="w-20 h-6 ml-auto bg-gray-300 animate-pulse"></div>
             </th>
+            <th className="px-2 py-4 bg-white" style={{width: '151px'}}>
+              <div className="w-20 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+            </th>
           </tr>
         </thead>
         <tbody className="bg-white">
@@ -68,6 +71,9 @@ const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({coinsPerPage}
               </td>
               <td className="px-2 py-4" style={{width: '176px'}}>
                 <div className="w-40 h-6 bg-gray-200 animate-pulse"></div>
+              </td>
+              <td className="px-2 py-4" style={{width: '151px'}}>
+                <div className="h-6 bg-gray-200 w-36 animate-pulse"></div>
               </td>
             </tr>
           ))}

@@ -1,7 +1,5 @@
 import {
-  ICoinHistoricalChartData,
   ICoinsMarketData,
-  ITransformedCoinHistoricalChartData,
   ITransformedCoinsMarketData,
   ITransformedPriceChange,
 } from "../models";
@@ -21,6 +19,7 @@ export const transformCoinsListWithMarketData = (
       total_volume,
       market_cap,
       market_cap_rank,
+      sparkline_in_7d,
       price_change_percentage_1h_in_currency,
       price_change_percentage_24h_in_currency,
       price_change_percentage_7d_in_currency,
@@ -35,6 +34,7 @@ export const transformCoinsListWithMarketData = (
       total_volume: formatCurrencyValue(total_volume, currency),
       market_cap: formatCurrencyValue(market_cap, currency),
       market_cap_rank: market_cap_rank,
+      sparkline_in_7d,
       price_change_percentage_1h_in_currency: transformPriceChange(
         price_change_percentage_1h_in_currency
       ),
@@ -46,14 +46,6 @@ export const transformCoinsListWithMarketData = (
       ),
     })
   );
-};
-
-export const transformCoinHistoricalChartData = (
-  data: ICoinHistoricalChartData
-): ITransformedCoinHistoricalChartData => {
-  return {
-    prices: data.prices.map(item => item[1])
-  }
 };
 
 function transformPriceChange(change: number): ITransformedPriceChange {

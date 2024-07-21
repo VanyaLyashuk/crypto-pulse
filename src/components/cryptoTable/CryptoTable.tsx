@@ -9,27 +9,27 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
-import { ICoinWithHistoricalData } from "../../models";
+import { ITransformedCoinsMarketData } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import PriceChangeCell from "./PriceChangeCell";
+import SparklineChart from "./SparklineChart";
 
 const CryptoTable: React.FC = () => {
-  const [coins, setCoins] = useState<ICoinWithHistoricalData[]>([]);
+  const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
   const [coinsPerPage, setCoinsPerPage] = useState<number>(30);
   const [loading, setLoading] = useState<boolean>(true);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
-    coinGeckoService._getCoinsListWithHistoricalData()
-    .then((res) => {
+    coinGeckoService._getCoinsListWithMarketData().then((res) => {
       setCoins(res);
       setLoading(false);
     });
   }, []);
 
-  const columns: ColumnDef<ICoinWithHistoricalData>[] = [
+  const columns: ColumnDef<ITransformedCoinsMarketData>[] = [
     {
       header: () => "",
       id: "favorite",
@@ -38,12 +38,15 @@ const CryptoTable: React.FC = () => {
           <FaRegStar />
         </button>
       ),
-      size: 38,
+      size: 32,
       enableSorting: false,
     },
     {
       header: "#",
       accessorKey: "market_cap_rank",
+      size: 32,
+      minSize: 32,
+      maxSize: 125,
       enableSorting: true,
     },
     {
@@ -63,6 +66,9 @@ const CryptoTable: React.FC = () => {
           </div>
         </div>
       ),
+      size: 500,
+      minSize: 150,
+      maxSize: 500,
       enableSorting: true,
     },
     { header: "Price", accessorKey: "current_price", enableSorting: true },
@@ -74,6 +80,9 @@ const CryptoTable: React.FC = () => {
           row.original.price_change_percentage_1h_in_currency;
         return <PriceChangeCell value={value} isNegative={isNegative} />;
       },
+      size: 70,
+      minSize: 70,
+      maxSize: 125,
       enableSorting: true,
     },
     {
@@ -84,6 +93,9 @@ const CryptoTable: React.FC = () => {
           row.original.price_change_percentage_24h_in_currency;
         return <PriceChangeCell value={value} isNegative={isNegative} />;
       },
+      size: 70,
+      minSize: 70,
+      maxSize: 125,
       enableSorting: true,
     },
     {
@@ -94,14 +106,40 @@ const CryptoTable: React.FC = () => {
           row.original.price_change_percentage_7d_in_currency;
         return <PriceChangeCell value={value} isNegative={isNegative} />;
       },
+      size: 70,
+      minSize: 70,
+      maxSize: 125,
       enableSorting: true,
     },
     {
       header: "24h Volume",
       accessorKey: "total_volume",
+      size: 100,
+      minSize: 100,
+      maxSize: 400,
       enableSorting: true,
     },
-    { header: "Market Cap", accessorKey: "market_cap", enableSorting: true },
+    { 
+      header: "Market Cap", 
+      accessorKey: "market_cap",
+      size: 100,
+      minSize: 100,
+      maxSize: 400,
+      enableSorting: true 
+    },
+    {
+      header: "Last 7 Days",
+      accessorKey: "sparkline_in_7d",
+      cell: ({ row }) => {
+        const { price } = row.original.sparkline_in_7d;
+
+        return <SparklineChart price={price} />;
+      },
+      size: 151,
+      minSize: 151,
+      maxSize: 151,
+      enableSorting: false,
+    },
   ];
 
   const table = useReactTable({
@@ -115,7 +153,7 @@ const CryptoTable: React.FC = () => {
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
       {loading ? (
-        <CryptoTableSkeleton coinsPerPage={coinsPerPage}/>
+        <CryptoTableSkeleton coinsPerPage={coinsPerPage} />
       ) : (
         <table className="min-w-full shadow table-auto sm:rounded-lg">
           <thead>
@@ -133,9 +171,11 @@ const CryptoTable: React.FC = () => {
                       className={cellClasses}
                       onClick={header.column.getToggleSortingHandler()}
                     >
-                      <div className={clsx("flex items-center gap-0.5", {
-                        "justify-end": index > 2
-                      })}>
+                      <div
+                        className={clsx("flex items-center gap-0.5", {
+                          "justify-end": index > 2,
+                        })}
+                      >
                         {header.isPlaceholder
                           ? null
                           : flexRender(
@@ -165,15 +205,19 @@ const CryptoTable: React.FC = () => {
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell, index) => {
                   const cellClasses = clsx(
-                    "px-2 py-4 text-sm text-gray-500 bg-white",
+                    "p-2 text-sm text-gray-500 bg-white",
                     {
                       "w-8": cell.column.id === "favorite",
                       "table-sticky-cell": cell.column.id === "name",
-                      "text-right": index > 2
+                      "text-right": index > 2,
                     }
                   );
                   return (
-                    <td key={cell.id} className={cellClasses}>
+                    <td
+                      key={cell.id}
+                      className={cellClasses}
+                      style={{ width: cell.column.getSize() }}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext()
