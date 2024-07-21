@@ -1,5 +1,7 @@
 import {
+  ICoinHistoricalChartData,
   ICoinsMarketData,
+  ITransformedCoinHistoricalChartData,
   ITransformedCoinsMarketData,
   ITransformedPriceChange,
 } from "../models";
@@ -46,6 +48,14 @@ export const transformCoinsListWithMarketData = (
   );
 };
 
+export const transformCoinHistoricalChartData = (
+  data: ICoinHistoricalChartData
+): ITransformedCoinHistoricalChartData => {
+  return {
+    prices: data.prices.map(item => item[1])
+  }
+};
+
 function transformPriceChange(change: number): ITransformedPriceChange {
   return {
     value: formatPercentageValue(change),
@@ -65,5 +75,5 @@ function formatCurrencyValue(
 }
 
 function formatPercentageValue(value: number): string {
-  return  `${Math.abs(value).toFixed(1)}%`;
+  return `${Math.abs(value).toFixed(1)}%`;
 }
