@@ -62,7 +62,7 @@ const CryptoTable: React.FC = () => {
           />
           <div className="overflow-hidden break-words">
             <span className="font-medium">{row.original.name}</span>{" "}
-            <span className="uppercase">{row.original.symbol}</span>
+            <span className="text-gray-500 uppercase">{row.original.symbol}</span>
           </div>
         </div>
       ),
@@ -205,7 +205,7 @@ const CryptoTable: React.FC = () => {
               <tr key={row.id}>
                 {row.getVisibleCells().map((cell, index) => {
                   const cellClasses = clsx(
-                    "p-2 text-sm text-gray-500 bg-white",
+                    "p-2 text-sm text-gray-700 bg-white",
                     {
                       "w-8": cell.column.id === "favorite",
                       "table-sticky-cell": cell.column.id === "name",
