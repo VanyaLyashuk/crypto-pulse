@@ -11,23 +11,36 @@ import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { ITransformedCoinsMarketData } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
+import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import PriceChangeCell from "./PriceChangeCell";
 import SparklineChart from "./SparklineChart";
 
 const CryptoTable: React.FC = () => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
-  const [coinsPerPage, setCoinsPerPage] = useState<number>(30);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(30);
   const [loading, setLoading] = useState<boolean>(true);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
-    coinGeckoService._getCoinsListWithMarketData().then((res) => {
-      setCoins(res);
-      setLoading(false);
-    });
-  }, []);
+    onRequest();
+  }, [rowsPerPage]);
+
+  const onRequest = () => {
+    setLoading(true);
+
+    coinGeckoService
+      ._getCoinsListWithMarketData("usd", rowsPerPage)
+      .then((res) => {
+        setCoins(res);
+        setLoading(false);
+      });
+  };
+
+  const onRowsChange = (e: React.MouseEvent<HTMLLIElement>) => {
+    setRowsPerPage(Number(e.currentTarget.getAttribute('data-value')));
+  };
 
   const columns: ColumnDef<ITransformedCoinsMarketData>[] = [
     {
@@ -62,7 +75,9 @@ const CryptoTable: React.FC = () => {
           />
           <div className="overflow-hidden break-words">
             <span className="font-medium">{row.original.name}</span>{" "}
-            <span className="text-gray-500 uppercase">{row.original.symbol}</span>
+            <span className="text-gray-500 uppercase">
+              {row.original.symbol}
+            </span>
           </div>
         </div>
       ),
@@ -119,13 +134,13 @@ const CryptoTable: React.FC = () => {
       maxSize: 400,
       enableSorting: true,
     },
-    { 
-      header: "Market Cap", 
+    {
+      header: "Market Cap",
       accessorKey: "market_cap",
       size: 100,
       minSize: 100,
       maxSize: 400,
-      enableSorting: true 
+      enableSorting: true,
     },
     {
       header: "Last 7 Days",
@@ -151,86 +166,92 @@ const CryptoTable: React.FC = () => {
   });
 
   return (
-    <div className="overflow-x-auto max-w-[1300px] m-auto">
-      {loading ? (
-        <CryptoTableSkeleton coinsPerPage={coinsPerPage} />
-      ) : (
-        <table className="min-w-full shadow table-auto sm:rounded-lg">
-          <thead>
-            {table.getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id}>
-                {headerGroup.headers.map((header, index) => {
-                  const cellClasses = clsx(
-                    "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white cursor-pointer group",
-                    { "table-sticky-cell": header.column.id === "name" }
-                  );
-                  return (
-                    <th
-                      key={header.id}
-                      scope="col"
-                      className={cellClasses}
-                      onClick={header.column.getToggleSortingHandler()}
-                    >
-                      <div
-                        className={clsx("flex items-center gap-0.5", {
-                          "justify-end": index > 2,
-                        })}
+    <>
+      <CryptoTableControls
+        rowsPerPage={rowsPerPage}
+        onRowsChange={onRowsChange}
+      />
+      <div className="m-auto max-w-[1300px] overflow-x-auto m">
+        {loading ? (
+          <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
+        ) : (
+          <table className="min-w-full table-auto sm:rounded-lg">
+            <thead>
+              {table.getHeaderGroups().map((headerGroup) => (
+                <tr key={headerGroup.id}>
+                  {headerGroup.headers.map((header, index) => {
+                    const cellClasses = clsx(
+                      "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white cursor-pointer group",
+                      { "table-sticky-cell": header.column.id === "name" }
+                    );
+                    return (
+                      <th
+                        key={header.id}
+                        scope="col"
+                        className={cellClasses}
+                        onClick={header.column.getToggleSortingHandler()}
                       >
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext()
-                            )}
-                        <span>
-                          {header.column.getIsSorted() ? (
-                            header.column.getIsSorted() === "desc" ? (
-                              <BiSolidDownArrow className="table-head-arrow" />
+                        <div
+                          className={clsx("flex items-center gap-0.5", {
+                            "justify-end": index > 2,
+                          })}
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(
+                                header.column.columnDef.header,
+                                header.getContext()
+                              )}
+                          <span>
+                            {header.column.getIsSorted() ? (
+                              header.column.getIsSorted() === "desc" ? (
+                                <BiSolidDownArrow className="table-head-arrow" />
+                              ) : (
+                                <BiSolidUpArrow className="table-head-arrow" />
+                              )
                             ) : (
-                              <BiSolidUpArrow className="table-head-arrow" />
-                            )
-                          ) : (
-                            ""
-                          )}
-                        </span>
-                      </div>
-                    </th>
-                  );
-                })}
-              </tr>
-            ))}
-          </thead>
-          <tbody className="bg-white ">
-            {table.getRowModel().rows.map((row) => (
-              <tr key={row.id}>
-                {row.getVisibleCells().map((cell, index) => {
-                  const cellClasses = clsx(
-                    "p-2 text-sm text-gray-700 bg-white",
-                    {
-                      "w-8": cell.column.id === "favorite",
-                      "table-sticky-cell": cell.column.id === "name",
-                      "text-right": index > 2,
-                    }
-                  );
-                  return (
-                    <td
-                      key={cell.id}
-                      className={cellClasses}
-                      style={{ width: cell.column.getSize() }}
-                    >
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+                              ""
+                            )}
+                          </span>
+                        </div>
+                      </th>
+                    );
+                  })}
+                </tr>
+              ))}
+            </thead>
+            <tbody className="bg-white ">
+              {table.getRowModel().rows.map((row) => (
+                <tr key={row.id}>
+                  {row.getVisibleCells().map((cell, index) => {
+                    const cellClasses = clsx(
+                      "p-2 text-sm text-gray-700 bg-white",
+                      {
+                        "w-8": cell.column.id === "favorite",
+                        "table-sticky-cell": cell.column.id === "name",
+                        "text-right": index > 2,
+                      }
+                    );
+                    return (
+                      <td
+                        key={cell.id}
+                        className={cellClasses}
+                        style={{ width: cell.column.getSize() }}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
+    </>
   );
 };
 
