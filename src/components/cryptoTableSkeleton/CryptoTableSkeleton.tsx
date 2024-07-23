@@ -1,8 +1,8 @@
 import React from "react";
 import { ICryptoTableSkeletonProps } from "../../models";
 
-const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({coinsPerPage}) => {
-  const rows = Array.from({ length: coinsPerPage });
+const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({rowsPerPage}) => {
+  const rows = Array.from({ length: rowsPerPage });
 
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">

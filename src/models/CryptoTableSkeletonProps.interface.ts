@@ -1,3 +1,3 @@
 export interface ICryptoTableSkeletonProps {
-  coinsPerPage: number;
+  rowsPerPage: number;
 }
