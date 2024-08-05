@@ -12,6 +12,7 @@ import { ISparklineChartProps } from "../../models";
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
 const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
+  const isEmpty = price.length === 0;
   const labels = price.map((_, index) => index.toString());
 
   const isPriceIncreasing = price[price.length - 1] >= price[0];
@@ -56,8 +57,9 @@ const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
   };
 
   return (
-    <div className="w-[135px] h-[50px]">
-      <Line data={chartData} options={options}></Line>
+    <div className="w-[135px] h-[50px] flex items-center justify-end">
+      {isEmpty ? '-' : <Line data={chartData} options={options}></Line>}
+      
     </div>
   );
 };
