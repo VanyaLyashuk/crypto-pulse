@@ -9,37 +9,79 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
-import { ITransformedCoinsMarketData } from "../../models";
+import {
+  ICryptoTableRowsPerPageProps,
+  ITransformedCoinsMarketData,
+} from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
+import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
+import Pagination from "../pagination/Pagination";
 import PriceChangeCell from "./PriceChangeCell";
 import SparklineChart from "./SparklineChart";
 
 const CryptoTable: React.FC = () => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
-  const [rowsPerPage, setRowsPerPage] = useState<number>(30);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [totalCoins, setTotalCoins] = useState<number>(0);
+  const [lastPage, setLastPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
 
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
-    onRequest();
+    onCoinsDataRequest();
+  }, [rowsPerPage, currentPage]);
+
+  useEffect(() => {
+    onTotalCoinsRequest();
   }, [rowsPerPage]);
 
-  const onRequest = () => {
+  useEffect(() => {
+    if (lastPage && currentPage > lastPage) {
+      setCurrentPage(lastPage);
+    } else if (lastPage && currentPage > 1) {
+      return;
+    }else  {
+      setCurrentPage(1);
+    }
+  }, [lastPage]);
+
+  useEffect(() => {
+    if (loading) {
+      setLoadingDelay(true);
+    } else {
+      const timer = setTimeout(() => setLoadingDelay(false), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+
+  const onCoinsDataRequest = () => {
     setLoading(true);
 
     coinGeckoService
-      ._getCoinsListWithMarketData("usd", rowsPerPage)
+      ._getCoinsListWithMarketData("usd", rowsPerPage, currentPage)
       .then((res) => {
         setCoins(res);
         setLoading(false);
       });
+  }
+
+  const onTotalCoinsRequest = () => {
+    setLoading(true);
+
+    coinGeckoService._getCoinsListLength().then((res) => {
+      setTotalCoins(res);
+      setLastPage(Math.ceil(res / rowsPerPage));
+      setLoading(false);
+    });
   };
 
-  const onRowsChange = (e: React.MouseEvent<HTMLLIElement>) => {
-    setRowsPerPage(Number(e.currentTarget.getAttribute('data-value')));
+  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] = (e) => {
+    setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
   };
 
   const columns: ColumnDef<ITransformedCoinsMarketData>[] = [
@@ -129,16 +171,16 @@ const CryptoTable: React.FC = () => {
     {
       header: "24h Volume",
       accessorKey: "total_volume",
-      size: 100,
-      minSize: 100,
+      size: 110,
+      minSize: 110,
       maxSize: 400,
       enableSorting: true,
     },
     {
       header: "Market Cap",
       accessorKey: "market_cap",
-      size: 100,
-      minSize: 100,
+      size: 110,
+      minSize: 110,
       maxSize: 400,
       enableSorting: true,
     },
@@ -167,12 +209,14 @@ const CryptoTable: React.FC = () => {
 
   return (
     <>
-      <CryptoTableControls
-        rowsPerPage={rowsPerPage}
-        onRowsChange={onRowsChange}
-      />
-      <div className="m-auto max-w-[1300px] overflow-x-auto m">
-        {loading ? (
+      <CryptoTableControls>
+        <CryptoTableRowsPerPage
+          onRowsChange={onRowsChange}
+          rowsPerPage={rowsPerPage}
+        />
+      </CryptoTableControls>
+      <div className="m-auto max-w-[1300px] overflow-x-auto mb-3">
+        {loading || loadingDelay ? (
           <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
         ) : (
           <table className="min-w-full table-auto sm:rounded-lg">
@@ -251,6 +295,14 @@ const CryptoTable: React.FC = () => {
           </table>
         )}
       </div>
+      <CryptoTableControls>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={totalCoins}
+          pageSize={rowsPerPage}
+          onPageChange={(count: number) => setCurrentPage(count)}
+        />
+      </CryptoTableControls>
     </>
   );
 };
