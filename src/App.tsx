@@ -4,7 +4,9 @@ import CryptoTable from './components/cryptoTable/CryptoTable';
 const App: React.FC = () => {
   
   return (
-    <CryptoTable />
+    <div className='py-10'>
+      <CryptoTable />
+    </div>
   );
 }
 
