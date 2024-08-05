@@ -16,8 +16,21 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
     { "invisible opacity-0 top-0": !isOpen }
   );
 
+  const handleRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] = (
+    e
+  ) => {
+    onRowsChange(e);
+    setIsOpen(!isOpen);
+  };
+
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLLIElement>) => {
+    if (e.key === "" || e.key === "Enter") {
+      handleRowsChange(e);
+    }
+  };
+
   return (
-    <div className="relative">
+    <div className="relative ml-auto">
       <button
         className="flex items-center px-2 py-1 text-sm font-medium border rounded-md"
         type="button"
@@ -30,15 +43,18 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       </button>
       <ul className={listClasses}>
         {options.map((item) => {
-          const liClasses = clsx("w-full p-2 text-sm border-b cursor-pointer last:border-b-0 hover-hover:hover:bg-slate-50",
-            {"bg-slate-100": rowsPerPage === item}
+          const liClasses = clsx(
+            "w-full p-2 text-sm border-b cursor-pointer last:border-b-0 hover-hover:hover:bg-slate-50 focus:bg-slate-50",
+            { "bg-slate-100": rowsPerPage === item }
           );
           return (
             <li
               className={liClasses}
-              onClick={onRowsChange}
+              onClick={handleRowsChange}
+              onKeyUp={handleKeyUp}
               key={item}
               data-value={item}
+              tabIndex={0}
             >
               {item}
             </li>
