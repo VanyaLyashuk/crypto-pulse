@@ -33,7 +33,7 @@ export const transformCoinsListWithMarketData = (
       }),
       total_volume: formatCurrencyValue(total_volume, currency),
       market_cap: formatCurrencyValue(market_cap, currency),
-      market_cap_rank: market_cap_rank,
+      market_cap_rank: market_cap_rank ?? '-',
       sparkline_in_7d,
       price_change_percentage_1h_in_currency: transformPriceChange(
         price_change_percentage_1h_in_currency
@@ -60,12 +60,14 @@ function formatCurrencyValue(
   currency: string,
   options?: Intl.NumberFormatOptions
 ): string {
-  if (options) {
+  if (options && value) {
     return currency + value.toLocaleString("en-US", options);
+  } else if (value) {
+    return currency + value.toLocaleString("en-US");
   }
-  return currency + value.toLocaleString("en-US");
+  return "-";
 }
 
 function formatPercentageValue(value: number): string {
-  return `${Math.abs(value).toFixed(1)}%`;
+  return value ? `${Math.abs(value).toFixed(1)}%` : '-';
 }
