@@ -8,7 +8,7 @@ export interface ITransformedCoinsMarketData {
   current_price: string;
   total_volume: string;
   market_cap: string;
-  market_cap_rank: number;
+  market_cap_rank: number | '-';
   sparkline_in_7d: {
     price: number[]
   }
