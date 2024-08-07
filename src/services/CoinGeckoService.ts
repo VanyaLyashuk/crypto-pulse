@@ -1,4 +1,8 @@
-import { ICoinsListData, ICoinsMarketData, ITransformedCoinsMarketData } from "../models";
+import {
+  ICoinsListData,
+  ICoinsMarketData,
+  ITransformedCoinsMarketData,
+} from "../models";
 import { transformCoinsListWithMarketData } from "./CoinGeckoServiceUtils";
 
 class CoinGeckoService {
@@ -12,7 +16,6 @@ class CoinGeckoService {
     const options = {
       method: "GET",
       headers: {
-        "Access-Control-Allow-Origin": "*",
         accept: "application/json",
         "x-cg-demo-api-key": this._apiKey || "",
       },
@@ -39,8 +42,7 @@ class CoinGeckoService {
     return transformedData;
   }
 
-  public async _getCoinsListLength(
-  ): Promise<number> {
+  public async _getCoinsListLength(): Promise<number> {
     const url = `${this._apiBase}coins/list`;
     const data = await this.getResource<ICoinsListData[]>(url);
 
