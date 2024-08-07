@@ -41,6 +41,15 @@ const CryptoTable: React.FC = () => {
   }, [rowsPerPage]);
 
   useEffect(() => {
+    if (loading) {
+      setLoadingDelay(true);
+    } else {
+      const timer = setTimeout(() => setLoadingDelay(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [loading]);
+  
+  useEffect(() => {
     if (lastPage && currentPage > lastPage) {
       setCurrentPage(lastPage);
     } else if (lastPage && currentPage > 1) {
@@ -50,14 +59,6 @@ const CryptoTable: React.FC = () => {
     }
   }, [lastPage]);
 
-  useEffect(() => {
-    if (loading) {
-      setLoadingDelay(true);
-    } else {
-      const timer = setTimeout(() => setLoadingDelay(false), 300);
-      return () => clearTimeout(timer);
-    }
-  }, [loading]);
 
   const onCoinsDataRequest = () => {
     setLoading(true);
