@@ -1,1 +1,0 @@
-export type TPaginationButton = "back" | "forward" | "go";
