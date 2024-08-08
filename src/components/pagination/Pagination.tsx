@@ -27,13 +27,13 @@ const Pagination = ({
   const isLastPage = currentPage === lastPage;
 
   const arrowClasses = (page: boolean): string =>
-    clsx("px-4 py-2 cursor-pointer", {
+    clsx("px-2 py-1 cursor-pointer sm:px-4 sm:py-2", {
       "text-gray-400": page,
     });
 
   return (
-    <ul className="flex items-center gap-1 text-base">
-      <li>
+    <ul className="flex items-stretch text-base sm:gap-1">
+      <li className="flex">
         <button
           onClick={() => !isFirstPage && onPageChange(currentPage - 1)}
           className={arrowClasses(isFirstPage)}
@@ -43,17 +43,22 @@ const Pagination = ({
       </li>
       {paginationRange.map((pageNumber: number | string, index) => {
         if (pageNumber === DOTS) {
-          return <li key={`dots-${index}`}>&#8230;</li>;
+          return (
+            <li className="px-2 py-1 sm:px-4 sm:py-2" key={`dots-${index}`}>
+              ...
+            </li>
+          );
         }
 
         return (
-          <li
-            key={pageNumber}
-          >
+          <li key={pageNumber}>
             <button
-              className={clsx("px-4 py-2 rounded-md cursor-pointer", {
-                "bg-slate-100": pageNumber === currentPage,
-              })}
+              className={clsx(
+                "px-2.5 py-1 text-base rounded-md cursor-pointer sm:px-4 sm:py-2",
+                {
+                  "bg-slate-100": pageNumber === currentPage,
+                }
+              )}
               onClick={() => onPageChange(Number(pageNumber))}
             >
               {pageNumber}
@@ -61,7 +66,7 @@ const Pagination = ({
           </li>
         );
       })}
-      <li>
+      <li className="flex">
         <button
           onClick={() => !isLastPage && onPageChange(currentPage + 1)}
           className={arrowClasses(isLastPage)}
