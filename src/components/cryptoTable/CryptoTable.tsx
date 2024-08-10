@@ -1,4 +1,5 @@
 import {
+  Cell,
   ColumnDef,
   flexRender,
   getCoreRowModel,
@@ -6,7 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import clsx from "clsx";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import {
@@ -23,9 +24,9 @@ import SparklineChart from "./SparklineChart";
 
 const CryptoTable: React.FC = () => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
+  const [totalCoins, setTotalCoins] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [totalCoins, setTotalCoins] = useState<number>(0);
   const [lastPage, setLastPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
@@ -33,11 +34,25 @@ const CryptoTable: React.FC = () => {
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
-    onCoinsDataRequest();
-  }, [rowsPerPage, currentPage]);
+    onTotalCoinsRequest();
+  }, []);
 
   useEffect(() => {
-    onTotalCoinsRequest();
+    setLastPage(Math.ceil(totalCoins / rowsPerPage));
+  }, [totalCoins, rowsPerPage]);
+
+  useEffect(() => {
+    if (lastPage && currentPage > lastPage) {
+      setCurrentPage(lastPage);
+    } else if (lastPage) {
+      onCoinsDataRequest();
+    }
+  }, [currentPage, lastPage]);
+
+  useEffect(() => {
+    if (lastPage && currentPage > lastPage) {
+      setCurrentPage(lastPage);
+    }
   }, [rowsPerPage]);
 
   useEffect(() => {
@@ -48,42 +63,46 @@ const CryptoTable: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [loading]);
-  
-  useEffect(() => {
-    if (lastPage && currentPage > lastPage) {
-      setCurrentPage(lastPage);
-    } else if (lastPage && currentPage > 1) {
-      return;
-    }else  {
-      setCurrentPage(1);
-    }
-  }, [lastPage]);
-
 
   const onCoinsDataRequest = () => {
     setLoading(true);
+    setLoadingDelay(true);
 
     coinGeckoService
       ._getCoinsListWithMarketData("usd", rowsPerPage, currentPage)
       .then((res) => {
         setCoins(res);
         setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching coins data:", error);
+        setLoading(false);
       });
-  }
+  };
 
   const onTotalCoinsRequest = () => {
     setLoading(true);
+    setLoadingDelay(true);
 
-    coinGeckoService._getCoinsListLength().then((res) => {
-      setTotalCoins(res);
-      setLastPage(Math.ceil(res / rowsPerPage));
-      setLoading(false);
-    });
+    coinGeckoService
+      ._getCoinsListLength()
+      .then((res) => {
+        setTotalCoins(res);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching total coins data:", error);
+        setLoading(false);
+      });
   };
 
-  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] = (e) => {
-    setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
-  };
+  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] =
+    useCallback(
+      (e) => {
+        setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
+      },
+      [setRowsPerPage]
+    );
 
   const columns: ColumnDef<ITransformedCoinsMarketData>[] = [
     {
@@ -125,7 +144,7 @@ const CryptoTable: React.FC = () => {
         </div>
       ),
       size: 500,
-      minSize: 150,
+      minSize: 200,
       maxSize: 500,
       enableSorting: true,
     },
@@ -172,8 +191,8 @@ const CryptoTable: React.FC = () => {
     {
       header: "24h Volume",
       accessorKey: "total_volume",
-      size: 110,
-      minSize: 110,
+      size: 150,
+      minSize: 150,
       maxSize: 400,
       enableSorting: true,
     },
@@ -200,6 +219,17 @@ const CryptoTable: React.FC = () => {
     },
   ];
 
+  const getCellClasses = (
+    cell: Cell<ITransformedCoinsMarketData, unknown>,
+    index: number
+  ) => {
+    return clsx("p-2 text-sm text-gray-700 bg-white", {
+      "w-8": cell.column.id === "favorite",
+      "table-sticky-cell": cell.column.id === "name",
+      "text-right": index > 2,
+    });
+  };
+
   const table = useReactTable({
     data: coins,
     columns,
@@ -220,7 +250,7 @@ const CryptoTable: React.FC = () => {
         {loading || loadingDelay ? (
           <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
         ) : (
-          <table className="min-w-full table-auto sm:rounded-lg">
+          <table className="min-w-full transition-all table-auto sm:rounded-lg">
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
@@ -238,7 +268,7 @@ const CryptoTable: React.FC = () => {
                       >
                         <div
                           className={clsx("flex items-center gap-0.5", {
-                            "justify-end": index > 2,
+                            "justify-end whitespace-nowrap": index > 2,
                           })}
                         >
                           {header.isPlaceholder
@@ -269,18 +299,10 @@ const CryptoTable: React.FC = () => {
               {table.getRowModel().rows.map((row) => (
                 <tr key={row.id}>
                   {row.getVisibleCells().map((cell, index) => {
-                    const cellClasses = clsx(
-                      "p-2 text-sm text-gray-700 bg-white",
-                      {
-                        "w-8": cell.column.id === "favorite",
-                        "table-sticky-cell": cell.column.id === "name",
-                        "text-right": index > 2,
-                      }
-                    );
                     return (
                       <td
                         key={cell.id}
-                        className={cellClasses}
+                        className={getCellClasses(cell, index)}
                         style={{ width: cell.column.getSize() }}
                       >
                         {flexRender(
