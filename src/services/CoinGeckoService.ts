@@ -17,7 +17,7 @@ class CoinGeckoService {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-cg-demo-api-key": this._apiKey || "",
+        "x-cg-demo-api-key": this._apiKey,
       },
     };
 
