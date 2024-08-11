@@ -2,6 +2,8 @@ import { ICoinsListData } from "./CoinsListData.interface";
 import { ICoinsMarketData } from "./CoinsMarketData.interface";
 import { ICryptoTableRowsPerPageProps } from "./CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./CryptoTableSkeletonProps.interface";
+import { ICryptoTableViewProps } from "./CryptoTableViewProps.interface";
+import { IErrorMessageProps } from "./ErrorMessageProps.interface";
 import { IPaginationProps } from "./Pagination.interface";
 import { IPaginationComponentProps } from "./PaginationComponentProps.interface";
 import { ISparklineChartProps } from "./SparklineChartProps.interface";
@@ -13,7 +15,7 @@ export type {
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
-    IPaginationComponentProps,
+    ICryptoTableViewProps, IErrorMessageProps, IPaginationComponentProps,
     IPaginationProps,
     ISparklineChartProps,
     ITransformedCoinsMarketData,
