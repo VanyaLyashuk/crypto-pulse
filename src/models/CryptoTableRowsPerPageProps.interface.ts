@@ -4,6 +4,6 @@ export interface ICryptoTableRowsPerPageProps {
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
   ) => void;
   isOpen: boolean;
-  toggleRowsSelect: () => void;
+  onToggleRowsSelect: () => void;
   options: number[];
 }
