@@ -7,7 +7,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   rowsPerPage,
   onRowsChange,
   isOpen,
-  toggleRowsSelect,
+  onToggleRowsSelect,
   options,
 }) => {
   const arrowClasses = clsx({ "rotate-180": isOpen });
@@ -27,7 +27,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       <button
         className="flex items-center px-2 py-1 text-sm font-medium border rounded-md"
         type="button"
-        onClick={toggleRowsSelect}
+        onClick={onToggleRowsSelect}
       >
         {rowsPerPage}
         <span>
