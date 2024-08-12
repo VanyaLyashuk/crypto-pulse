@@ -3,6 +3,8 @@ import { ICoinsMarketData } from "./CoinsMarketData.interface";
 import { ICryptoTableRowsPerPageProps } from "./CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./CryptoTableSkeletonProps.interface";
 import { ICryptoTableViewProps } from "./CryptoTableViewProps.interface";
+import { IErrorBoundaryProps } from "./ErrorBoundaryProps.interface";
+import { IErrorBoundaryState } from "./ErrorBoundaryState.interface";
 import { IErrorMessageProps } from "./ErrorMessageProps.interface";
 import { IPaginationProps } from "./Pagination.interface";
 import { IPaginationComponentProps } from "./PaginationComponentProps.interface";
@@ -15,7 +17,8 @@ export type {
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
-    ICryptoTableViewProps, IErrorMessageProps, IPaginationComponentProps,
+    ICryptoTableViewProps, IErrorBoundaryProps,
+    IErrorBoundaryState, IErrorMessageProps, IPaginationComponentProps,
     IPaginationProps,
     ISparklineChartProps,
     ITransformedCoinsMarketData,
