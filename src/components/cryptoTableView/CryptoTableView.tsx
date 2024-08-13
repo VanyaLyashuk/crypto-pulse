@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import clsx from "clsx";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import {
@@ -20,6 +20,9 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
   coins,
   getCellClasses,
 }) => {
+  const [sorting, setSorting] = useState([
+    {id: "market_cap_rank", desc: false}
+  ])
   const columns: ColumnDef<ITransformedCoinsMarketData>[] = useMemo(
     () => [
       {
@@ -143,7 +146,11 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    enableSortingRemoval: true,
+    enableSortingRemoval: false,
+    state: {
+      sorting
+    },
+    onSortingChange: setSorting
   });
 
   return (
