@@ -168,12 +168,6 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
                       "justify-end whitespace-nowrap": index > 2,
                     })}
                   >
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
                     <span>
                       {header.column.getIsSorted() ? (
                         header.column.getIsSorted() === "desc" ? (
@@ -185,6 +179,12 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
                         ""
                       )}
                     </span>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                   </div>
                 </th>
               );
