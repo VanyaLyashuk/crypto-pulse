@@ -1,5 +1,7 @@
 import { ICoinsListData } from "./CoinsListData.interface";
 import { ICoinsMarketData } from "./CoinsMarketData.interface";
+import { TCryptoTableCellContext } from "./CryptoTableCellContext.type";
+import { TCryptoTableCurrency } from "./CryptoTableCurrency.type";
 import { ICryptoTableRowsPerPageProps } from "./CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./CryptoTableSkeletonProps.interface";
 import { ICryptoTableViewProps } from "./CryptoTableViewProps.interface";
@@ -17,11 +19,16 @@ export type {
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
-    ICryptoTableViewProps, IErrorBoundaryProps,
-    IErrorBoundaryState, IErrorMessageProps, IPaginationComponentProps,
+    ICryptoTableViewProps,
+    IErrorBoundaryProps,
+    IErrorBoundaryState,
+    IErrorMessageProps,
+    IPaginationComponentProps,
     IPaginationProps,
     ISparklineChartProps,
     ITransformedCoinsMarketData,
-    ITransformedPriceChange
+    ITransformedPriceChange,
+    TCryptoTableCellContext,
+    TCryptoTableCurrency
 };
 
