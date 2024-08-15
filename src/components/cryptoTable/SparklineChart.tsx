@@ -22,13 +22,15 @@ const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
     datasets: [
       {
         data: price,
-        borderColor: isPriceIncreasing ? "rgb(34, 197, 94)" : "rgb(220, 38, 38)",
+        borderColor: isPriceIncreasing
+          ? "rgb(34, 197, 94)"
+          : "rgb(220, 38, 38)",
         backgroundColor: "rgba(0, 0, 0, 0)",
         borderWidth: 1,
         pointRadius: 0,
-      }
-    ]
-  }
+      },
+    ],
+  };
 
   const options = {
     responsive: true,
@@ -51,15 +53,14 @@ const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
     },
     elements: {
       line: {
-        tension: 0.3
+        tension: 0.3,
       },
     },
   };
 
   return (
     <div className="w-[135px] h-[50px] flex items-center justify-end">
-      {isEmpty ? '-' : <Line data={chartData} options={options}></Line>}
-      
+      {isEmpty ? "-" : <Line data={chartData} options={options}></Line>}
     </div>
   );
 };
