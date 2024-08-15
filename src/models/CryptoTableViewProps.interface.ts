@@ -1,4 +1,5 @@
 import { Cell } from "@tanstack/react-table";
+import { TCryptoTableCurrency } from "./CryptoTableCurrency.type";
 import { ITransformedCoinsMarketData } from "./TransformedCoinsMarketData.interface";
 
 export interface ICryptoTableViewProps {
@@ -7,4 +8,5 @@ export interface ICryptoTableViewProps {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => string;
+  currency: TCryptoTableCurrency;
 }
