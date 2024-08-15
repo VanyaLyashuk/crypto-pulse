@@ -6,6 +6,7 @@ import {
   ITransformedCoinsMarketData,
 } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
+import { handlePageChange } from "../../utils/CryptoTableUtils";
 import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
 import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
@@ -55,7 +56,7 @@ const CryptoTable: React.FC = () => {
     if (loading) {
       setLoadingDelay(true);
     } else {
-      const timer = setTimeout(() => setLoadingDelay(false), 500);
+      const timer = setTimeout(() => setLoadingDelay(false), 200);
       return () => clearTimeout(timer);
     }
   }, [loading]);
@@ -125,7 +126,9 @@ const CryptoTable: React.FC = () => {
     });
   };
 
-  const errMsg = error ? <ErrorMessage message="Ooops! Something went wrong!" /> : null;
+  const errMsg = error ? (
+    <ErrorMessage message="Ooops! Something went wrong!" />
+  ) : null;
   const skeleton =
     loading || (loadingDelay && !error) ? (
       <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
@@ -159,7 +162,9 @@ const CryptoTable: React.FC = () => {
               currentPage={currentPage}
               totalCount={totalCoins}
               pageSize={rowsPerPage}
-              onPageChange={(count: number) => setCurrentPage(count)}
+              onPageChange={(count: number) =>
+                handlePageChange(count, setCurrentPage)
+              }
             />
           </CryptoTableControls>
         </>
