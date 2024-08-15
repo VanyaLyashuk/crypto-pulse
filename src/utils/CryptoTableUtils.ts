@@ -8,5 +8,5 @@ export const handlePageChange = debounce(
   ): void => {
     setCurrentPage(count);
   },
-  200
+  300
 );
