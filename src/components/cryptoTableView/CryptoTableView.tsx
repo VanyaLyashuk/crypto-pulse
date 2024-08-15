@@ -1,8 +1,9 @@
 import {
-  ColumnDef,
+  CellContext,
   flexRender,
   getCoreRowModel,
   getSortedRowModel,
+  Row,
   useReactTable,
 } from "@tanstack/react-table";
 import clsx from "clsx";
@@ -12,18 +13,27 @@ import { FaRegStar } from "react-icons/fa";
 import {
   ICryptoTableViewProps,
   ITransformedCoinsMarketData,
+  TCryptoTableCellContext,
 } from "../../models";
+import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
 import PriceChangeCell from "../cryptoTable/PriceChangeCell";
 import SparklineChart from "../cryptoTable/SparklineChart";
+
+const renderPriceChangeCell = () => (info: TCryptoTableCellContext) => {
+  const value = info.getValue<number>();
+  return <PriceChangeCell value={value} />;
+};
 
 const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
   coins,
   getCellClasses,
+  currency,
 }) => {
   const [sorting, setSorting] = useState([
-    {id: "market_cap_rank", desc: false}
-  ])
-  const columns: ColumnDef<ITransformedCoinsMarketData>[] = useMemo(
+    { id: "market_cap_rank", desc: false },
+  ]);
+
+  const columns = useMemo(
     () => [
       {
         header: () => "",
@@ -43,11 +53,19 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
         minSize: 32,
         maxSize: 125,
         enableSorting: true,
+        cell: (info: CellContext<ITransformedCoinsMarketData, number>) => {
+          const value = info.getValue<number>();
+          return value ? value : "-";
+        },
       },
       {
         header: "Coin",
         accessorKey: "name",
-        cell: ({ row }) => (
+        size: 500,
+        minSize: 200,
+        maxSize: 500,
+        enableSorting: true,
+        cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => (
           <div className="flex items-center">
             <img
               src={row.original.image}
@@ -63,50 +81,39 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
             </div>
           </div>
         ),
-        size: 500,
-        minSize: 200,
-        maxSize: 500,
-        enableSorting: true,
       },
-      { header: "Price", accessorKey: "current_price", enableSorting: true },
+      {
+        header: "Price",
+        accessorKey: "current_price",
+        enableSorting: true,
+        cell: renderCurrencyCell(currency, { minimumFractionDigits: 2 }),
+      },
       {
         header: "1h",
         accessorKey: "price_change_percentage_1h_in_currency",
-        cell: ({ row }) => {
-          const { value, isNegative } =
-            row.original.price_change_percentage_1h_in_currency;
-          return <PriceChangeCell value={value} isNegative={isNegative} />;
-        },
         size: 70,
         minSize: 70,
         maxSize: 125,
         enableSorting: true,
+        cell: renderPriceChangeCell(),
       },
       {
         header: "24h",
         accessorKey: "price_change_percentage_24h_in_currency",
-        cell: ({ row }) => {
-          const { value, isNegative } =
-            row.original.price_change_percentage_24h_in_currency;
-          return <PriceChangeCell value={value} isNegative={isNegative} />;
-        },
         size: 70,
         minSize: 70,
         maxSize: 125,
         enableSorting: true,
+        cell: renderPriceChangeCell(),
       },
       {
         header: "7d",
         accessorKey: "price_change_percentage_7d_in_currency",
-        cell: ({ row }) => {
-          const { value, isNegative } =
-            row.original.price_change_percentage_7d_in_currency;
-          return <PriceChangeCell value={value} isNegative={isNegative} />;
-        },
         size: 70,
         minSize: 70,
         maxSize: 125,
         enableSorting: true,
+        cell: renderPriceChangeCell(),
       },
       {
         header: "24h Volume",
@@ -115,6 +122,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
         minSize: 150,
         maxSize: 400,
         enableSorting: true,
+        cell: renderCurrencyCell(currency),
       },
       {
         header: "Market Cap",
@@ -123,19 +131,19 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
         minSize: 110,
         maxSize: 400,
         enableSorting: true,
+        cell: renderCurrencyCell(currency),
       },
       {
         header: "Last 7 Days",
         accessorKey: "sparkline_in_7d",
-        cell: ({ row }) => {
-          const { price } = row.original.sparkline_in_7d;
-
-          return <SparklineChart price={price} />;
-        },
         size: 151,
         minSize: 151,
         maxSize: 151,
         enableSorting: false,
+        cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => {
+          const { price } = row.original.sparkline_in_7d;
+          return <SparklineChart price={price} />;
+        },
       },
     ],
     []
@@ -148,9 +156,9 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
     getSortedRowModel: getSortedRowModel(),
     enableSortingRemoval: false,
     state: {
-      sorting
+      sorting,
     },
-    onSortingChange: setSorting
+    onSortingChange: setSorting,
   });
 
   return (
