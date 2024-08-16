@@ -191,7 +191,9 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
                           <BiSolidUpArrow className="table-head-arrow" />
                         )
                       ) : (
-                        ""
+                        header.column.getCanSort() && (
+                          <BiSolidDownArrow className="transition-opacity opacity-0 table-head-arrow group-hover:opacity-100" />
+                        )
                       )}
                     </span>
                     {header.isPlaceholder
