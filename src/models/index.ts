@@ -1,18 +1,18 @@
-import { ICoinsListData } from "./CoinsListData.interface";
-import { ICoinsMarketData } from "./CoinsMarketData.interface";
-import { TCryptoTableCellContext } from "./CryptoTableCellContext.type";
-import { TCryptoTableCurrency } from "./CryptoTableCurrency.type";
-import { ICryptoTableRowsPerPageProps } from "./CryptoTableRowsPerPageProps.interface";
-import { ICryptoTableSkeletonProps } from "./CryptoTableSkeletonProps.interface";
-import { ICryptoTableViewProps } from "./CryptoTableViewProps.interface";
-import { IErrorBoundaryProps } from "./ErrorBoundaryProps.interface";
-import { IErrorBoundaryState } from "./ErrorBoundaryState.interface";
-import { IErrorMessageProps } from "./ErrorMessageProps.interface";
-import { IPaginationProps } from "./Pagination.interface";
-import { IPaginationComponentProps } from "./PaginationComponentProps.interface";
-import { ISparklineChartProps } from "./SparklineChartProps.interface";
-import { ITransformedCoinsMarketData } from "./TransformedCoinsMarketData.interface";
-import { ITransformedPriceChange } from "./TransformedPriceChange.interface";
+import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
+import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
+import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.interface";
+import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interface";
+import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
+import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
+import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
+import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
+import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
+import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
+import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
+import { ITransformedPriceChange } from "./dataTypes/TransformedPriceChange.interface";
+import { IPaginationProps } from "./pagination/Pagination.interface";
+import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
+import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
     ICoinsListData,
