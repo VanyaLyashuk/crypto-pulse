@@ -3,7 +3,7 @@ import {
   ICoinsMarketData,
   ITransformedCoinsMarketData,
 } from "../models";
-import { transformCoinsListWithMarketData } from "./CoinGeckoServiceUtils";
+import { transformCoinsListWithMarketData } from "../utils/CoinGeckoServiceUtils";
 
 class CoinGeckoService {
   private readonly _apiKey: string = import.meta.env.VITE_COINGECKO_API_KEY;
