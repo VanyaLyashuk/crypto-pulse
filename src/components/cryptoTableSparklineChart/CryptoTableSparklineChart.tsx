@@ -11,7 +11,7 @@ import { ISparklineChartProps } from "../../models";
 
 ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
 
-const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
+const CryptoTableSparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
   const isEmpty = price.length === 0;
   const labels = price.map((_, index) => index.toString());
 
@@ -65,4 +65,4 @@ const SparklineChart: React.FC<ISparklineChartProps> = ({ price }) => {
   );
 };
 
-export default SparklineChart;
+export default CryptoTableSparklineChart;

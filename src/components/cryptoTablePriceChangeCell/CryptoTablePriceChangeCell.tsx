@@ -3,7 +3,7 @@ import { ITransformedPriceChange } from "../../models";
 import { formatPercentageValue } from "../../utils/CryptoTableUtils";
 import ArrowIcon from "../UI/ArrowIcon";
 
-const PriceChangeCell: React.FC<ITransformedPriceChange> = ({ value }) => {
+const CryptoTablePriceChangeCell: React.FC<ITransformedPriceChange> = ({ value }) => {
   const isNegative: boolean = value < 0;
   const cellClasses = clsx("flex items-center justify-end gap-0.5", {
     "text-red-600": value && isNegative,
@@ -19,4 +19,4 @@ const PriceChangeCell: React.FC<ITransformedPriceChange> = ({ value }) => {
   );
 };
 
-export default PriceChangeCell;
+export default CryptoTablePriceChangeCell;
