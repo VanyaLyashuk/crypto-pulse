@@ -16,12 +16,12 @@ import {
   TCryptoTableCellContext,
 } from "../../models";
 import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
-import PriceChangeCell from "../cryptoTable/PriceChangeCell";
-import SparklineChart from "../cryptoTable/SparklineChart";
+import CryptoTablePriceChangeCell from "../cryptoTablePriceChangeCell/CryptoTablePriceChangeCell";
+import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 
 const renderPriceChangeCell = () => (info: TCryptoTableCellContext) => {
   const value = info.getValue<number>();
-  return <PriceChangeCell value={value} />;
+  return <CryptoTablePriceChangeCell value={value} />;
 };
 
 const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
@@ -142,7 +142,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
         enableSorting: false,
         cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => {
           const { price } = row.original.sparkline_in_7d;
-          return <SparklineChart price={price} />;
+          return <CryptoTableSparklineChart price={price} />;
         },
       },
     ],
