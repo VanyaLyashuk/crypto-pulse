@@ -1,16 +1,12 @@
-import React from 'react';
-import CryptoTable from './components/cryptoTable/CryptoTable';
-import ErrorBoundary from './components/errorBoundary/ErrorBoundary';
+import React from "react";
+import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
-  
   return (
-    <div className='py-10'>
-      <ErrorBoundary>
-        <CryptoTable />
-      </ErrorBoundary>
+    <div className="py-10">
+      <Home />
     </div>
   );
-}
+};
 
-export default App
+export default App;

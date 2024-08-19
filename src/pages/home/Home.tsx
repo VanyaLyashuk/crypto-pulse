@@ -1,8 +1,11 @@
+import CryptoTable from "../../components/cryptoTable/CryptoTable"
+import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary"
+
 const Home: React.FC = () => {
   return (
-    <div>
-      Home Page
-    </div>
+    <ErrorBoundary>
+      <CryptoTable />
+    </ErrorBoundary>
   )
 }
 
