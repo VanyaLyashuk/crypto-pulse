@@ -1,3 +1,4 @@
+import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
 import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.interface";
@@ -15,7 +16,7 @@ import { IPaginationComponentProps } from "./pagination/PaginationComponentProps
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
-    ICoinsListData,
+    ICoinInfoProps, ICoinsListData,
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
