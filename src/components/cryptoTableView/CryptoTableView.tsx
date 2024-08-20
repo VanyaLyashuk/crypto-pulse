@@ -10,6 +10,7 @@ import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   ICryptoTableViewProps,
   ITransformedCoinsMarketData,
@@ -28,7 +29,17 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
   coins,
   getCellClasses,
   currency,
+  handleSetCoinId,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const openModal = (id: string) => {
+    handleSetCoinId(id);
+    const backgroundLocation = { pathname: location.pathname };
+    navigate(`/coin/${id}`, { state: { backgroundLocation } });
+  };
+
   const [sorting, setSorting] = useState([
     { id: "market_cap_rank", desc: false },
   ]);
@@ -211,7 +222,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
       </thead>
       <tbody className="bg-white ">
         {table.getRowModel().rows.map((row) => (
-          <tr key={row.id}>
+          <tr key={row.original.id} onClick={() => openModal(row.original.id)}>
             {row.getVisibleCells().map((cell, index) => {
               return (
                 <td
