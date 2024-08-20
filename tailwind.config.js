@@ -12,6 +12,9 @@ export default {
       },
       screens: {
         'hover-hover': {'raw': '(hover: hover)'}
+      },
+      minHeight: {
+        '50vh': '50vh'
       }
     },
   },
