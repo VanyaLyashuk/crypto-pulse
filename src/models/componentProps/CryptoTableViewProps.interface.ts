@@ -9,4 +9,5 @@ export interface ICryptoTableViewProps {
     index: number
   ) => string;
   currency: TCryptoTableCurrency;
+  handleSetCoinId: (id: string) => void;
 }
