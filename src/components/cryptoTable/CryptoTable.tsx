@@ -14,7 +14,11 @@ import CryptoTableView from "../cryptoTableView/CryptoTableView";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 
-const CryptoTable: React.FC = () => {
+interface ICryptoTableProps {
+  handleSetCoinId: (id: string) => void
+}
+
+const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
   const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
   const [totalCoins, setTotalCoins] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
@@ -139,6 +143,7 @@ const CryptoTable: React.FC = () => {
         coins={coins}
         getCellClasses={getCellClasses}
         currency="$"
+        handleSetCoinId={handleSetCoinId}
       />
     ) : null;
 
