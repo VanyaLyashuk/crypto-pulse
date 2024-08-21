@@ -1,15 +1,15 @@
 import React from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
+import { IArrowIconProps } from "../../models";
 
-interface IArrowIconProps {
-  isNegative: boolean;
-}
-
-const ArrowIcon: React.FC<IArrowIconProps> = ({ isNegative }) => {
+const ArrowIcon: React.FC<IArrowIconProps> = ({
+  arrowSize,
+  isNegative,
+}) => {
   return isNegative ? (
-    <BiSolidDownArrow className="table-body-arrow" />
+    <BiSolidDownArrow className={arrowSize} />
   ) : (
-    <BiSolidUpArrow className="table-body-arrow" />
+    <BiSolidUpArrow className={arrowSize} />
   );
 };
 
