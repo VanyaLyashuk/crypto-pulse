@@ -17,12 +17,12 @@ import {
   TCryptoTableCellContext,
 } from "../../models";
 import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
-import CryptoTablePriceChangeCell from "../cryptoTablePriceChangeCell/CryptoTablePriceChangeCell";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
+import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
 
 const renderPriceChangeCell = () => (info: TCryptoTableCellContext) => {
   const value = info.getValue<number>();
-  return <CryptoTablePriceChangeCell value={value} />;
+  return <PriceChangeIndicator arrowSize="w-3 h-3" value={value} />;
 };
 
 const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
