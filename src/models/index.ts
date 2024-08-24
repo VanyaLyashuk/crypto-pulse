@@ -1,4 +1,5 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
+import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
@@ -7,6 +8,8 @@ import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interfa
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
+import { TCoinInfoMetric } from "./dataTypes/CoinInfoMetric.type";
+import { TCoinInfoTimeRange } from "./dataTypes/CoinInfoTimeRange.type";
 import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
 import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
 import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
@@ -17,7 +20,10 @@ import { IPaginationComponentProps } from "./pagination/PaginationComponentProps
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
-    IArrowIconProps, ICoinInfoProps, ICoinsListData,
+    IArrowIconProps,
+    ICoinInfoFilterProps,
+    ICoinInfoProps,
+    ICoinsListData,
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
@@ -26,8 +32,13 @@ export type {
     IErrorBoundaryState,
     IErrorMessageProps,
     IPaginationComponentProps,
-    IPaginationProps, IPriceChangeIndicatorProps, ISparklineChartProps,
-    ITransformedCoinsMarketData, TCryptoTableCellContext,
+    IPaginationProps,
+    IPriceChangeIndicatorProps,
+    ISparklineChartProps,
+    ITransformedCoinsMarketData,
+    TCoinInfoMetric,
+    TCoinInfoTimeRange,
+    TCryptoTableCellContext,
     TCryptoTableCurrency
 };
 

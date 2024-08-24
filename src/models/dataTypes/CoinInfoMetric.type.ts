@@ -1,0 +1,1 @@
+export type TCoinInfoMetric = 'Price' | 'Market Cap';
