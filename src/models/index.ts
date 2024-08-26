@@ -1,6 +1,7 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
 import { ICoinInfoDatePickerProps } from "./componentProps/CoinInfoDatePickerProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
+import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
@@ -22,8 +23,7 @@ import { IPaginationComponentProps } from "./pagination/PaginationComponentProps
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
-    IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps,
-    ICoinInfoProps,
+    IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps, ICoinInfoListProps, ICoinInfoProps,
     ICoinsListData,
     ICoinsMarketData,
     ICryptoTableRowsPerPageProps,
