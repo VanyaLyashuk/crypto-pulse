@@ -27,7 +27,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
             toggleDatepicker ? toggleDatepicker() : null;
           }}
         >
-          <BsCalendar2 />
+          <BsCalendar2 className="w-4 h-5"/>
         </button>
         {isOpen && (
           <CoinInfoDatepicker
