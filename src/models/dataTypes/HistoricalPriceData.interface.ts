@@ -1,7 +1,18 @@
+import { ILabeledValue } from "./LabeledValue.interface";
+
 export interface IHistoricalPriceData {
-  "24h_range": string;
-  "7d_range": string;
-  ath: string;
-  ath_change_percentage: number;
-  ath_date: string;
+  "24h_range": ILabeledValue;
+  "7d_range": ILabeledValue;
+  "all_time_high": {
+    label: string;
+    price: string;
+    price_change_percentage: number;
+    date: string;
+  }
+  "all_time_low": {
+    label: string;
+    price: string;
+    price_change_percentage: number;
+    date: string;
+  }
 }
