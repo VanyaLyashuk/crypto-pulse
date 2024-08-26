@@ -9,13 +9,14 @@ const CoinInfoDatepicker: React.FC<ICoinInfoDatePickerProps> = ({
 }) => {
   return (
     <div
-      className="absolute z-10 mt-2"
+      className="absolute z-50 mt-2"
       style={{
         right: 0,
         top: 37,
       }}
     >
       <DatePicker
+        wrapperClassName="CoinInfoDatePicker"
         selected={startDate}
         onChange={handleDateChange}
         startDate={startDate}
