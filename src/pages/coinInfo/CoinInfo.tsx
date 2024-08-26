@@ -10,6 +10,7 @@ import {
   ICoinInfoProps,
   TCoinInfoMetric,
   TCoinInfoTimeRange,
+  TDateChangeHandler,
 } from "../../models";
 
 const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
@@ -17,6 +18,9 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
     useState<TCoinInfoMetric>("Price");
   const [selectedTimeRange, setSelectedTimeRange] =
     useState<TCoinInfoTimeRange>("24h");
+  const [startDate, setStartDate] = useState<Date | null>(null);
+  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   const coinInfoTableData = [
     {
@@ -60,14 +64,29 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
 
   const handleFilterChange = useCallback(
     (filter: TCoinInfoMetric | TCoinInfoTimeRange) => {
-      if (filter === "Price" || filter === "Market Cap") {
+      const isMetric = filter === "Price" || filter === "Market Cap";
+      const isDateRange = filter === "date range";
+
+      if (isMetric) {
         setSelectedMetric(filter);
       } else {
         setSelectedTimeRange(filter);
       }
+
+      setIsOpen(isDateRange);
     },
     []
   );
+
+  const toggleDatepicker = () => setIsOpen(!isOpen);
+
+  const handleDateChange: TDateChangeHandler = (dates) => {
+    if (dates) {
+      const [start, end] = dates;
+      setStartDate(start);
+      setEndDate(end);
+    }
+  };
 
   return (
     <div
@@ -76,7 +95,7 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
     >
       <div
         onClick={handleInnerClick}
-        className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-[592px]  md:max-w-[720px] lg:max-w-[976px] sm:m-auto sm:px-4 overflow-y-scroll"
+        className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-[592px]  md:max-w-[720px] lg:max-w-[976px] sm:m-auto sm:px-4 lg:px-6"
       >
         <div className="mb-2 lg:mb-8">
           <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
@@ -97,17 +116,22 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
               ]}
               activeFilter={selectedTimeRange}
               onFilterChange={handleFilterChange}
+              startDate={startDate}
+              endDate={endDate}
+              isOpen={isOpen}
+              handleDateChange={handleDateChange}
+              toggleDatepicker={toggleDatepicker}
             />
           </div>
           <div className="grid w-full bg-gray-200 aspect-video place-items-center">
             <p>Coin chart for {id}</p>
           </div>
         </div>
-        <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-x-4">
-          <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start">
+        <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
+          <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start lg:overflow-auto">
             <CoinInfoTable data={coinInfoTableData} />
           </div>
-          <div className="mb-5 lg:col-span-3">
+          <div className="mb-5 lg:col-span-3 lg:mb-0">
             <div className="flex items-center gap-2 mb-3">
               <img className="w-8" src={bitcoin} alt={id} />
               <h3 className="text-2xl font-bold">
