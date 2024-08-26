@@ -1,4 +1,5 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
+import { ICoinInfoDatePickerProps } from "./componentProps/CoinInfoDatePickerProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
@@ -14,14 +15,14 @@ import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
 import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
 import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
+import { TDateChangeHandler } from "./dataTypes/DateChangeHandler.type";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
-    IArrowIconProps,
-    ICoinInfoFilterProps,
+    IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps,
     ICoinInfoProps,
     ICoinsListData,
     ICoinsMarketData,
@@ -39,6 +40,7 @@ export type {
     TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
-    TCryptoTableCurrency
+    TCryptoTableCurrency,
+    TDateChangeHandler
 };
 
