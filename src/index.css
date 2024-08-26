@@ -16,7 +16,7 @@ td {
   position: relative;
 }
 td:after {
-  content: '';
+  content: "";
   display: block;
   position: absolute;
   left: 0;
@@ -27,4 +27,15 @@ td:after {
 td:after {
   top: -1px;
   border-top: 1px solid #e5e7eb;
+}
+
+.react-datepicker {
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.react-datepicker__header {
+  border-top-left-radius: 0.5rem;
+  background-color: #f3f4f6;
+  border-bottom: 1px solid #e5e7eb;
 }
