@@ -1,17 +1,19 @@
 import { useCallback, useEffect, useState } from "react";
-import { PiInfo } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import bitcoin from "../../assets/bitcoin.png";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
+import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import {
   ICoinInfoProps,
   TCoinInfoMetric,
   TCoinInfoTimeRange,
   TDateChangeHandler,
 } from "../../models";
+import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
+import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
 
 const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
   const [selectedMetric, setSelectedMetric] =
@@ -48,6 +50,56 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
       value: 134.8,
     },
   ];
+
+  const coinStatisticsData: ICoinStatisticsData = {
+    market_cap: {
+      label: "Market Cap",
+      price: "$1,171,509,139,974",
+    },
+    fully_diluted_valuation: {
+      label: "Fully Diluted Valuation",
+      price: "$1,241,366,511,000",
+    },
+    "24h_trading_volume": {
+      label: "24 Hour Trading Vol",
+      price: "$28,002,457,100",
+    },
+    circulating_supply: {
+      label: "Circulating Supply",
+      price: "19,742,937",
+    },
+    total_supply: {
+      label: "Total Supply",
+      price: "21,000,000",
+    },
+    max_supply: {
+      label: "Max Supply",
+      price: "21,000,000",
+    },
+  };
+
+  const historicalPriceListData: IHistoricalPriceData = {
+    "24h_range": {
+      label: "24h Range",
+      price: "$58,985.75 – $61,830.21",
+    },
+    "7d_range": {
+      label: "7d Range",
+      price: "$56,765.93 – $61,524.47",
+    },
+    all_time_high: {
+      label: "All-Time High",
+      price: "$73,737.94",
+      price_change_percentage: -17.4,
+      date: "date",
+    },
+    all_time_low: {
+      label: "All-Time Low",
+      price: "$67.81",
+      price_change_percentage: 89757.9,
+      date: "date",
+    },
+  };
 
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
@@ -150,68 +202,16 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
               />
             </div>
           </div>
-          <div className="mb-6 lg:mb-0 lg:col-span-4">
-            <h5 className="text-2xl font-bold ">Bitcoin Statistics</h5>
-            <ul>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">Market Cap</h5>{" "}
-                <div>$1,171,509,139,974</div>
-              </li>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">Fully Diluted Valuation</h5>{" "}
-                <div>$1,241,366,511,000</div>
-              </li>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">24 Hour Trading Vol</h5>{" "}
-                <div>$28,002,457,100</div>
-              </li>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">Circulating Supply</h5>{" "}
-                <div>19,742,937</div>
-              </li>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">Total Supply</h5>{" "}
-                <div>21,000,000</div>
-              </li>
-              <li className="flex justify-between pt-3">
-                <h5 className="text-gray-500">Max Supply</h5>{" "}
-                <div>21,000,000</div>
-              </li>
-            </ul>
-          </div>
-          <div className="lg:col-span-4">
-            <h5 className="text-2xl font-bold">BTC Historical Price</h5>
-            <ul>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">24h Range</h5>{" "}
-                <div>$58,985.75 – $61,830.21</div>
-              </li>
-              <li className="flex justify-between py-3 font-medium border-b">
-                <h5 className="text-gray-500">7d Range</h5>{" "}
-                <div>$56,765.93 – $61,524.47</div>
-              </li>
-              <li className="flex items-start justify-between py-3 font-medium border-b">
-                <div className="flex items-center gap-1">
-                  <h5 className="text-gray-500 ">All-Time High</h5>{" "}
-                  <PiInfo className="relative top-[1px]" />
-                </div>
-                <div className="flex items-center justify-end font-medium gap-x-2">
-                  <h4>$73,737.94</h4>
-                  <PriceChangeIndicator arrowSize="w-2 h-2" value={-17.4} />
-                </div>
-              </li>
-              <li className="flex items-start justify-between pt-3 font-medium">
-                <div className="flex items-center gap-1">
-                  <h5 className="text-gray-500">All-Time Low</h5>{" "}
-                  <PiInfo className="relative top-[1px]" />
-                </div>
-                <div className="flex items-center justify-end font-medium gap-x-2">
-                  <h4>$67.81</h4>
-                  <PriceChangeIndicator arrowSize="w-2 h-2" value={89757.9} />
-                </div>
-              </li>
-            </ul>
-          </div>
+          <CoinInfoList
+            name="Bitcoin"
+            title="Statistics"
+            data={coinStatisticsData}
+          />
+          <CoinInfoList
+            name="BTC"
+            title="Historical Price"
+            data={historicalPriceListData}
+          />
         </div>
       </div>
     </div>
