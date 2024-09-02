@@ -7,6 +7,8 @@ const useCoinsStore = create<ICoinsState>()(
     (set) => ({
       coins: [],
       setCoins: (coins) => set({ coins }),
+      totalCoins: 0,
+      setTotalCoins: (total) => set({totalCoins: total})
     }),
     { name: 'CoinsStore' }
   )
