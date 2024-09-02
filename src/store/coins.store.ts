@@ -1,8 +1,8 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { ICoinsState } from "../models";
+import { ICoinsStore } from "../models";
 
-const useCoinsStore = create<ICoinsState>()(
+const useCoinsStore = create<ICoinsStore>()(
   devtools(
     (set) => ({
       coins: [],

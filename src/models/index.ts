@@ -20,13 +20,13 @@ import { TDateChangeHandler } from "./dataTypes/DateChangeHandler.type";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
-import { ICoinsState } from "./stateAndErrors/CoinsState.interface";
+import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 
 export type {
     IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps, ICoinInfoListProps, ICoinInfoProps,
     ICoinsListData,
-    ICoinsMarketData, ICoinsState, ICryptoTableRowsPerPageProps,
+    ICoinsMarketData, ICoinsStore, ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
     ICryptoTableViewProps,
     IErrorBoundaryProps,
