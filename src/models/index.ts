@@ -20,6 +20,7 @@ import { TDateChangeHandler } from "./dataTypes/DateChangeHandler.type";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
+import { IPaginationStore } from "./pagination/PaginationStore.interface";
 import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
@@ -34,8 +35,7 @@ export type {
     IErrorBoundaryState,
     IErrorMessageProps,
     IPaginationComponentProps,
-    IPaginationProps,
-    IPriceChangeIndicatorProps,
+    IPaginationProps, IPaginationStore, IPriceChangeIndicatorProps,
     ISparklineChartProps, ITableViewStore, ITransformedCoinsMarketData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
