@@ -4,4 +4,6 @@ import { ITransformedCoinsMarketData } from "../dataTypes/TransformedCoinsMarket
 export interface ICoinsState {
   coins: ITransformedCoinsMarketData[];
   setCoins: (coins: ITransformedCoinsMarketData[]) => void;
+  totalCoins: number;
+  setTotalCoins: (total: number) => void;
 }
