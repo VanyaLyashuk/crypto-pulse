@@ -19,7 +19,6 @@ interface ICryptoTableProps {
 }
 
 const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
-  const [totalCoins, setTotalCoins] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [isRowsSelectOpen, setIsRowsSelectOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -29,8 +28,8 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
   const [error, setError] = useState(false);
 
 
+  const {coins, setCoins, totalCoins, setTotalCoins} = useCoinsStore();
   const coinGeckoService = new CoinGeckoService();
-  const {coins, setCoins} = useCoinsStore();
 
   useEffect(() => {
     onTotalCoinsRequest();
