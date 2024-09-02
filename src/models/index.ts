@@ -22,6 +22,7 @@ import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
 import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
+import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps, ICoinInfoListProps, ICoinInfoProps,
@@ -35,8 +36,7 @@ export type {
     IPaginationComponentProps,
     IPaginationProps,
     IPriceChangeIndicatorProps,
-    ISparklineChartProps,
-    ITransformedCoinsMarketData,
+    ISparklineChartProps, ITableViewStore, ITransformedCoinsMarketData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
