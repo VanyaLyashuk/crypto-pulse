@@ -3,9 +3,9 @@ import { useCallback, useEffect, useState } from "react";
 import {
   ICryptoTableRowsPerPageProps,
   ICryptoTableViewProps,
-  ITransformedCoinsMarketData,
 } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
+import useCoinsStore from "../../store/coins.store";
 import { handlePageChange } from "../../utils/CryptoTableUtils";
 import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
 import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
@@ -19,7 +19,6 @@ interface ICryptoTableProps {
 }
 
 const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
-  const [coins, setCoins] = useState<ITransformedCoinsMarketData[]>([]);
   const [totalCoins, setTotalCoins] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
   const [isRowsSelectOpen, setIsRowsSelectOpen] = useState(false);
@@ -29,9 +28,9 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
   const [error, setError] = useState(false);
 
-  const rowsSelectOptions: number[] = [10, 30, 50, 100];
 
   const coinGeckoService = new CoinGeckoService();
+  const {coins, setCoins} = useCoinsStore();
 
   useEffect(() => {
     onTotalCoinsRequest();
@@ -159,7 +158,7 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({handleSetCoinId}) => {
               onRowsChange={onRowsChange}
               onToggleRowsSelect={onToggleRowsSelect}
               isOpen={isRowsSelectOpen}
-              options={rowsSelectOptions}
+              options={[10, 30, 50, 100]}
             />
           </CryptoTableControls>
           <div className="m-auto max-w-[1300px] overflow-x-auto mb-3">
