@@ -1,6 +1,6 @@
 export interface IPaginationStore {
   currentPage: number;
-  setCurrentpage: (page: number) => void;
+  setCurrentPage: (page: number) => void;
   lastPage: number;
   setLastPage: (page: number) => void;
 }
