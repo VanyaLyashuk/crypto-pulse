@@ -6,6 +6,7 @@ import {
 } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
+import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
 import { handlePageChange } from "../../utils/CryptoTableUtils";
 import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
@@ -20,8 +21,6 @@ interface ICryptoTableProps {
 }
 
 const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [lastPage, setLastPage] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
   const [error, setError] = useState(false);
@@ -29,6 +28,8 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
   const { coins, setCoins, totalCoins, setTotalCoins } = useCoinsStore();
   const { rowsPerPage, setRowsPerPage, isRowsSelectOpen, setIsRowsSelectOpen } =
     useTableViewStore();
+  const {currentPage, setCurrentPage, lastPage, setLastPage} = usePaginationStore();
+
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
