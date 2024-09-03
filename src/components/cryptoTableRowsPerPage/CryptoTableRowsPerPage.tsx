@@ -2,19 +2,22 @@ import clsx from "clsx";
 import React from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { ICryptoTableRowsPerPageProps } from "../../models";
+import useTableViewStore from "../../store/tableView.store";
 
 const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
-  rowsPerPage,
-  onRowsChange,
-  isOpen,
-  onToggleRowsSelect,
   options,
 }) => {
-  const arrowClasses = clsx({ "rotate-180": isOpen });
+  const { rowsPerPage, setRowsPerPage, isRowsSelectOpen, setIsRowsSelectOpen } =
+    useTableViewStore();
+  const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
     "absolute right-0 z-40 bg-white border rounded-md w-36 transition-all top-[34px]",
-    { "invisible opacity-0 top-0": !isOpen }
+    { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
+
+  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] = (e) => {
+    setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
+  };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLLIElement>) => {
     if (e.key === "" || e.key === "Enter") {
@@ -27,7 +30,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       <button
         className="flex items-center px-2 py-1 text-sm font-medium border rounded-md"
         type="button"
-        onClick={onToggleRowsSelect}
+        onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
         {rowsPerPage}
         <span>
