@@ -1,6 +1,4 @@
-import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { ICryptoTableViewProps } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
 import usePaginationStore from "../../store/pagination.store";
@@ -13,22 +11,19 @@ import CryptoTableView from "../cryptoTableView/CryptoTableView";
 import ErrorMessage from "../errorMessage/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 
-interface ICryptoTableProps {
-  handleSetCoinId: (id: string) => void;
-}
-
-const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
+const CryptoTable: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
   const [error, setError] = useState(false);
 
-  const { coins, setCoins, totalCoins, setTotalCoins } = useCoinsStore();
+  const { setCoins, totalCoins, setTotalCoins } = useCoinsStore();
   const rowsPerPage = useTableViewStore((state) => state.rowsPerPage);
-  const setIsRowsSelectOpen = useTableViewStore((state) => state.setIsRowsSelectOpen);
+  const setIsRowsSelectOpen = useTableViewStore(
+    (state) => state.setIsRowsSelectOpen
+  );
   const { currentPage, setCurrentPage, lastPage, setLastPage } =
     usePaginationStore();
 
-  console.log("rendet table");
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
@@ -104,17 +99,6 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
       });
   };
 
-  const getCellClasses: ICryptoTableViewProps["getCellClasses"] = (
-    cell,
-    index
-  ) => {
-    return clsx("p-2 text-sm text-gray-700 bg-white", {
-      "w-8": cell.column.id === "favorite",
-      "table-sticky-cell": cell.column.id === "name",
-      "text-right": index > 2,
-    });
-  };
-
   const errMsg = error ? (
     <ErrorMessage message="Ooops! Something went wrong!" />
   ) : null;
@@ -124,12 +108,7 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
     ) : null;
   const tableContent =
     !error && !loading && !loadingDelay ? (
-      <CryptoTableView
-        coins={coins}
-        getCellClasses={getCellClasses}
-        currency="$"
-        handleSetCoinId={handleSetCoinId}
-      />
+      <CryptoTableView currency="$" />
     ) : null;
 
   return (
