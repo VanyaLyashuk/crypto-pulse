@@ -1,9 +1,6 @@
 import clsx from "clsx";
-import { useCallback, useEffect, useState } from "react";
-import {
-  ICryptoTableRowsPerPageProps,
-  ICryptoTableViewProps,
-} from "../../models";
+import { useEffect, useState } from "react";
+import { ICryptoTableViewProps } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
 import usePaginationStore from "../../store/pagination.store";
@@ -26,10 +23,12 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
   const [error, setError] = useState(false);
 
   const { coins, setCoins, totalCoins, setTotalCoins } = useCoinsStore();
-  const { rowsPerPage, setRowsPerPage, isRowsSelectOpen, setIsRowsSelectOpen } =
-    useTableViewStore();
-  const {currentPage, setCurrentPage, lastPage, setLastPage} = usePaginationStore();
+  const rowsPerPage = useTableViewStore((state) => state.rowsPerPage);
+  const setIsRowsSelectOpen = useTableViewStore((state) => state.setIsRowsSelectOpen);
+  const { currentPage, setCurrentPage, lastPage, setLastPage } =
+    usePaginationStore();
 
+  console.log("rendet table");
   const coinGeckoService = new CoinGeckoService();
 
   useEffect(() => {
@@ -105,19 +104,6 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
       });
   };
 
-  const onToggleRowsSelect = useCallback(
-    () => setIsRowsSelectOpen(!isRowsSelectOpen),
-    [isRowsSelectOpen, setIsRowsSelectOpen]
-  );
-
-  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] =
-    useCallback(
-      (e) => {
-        setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
-      },
-      [setRowsPerPage]
-    );
-
   const getCellClasses: ICryptoTableViewProps["getCellClasses"] = (
     cell,
     index
@@ -153,13 +139,7 @@ const CryptoTable: React.FC<ICryptoTableProps> = ({ handleSetCoinId }) => {
       ) : (
         <>
           <CryptoTableControls>
-            <CryptoTableRowsPerPage
-              rowsPerPage={rowsPerPage}
-              onRowsChange={onRowsChange}
-              onToggleRowsSelect={onToggleRowsSelect}
-              isOpen={isRowsSelectOpen}
-              options={[10, 30, 50, 100]}
-            />
+            <CryptoTableRowsPerPage options={[10, 30, 50, 100]} />
           </CryptoTableControls>
           <div className="m-auto max-w-[1300px] overflow-x-auto mb-3">
             {skeleton}
