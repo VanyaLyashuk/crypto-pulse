@@ -1,4 +1,5 @@
 import {
+  Cell,
   CellContext,
   flexRender,
   getCoreRowModel,
@@ -16,6 +17,7 @@ import {
   ITransformedCoinsMarketData,
   TCryptoTableCellContext,
 } from "../../models";
+import useCoinsStore from "../../store/coins.store";
 import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
@@ -25,24 +27,33 @@ const renderPriceChangeCell = () => (info: TCryptoTableCellContext) => {
   return <PriceChangeIndicator arrowSize="w-3 h-3" value={value} />;
 };
 
-const CryptoTableView: React.FC<ICryptoTableViewProps> = ({
-  coins,
-  getCellClasses,
-  currency,
-  handleSetCoinId,
-}) => {
+const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
+  const [sorting, setSorting] = useState([
+    { id: "market_cap_rank", desc: false },
+  ]);
+
+  const coins = useCoinsStore((state) => state.coins);
+  const setCoinId = useCoinsStore((state) => state.setCoinId);
+
   const navigate = useNavigate();
   const location = useLocation();
 
   const openModal = (id: string) => {
-    handleSetCoinId(id);
+    setCoinId(id);
     const backgroundLocation = { pathname: location.pathname };
     navigate(`/coin/${id}`, { state: { backgroundLocation } });
   };
 
-  const [sorting, setSorting] = useState([
-    { id: "market_cap_rank", desc: false },
-  ]);
+  const getCellClasses = (
+    cell: Cell<ITransformedCoinsMarketData, unknown>,
+    index: number
+  ) => {
+    return clsx("p-2 text-sm text-gray-700 bg-white", {
+      "w-8": cell.column.id === "favorite",
+      "table-sticky-cell": cell.column.id === "name",
+      "text-right": index > 2,
+    });
+  };
 
   const columns = useMemo(
     () => [
