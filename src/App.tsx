@@ -1,15 +1,8 @@
-import { useCallback, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import CoinInfo from "./pages/coinInfo/CoinInfo";
 import Home from "./pages/home/Home";
 
 const App: React.FC = () => {
-  const [coinId, setCoinId] = useState<string>("");
-
-  const handleSetCoinId = useCallback((id: string) => {
-    setCoinId(id);
-  }, [])
-  
   const location = useLocation();
   const state = location.state as { backgroundLocation?: Location };
 
@@ -17,12 +10,12 @@ const App: React.FC = () => {
     <div className="py-10">
       <>
         <Routes location={state?.backgroundLocation || location}>
-          <Route path="/" element={<Home handleSetCoinId={handleSetCoinId} />} />
-          <Route path="/coin/:id" element={<CoinInfo id={coinId} />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/coin/:id" element={<CoinInfo />} />
         </Routes>
         {state?.backgroundLocation && (
           <Routes>
-            <Route path="/coin/:id" element={<CoinInfo id={coinId} />} />
+            <Route path="/coin/:id" element={<CoinInfo />} />
           </Routes>
         )}
       </>

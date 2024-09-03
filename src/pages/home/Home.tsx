@@ -1,15 +1,11 @@
 import CryptoTable from "../../components/cryptoTable/CryptoTable";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 
-interface IHomeProps {
-  handleSetCoinId: (id: string) => void
-}
-
-const Home: React.FC<IHomeProps> = ({handleSetCoinId}) => {
+const Home: React.FC = () => {
   return (
     <>
       <ErrorBoundary>
-        <CryptoTable handleSetCoinId={handleSetCoinId} />
+        <CryptoTable />
       </ErrorBoundary>
     </>
   );
