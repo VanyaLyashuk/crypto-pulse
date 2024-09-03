@@ -7,15 +7,15 @@ import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceCha
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import {
-  ICoinInfoProps,
   TCoinInfoMetric,
   TCoinInfoTimeRange,
   TDateChangeHandler,
 } from "../../models";
 import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
+import useCoinsStore from "../../store/coins.store";
 
-const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
+const CoinInfo: React.FC = () => {
   const [selectedMetric, setSelectedMetric] =
     useState<TCoinInfoMetric>("Price");
   const [selectedTimeRange, setSelectedTimeRange] =
@@ -23,6 +23,8 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+
+  const coinId = useCoinsStore((state) => state.coinId);
 
   const coinInfoTableData = [
     {
@@ -176,7 +178,7 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
             />
           </div>
           <div className="grid w-full bg-gray-200 aspect-video place-items-center">
-            <p>Coin chart for {id}</p>
+            <p>Coin chart for {coinId}</p>
           </div>
         </div>
         <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
@@ -185,7 +187,7 @@ const CoinInfo: React.FC<ICoinInfoProps> = ({ id }) => {
           </div>
           <div className="mb-5 lg:col-span-3 lg:mb-0">
             <div className="flex items-center gap-2 mb-3">
-              <img className="w-8" src={bitcoin} alt={id} />
+              <img className="w-8" src={bitcoin} alt={coinId} />
               <h3 className="text-2xl font-bold">
                 Bitcoin <span className="text-base font-normal">BTC Price</span>
               </h3>
