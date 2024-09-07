@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bitcoin from "../../assets/bitcoin.png";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
@@ -11,8 +10,6 @@ import {
   TCoinInfoTimeRange,
   TDateChangeHandler,
 } from "../../models";
-import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
-import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
 import useCoinsStore from "../../store/coins.store";
 
 const CoinInfo: React.FC = () => {
@@ -24,84 +21,7 @@ const CoinInfo: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const coinId = useCoinsStore((state) => state.coinId);
-
-  const coinInfoTableData = [
-    {
-      label: "1h",
-      value: 0.1,
-    },
-    {
-      label: "24h",
-      value: 0.5,
-    },
-    {
-      label: "7d",
-      value: 4.7,
-    },
-    {
-      label: "14d",
-      value: 0.6,
-    },
-    {
-      label: "30d",
-      value: -7.9,
-    },
-    {
-      label: "1y",
-      value: 134.8,
-    },
-  ];
-
-  const coinStatisticsData: ICoinStatisticsData = {
-    market_cap: {
-      label: "Market Cap",
-      price: "$1,171,509,139,974",
-    },
-    fully_diluted_valuation: {
-      label: "Fully Diluted Valuation",
-      price: "$1,241,366,511,000",
-    },
-    "24h_trading_volume": {
-      label: "24 Hour Trading Vol",
-      price: "$28,002,457,100",
-    },
-    circulating_supply: {
-      label: "Circulating Supply",
-      price: "19,742,937",
-    },
-    total_supply: {
-      label: "Total Supply",
-      price: "21,000,000",
-    },
-    max_supply: {
-      label: "Max Supply",
-      price: "21,000,000",
-    },
-  };
-
-  const historicalPriceListData: IHistoricalPriceData = {
-    "24h_range": {
-      label: "24h Range",
-      price: "$58,985.75 – $61,830.21",
-    },
-    "7d_range": {
-      label: "7d Range",
-      price: "$56,765.93 – $61,524.47",
-    },
-    all_time_high: {
-      label: "All-Time High",
-      price: "$73,737.94",
-      price_change_percentage: -17.4,
-      date: "date",
-    },
-    all_time_low: {
-      label: "All-Time Low",
-      price: "$67.81",
-      price_change_percentage: 89757.9,
-      date: "date",
-    },
-  };
+  const coin = useCoinsStore((state) => state.selectedCoin);
 
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
@@ -142,6 +62,30 @@ const CoinInfo: React.FC = () => {
     }
   };
 
+  const {
+    name,
+    symbol,
+    image,
+    market_cap_rank,
+    market_cap_formatted,
+    fully_diluted_valuation,
+    trading_volume_24h,
+    circulating_supply,
+    total_supply,
+    max_supply,
+    current_price_formatted,
+    price_change_percentage_1h_in_currency,
+    price_change_percentage_24h_in_currency,
+    price_change_percentage_7d_in_currency,
+    price_change_percentage_14d_in_currency,
+    price_change_percentage_30d_in_currency,
+    price_change_percentage_1y_in_currency,
+    range_24h,
+    range_7d,
+    ath,
+    atl,
+  } = coin;
+
   return (
     <div
       onClick={closeModal}
@@ -178,41 +122,69 @@ const CoinInfo: React.FC = () => {
             />
           </div>
           <div className="grid w-full bg-gray-200 aspect-video place-items-center">
-            <p>Coin chart for {coinId}</p>
+            <p>Coin chart for {name}</p>
           </div>
         </div>
         <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
           <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start lg:overflow-auto">
-            <CoinInfoTable data={coinInfoTableData} />
+            <CoinInfoTable
+              data={[
+                { label: "1h", value: price_change_percentage_1h_in_currency },
+                {
+                  label: "24h",
+                  value: price_change_percentage_24h_in_currency,
+                },
+                { label: "7d", value: price_change_percentage_7d_in_currency },
+                {
+                  label: "14d",
+                  value: price_change_percentage_14d_in_currency,
+                },
+                {
+                  label: "30d",
+                  value: price_change_percentage_30d_in_currency,
+                },
+                { label: "1y", value: price_change_percentage_1y_in_currency },
+              ]}
+            />
           </div>
           <div className="mb-5 lg:col-span-3 lg:mb-0">
             <div className="flex items-center gap-2 mb-3">
-              <img className="w-8" src={bitcoin} alt={coinId} />
-              <h3 className="text-2xl font-bold">
-                Bitcoin <span className="text-base font-normal">BTC Price</span>
+              <img className="w-8" src={image} alt={name} />
+              <h3 className="text-2xl font-bold leading-none">
+                {name}{" "}
+                <span className="text-base font-normal">
+                  <span className="uppercase">{symbol}</span> Price
+                </span>
               </h3>
               <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md">
-                #1
+                #{market_cap_rank}
               </div>
             </div>
             <div className="flex items-center gap-x-2">
-              <h4 className="text-4xl font-bold">$59,464.31</h4>
+              <h4 className="text-4xl font-bold">{current_price_formatted}</h4>
               <PriceChangeIndicator
                 arrowSize="w-4 h-4"
                 className="text-xl font-bold"
-                value={2.3}
+                value={price_change_percentage_24h_in_currency}
               />
             </div>
           </div>
           <CoinInfoList
-            name="Bitcoin"
+            name={symbol}
             title="Statistics"
-            data={coinStatisticsData}
+            data={{
+              market_cap_formatted,
+              fully_diluted_valuation,
+              trading_volume_24h,
+              circulating_supply,
+              total_supply,
+              max_supply,
+            }}
           />
           <CoinInfoList
-            name="BTC"
+            name={symbol}
             title="Historical Price"
-            data={historicalPriceListData}
+            data={{ range_24h, range_7d, ath, atl }}
           />
         </div>
       </div>
