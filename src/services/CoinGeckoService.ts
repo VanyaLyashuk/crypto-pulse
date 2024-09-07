@@ -35,7 +35,7 @@ class CoinGeckoService {
     perPage: number = this._perPage,
     page: number = this._page
   ): Promise<ITransformedCoinsMarketData[]> {
-    const url = `${this._apiBase}coins/markets?vs_currency=${vsCurrency}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d&precision=2`;
+    const url = `${this._apiBase}coins/markets?vs_currency=${vsCurrency}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
     const data = await this.getResource<ICoinsMarketData[]>(url);
     const transformedData = transformCoinsListWithMarketData(data);
 
