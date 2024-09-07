@@ -19,19 +19,28 @@ export const renderCurrencyCell =
     return formatCurrencyValue(value, currency, options);
   };
 
-function formatCurrencyValue(
+export function formatCurrencyValue(
   value: number,
-  currency: TCryptoTableCurrency,
+  currency?: TCryptoTableCurrency,
   options?: Intl.NumberFormatOptions
 ): string {
-  if (options && value) {
+  if (value && options && currency) {
     return currency + value.toLocaleString("en-US", options);
-  } else if (value) {
+  } else if (value && currency) {
     return currency + value.toLocaleString("en-US");
+  } else if (value) {
+    return value.toLocaleString("en-US");
   }
   return "-";
 }
 
 export function formatPercentageValue(value: number): string {
   return value ? `${Math.abs(value).toFixed(1)}%` : "-";
+}
+
+export function getMinMaxValue(arr: number[]): { min: number; max: number } {
+  return {
+    min: Math.min(...arr),
+    max: Math.max(...arr),
+  };
 }
