@@ -1,5 +1,9 @@
 import { ICoinsMarketData, ITransformedCoinsMarketData } from "../models";
-import { formatCurrencyValue, getMinMaxValue } from "./CryptoTableUtils";
+import {
+  formatCurrencyValue,
+  formatDate,
+  getMinMaxValue,
+} from "./CryptoTableUtils";
 
 export const transformCoinsListWithMarketData = (
   data: ICoinsMarketData[]
@@ -85,13 +89,13 @@ export const transformCoinsListWithMarketData = (
         label: "All-Time High",
         price: formatCurrencyValue(ath, "$"),
         percentage: ath_change_percentage,
-        date: ath_date,
+        date: formatDate(ath_date),
       },
       atl: {
         label: "All-Time Low",
         price: formatCurrencyValue(atl, "$"),
         percentage: atl_change_percentage,
-        date: atl_date,
+        date: formatDate(atl_date),
       },
       sparkline_in_7d,
       price_change_percentage_1h_in_currency,
