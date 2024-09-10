@@ -22,21 +22,35 @@ import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketD
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
 import { IPaginationStore } from "./pagination/PaginationStore.interface";
+import { ICoinDetailsStore } from "./stateAndErrors/CoinDetailsStore.interface";
 import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
-    IArrowIconProps, ICoinInfoDatePickerProps, ICoinInfoFilterProps, ICoinInfoListProps, ICoinInfoProps, ICoinListItemProps, ICoinsListData,
-    ICoinsMarketData, ICoinsStore, ICryptoTableRowsPerPageProps,
+    IArrowIconProps,
+    ICoinDetailsStore,
+    ICoinInfoDatePickerProps,
+    ICoinInfoFilterProps,
+    ICoinInfoListProps,
+    ICoinInfoProps,
+    ICoinListItemProps,
+    ICoinsListData,
+    ICoinsMarketData,
+    ICoinsStore,
+    ICryptoTableRowsPerPageProps,
     ICryptoTableSkeletonProps,
     ICryptoTableViewProps,
     IErrorBoundaryProps,
     IErrorBoundaryState,
     IErrorMessageProps,
     IPaginationComponentProps,
-    IPaginationProps, IPaginationStore, IPriceChangeIndicatorProps,
-    ISparklineChartProps, ITableViewStore, ITransformedCoinsMarketData,
+    IPaginationProps,
+    IPaginationStore,
+    IPriceChangeIndicatorProps,
+    ISparklineChartProps,
+    ITableViewStore,
+    ITransformedCoinsMarketData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
