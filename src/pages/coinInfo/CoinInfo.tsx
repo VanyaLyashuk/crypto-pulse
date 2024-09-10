@@ -10,6 +10,7 @@ import {
   TCoinInfoTimeRange,
   TDateChangeHandler,
 } from "../../models";
+import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinDetailsStore from "../../store/coinDetails.store";
 
 const CoinInfo: React.FC = () => {
@@ -23,6 +24,8 @@ const CoinInfo: React.FC = () => {
 
   const coin = useCoinDetailsStore((state) => state.selectedCoin);
 
+  const coinGeckoService = new CoinGeckoService();
+
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
 
@@ -30,6 +33,15 @@ const CoinInfo: React.FC = () => {
     document.body.classList.add("overflow-hidden");
 
     return () => document.body.classList.remove("overflow-hidden");
+  }, []);
+
+  useEffect(() => {
+    const currentDate = Date.now() / 1000;
+    const before24Hours = currentDate - (24 * 3600);
+
+    coinGeckoService
+      ._getCoinHistoricalChartDataById("bitcoin", "usd", before24Hours, currentDate)
+      .then((data) => console.log(data));
   }, []);
 
   const handleInnerClick = (event: React.MouseEvent) => {
@@ -103,14 +115,7 @@ const CoinInfo: React.FC = () => {
               onFilterChange={handleFilterChange}
             />
             <CoinInfoFilter
-              filterOptions={[
-                "24h",
-                "7d",
-                "1m",
-                "3m",
-                "1y",
-                "date range",
-              ]}
+              filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
               activeFilter={selectedTimeRange}
               onFilterChange={handleFilterChange}
               startDate={startDate}

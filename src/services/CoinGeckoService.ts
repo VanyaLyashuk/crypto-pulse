@@ -1,4 +1,5 @@
 import {
+  ICoinHistoricalChartDataById,
   ICoinsListData,
   ICoinsMarketData,
   ITransformedCoinsMarketData,
@@ -47,6 +48,18 @@ class CoinGeckoService {
     const data = await this.getResource<ICoinsListData[]>(url);
 
     return data.length;
+  }
+
+  public async _getCoinHistoricalChartDataById(
+    id: string,
+    vsCurrency: string = this._vsCurrency,
+    from: number,
+    to: number
+  ): Promise<ICoinHistoricalChartDataById> {
+    const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}&precision=2`;
+    const data = await this.getResource<ICoinHistoricalChartDataById>(url);
+
+    return data;
   }
 }
 
