@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { PiInfo } from "react-icons/pi";
-import { ICoinListItemProps } from "../models";
-import PriceChangeIndicator from "./priceChangeIndicator/PriceChangeIndicator";
+import { ICoinListItemProps } from "../../models";
+import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
 
 const CoinInfoListItem: React.FC<ICoinListItemProps> = ({value}) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);

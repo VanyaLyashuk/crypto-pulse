@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { ICoinInfoListProps } from "../../models";
-import CoinInfoListItem from "../CoinInfoListItem";
+import CoinInfoListItem from "../coinInfoListItem/CoinInfoListItem";
 
 const CoinInfoList: React.FC<ICoinInfoListProps> = ({ name, title, data }) => {
   const wrapperClasses = clsx("lg:col-span-4", {
