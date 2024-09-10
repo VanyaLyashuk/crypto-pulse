@@ -109,7 +109,6 @@ const CoinInfo: React.FC = () => {
                 "1m",
                 "3m",
                 "1y",
-                "MAX",
                 "date range",
               ]}
               activeFilter={selectedTimeRange}
