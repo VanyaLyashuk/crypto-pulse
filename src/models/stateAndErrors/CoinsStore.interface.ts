@@ -6,6 +6,4 @@ export interface ICoinsStore {
   setCoins: (coins: ITransformedCoinsMarketData[]) => void;
   totalCoins: number;
   setTotalCoins: (total: number) => void;
-  selectedCoin: ITransformedCoinsMarketData;
-  setSelectedCoin: (id: string) => void;
 }
