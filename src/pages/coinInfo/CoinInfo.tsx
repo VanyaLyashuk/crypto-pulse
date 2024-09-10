@@ -36,8 +36,10 @@ const CoinInfo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const currentDate = Date.now() / 1000;
-    const before24Hours = currentDate - (24 * 3600);
+    const currentDate = Math.floor(Date.now() / 1000);
+    const before24Hours = Math.floor(currentDate - (24 * 3600));
+
+    console.log(currentDate, before24Hours)
 
     coinGeckoService
       ._getCoinHistoricalChartDataById("bitcoin", "usd", before24Hours, currentDate)
