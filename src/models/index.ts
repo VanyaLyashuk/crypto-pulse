@@ -11,6 +11,7 @@ import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interfa
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
+import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
 import { TCoinInfoMetric } from "./dataTypes/CoinInfoMetric.type";
 import { TCoinInfoTimeRange } from "./dataTypes/CoinInfoTimeRange.type";
 import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
@@ -29,8 +30,7 @@ import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps,
-    ICoinDetailsStore,
-    ICoinInfoDatePickerProps,
+    ICoinDetailsStore, ICoinHistoricalChartDataById, ICoinInfoDatePickerProps,
     ICoinInfoFilterProps,
     ICoinInfoListProps,
     ICoinInfoProps,
