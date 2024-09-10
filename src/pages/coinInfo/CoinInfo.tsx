@@ -10,7 +10,7 @@ import {
   TCoinInfoTimeRange,
   TDateChangeHandler,
 } from "../../models";
-import useCoinsStore from "../../store/coins.store";
+import useCoinDetailsStore from "../../store/coinDetails.store";
 
 const CoinInfo: React.FC = () => {
   const [selectedMetric, setSelectedMetric] =
@@ -21,7 +21,7 @@ const CoinInfo: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const coin = useCoinsStore((state) => state.selectedCoin);
+  const coin = useCoinDetailsStore((state) => state.selectedCoin);
 
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);

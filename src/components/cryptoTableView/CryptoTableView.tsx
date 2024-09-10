@@ -17,6 +17,7 @@ import {
   ITransformedCoinsMarketData,
   TCryptoTableCellContext,
 } from "../../models";
+import useCoinDetailsStore from "../../store/coinDetails.store";
 import useCoinsStore from "../../store/coins.store";
 import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
@@ -33,7 +34,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   ]);
 
   const coins = useCoinsStore((state) => state.coins);
-  const setSelectedCoin = useCoinsStore(state => state.setSelectedCoin);
+  const setSelectedCoin = useCoinDetailsStore(state => state.setSelectedCoin);
   
   const openModal = (id: string) => {
     setSelectedCoin(id);
