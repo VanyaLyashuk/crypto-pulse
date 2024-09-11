@@ -1,6 +1,10 @@
 import debounce from "debounce";
 import React from "react";
-import { TCryptoTableCellContext, TCryptoTableCurrency } from "../models";
+import {
+  TCryptoTableCellContext,
+  TCryptoTableCurrency,
+  TShortMonthName,
+} from "../models";
 
 export const handlePageChange = debounce(
   (
@@ -46,24 +50,22 @@ export function getMinMaxValue(arr: number[]): { min: number; max: number } {
 }
 
 export function formatDate(date: string): string {
-  const months: string[] = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
   const dateObj = new Date(date);
-  const month = months[dateObj.getMonth()];
+  const month = getShortMonthName(dateObj.getMonth());
   const day = dateObj.getDate();
   const year = dateObj.getFullYear();
 
   return `${month} ${String(day).padStart(2, "0")}, ${year}`;
+}
+
+export function getShortMonthName(month: number): TShortMonthName {
+  const months: TShortMonthName[] = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+  ];
+  
+  if (month < 0 || month > 11) {
+    throw new Error('Invalid month index');
+  }
+  return months[month];
 }
