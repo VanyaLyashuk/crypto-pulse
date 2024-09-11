@@ -1,4 +1,4 @@
-type TCoinHistoricalChartItem  = [number, number];
+import { TCoinHistoricalChartItem } from "./CoinHistoricalChartItem.type";
 
 export interface ICoinHistoricalChartDataById {
   prices: TCoinHistoricalChartItem[],
