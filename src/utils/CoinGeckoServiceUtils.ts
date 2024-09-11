@@ -114,3 +114,6 @@ export const transformCoinsListWithMarketData = (
 
 export const extractTimestamps = (data: TCoinHistoricalChartItem[]): number[] =>
   data.map((item) => item[0]);
+
+export const extractValues = (data: TCoinHistoricalChartItem[]): number[] =>
+  data.map((item) => item[1]);
