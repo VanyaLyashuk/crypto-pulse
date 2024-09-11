@@ -20,6 +20,7 @@ import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
 import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
 import { TDateChangeHandler } from "./dataTypes/DateChangeHandler.type";
+import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
@@ -31,7 +32,9 @@ import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps,
-    ICoinDetailsStore, ICoinHistoricalChartDataById, ICoinInfoDatePickerProps,
+    ICoinDetailsStore,
+    ICoinHistoricalChartDataById,
+    ICoinInfoDatePickerProps,
     ICoinInfoFilterProps,
     ICoinInfoListProps,
     ICoinInfoProps,
@@ -51,10 +54,13 @@ export type {
     IPriceChangeIndicatorProps,
     ISparklineChartProps,
     ITableViewStore,
-    ITransformedCoinsMarketData, TCoinHistoricalChartItem, TCoinInfoMetric,
+    ITransformedCoinsMarketData,
+    TCoinHistoricalChartItem,
+    TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
     TCryptoTableCurrency,
-    TDateChangeHandler
+    TDateChangeHandler,
+    TShortMonthName
 };
 
