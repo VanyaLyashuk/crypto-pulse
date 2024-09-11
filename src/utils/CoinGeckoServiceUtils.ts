@@ -1,4 +1,8 @@
-import { ICoinsMarketData, ITransformedCoinsMarketData } from "../models";
+import {
+  ICoinsMarketData,
+  ITransformedCoinsMarketData,
+  TCoinHistoricalChartItem,
+} from "../models";
 import {
   formatCurrencyValue,
   formatDate,
@@ -107,3 +111,6 @@ export const transformCoinsListWithMarketData = (
     })
   );
 };
+
+export const extractTimestamps = (data: TCoinHistoricalChartItem[]): number[] =>
+  data.map((item) => item[0]);
