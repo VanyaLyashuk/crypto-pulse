@@ -2,11 +2,14 @@ import {
   ICoinsMarketData,
   ITransformedCoinsMarketData,
   TCoinHistoricalChartItem,
+  TCoinInfoTimeRange,
 } from "../models";
 import {
   formatCurrencyValue,
   formatDate,
+  formatTwoDigits,
   getMinMaxValue,
+  getShortMonthName,
 } from "./CryptoTableUtils";
 
 export const transformCoinsListWithMarketData = (
@@ -110,6 +113,25 @@ export const transformCoinsListWithMarketData = (
       price_change_percentage_1y_in_currency,
     })
   );
+};
+
+const formatLabel = (date: Date, period: TCoinInfoTimeRange) => {
+  const year = date.getFullYear().toString().slice(-2);
+  const month = getShortMonthName(date.getMonth());
+  const day = date.getDate();
+  const hours = formatTwoDigits(date.getHours());
+  const minutes = formatTwoDigits(date.getMinutes());
+
+  switch (period) {
+    case "7d":
+    case "1m":
+    case "3m":
+      return `${day}. ${month}`;
+    case "1y":
+      return `${month} '${year}`;
+    default:
+      return `${hours}:${minutes}`;
+  }
 };
 
 const extractTimestamps = (data: TCoinHistoricalChartItem[]): number[] =>
