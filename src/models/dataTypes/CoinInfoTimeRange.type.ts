@@ -4,5 +4,4 @@ export type TCoinInfoTimeRange =
   | "1m"
   | "3m"
   | "1y"
-  | "MAX"
   | "date range";
