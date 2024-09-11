@@ -52,10 +52,10 @@ export function getMinMaxValue(arr: number[]): { min: number; max: number } {
 export function formatDate(date: string): string {
   const dateObj = new Date(date);
   const month = getShortMonthName(dateObj.getMonth());
-  const day = dateObj.getDate();
+  const day = formatTwoDigits(dateObj.getDate());
   const year = dateObj.getFullYear();
 
-  return `${month} ${String(day).padStart(2, "0")}, ${year}`;
+  return `${month} ${day}, ${year}`;
 }
 
 export function getShortMonthName(month: number): TShortMonthName {
@@ -68,4 +68,8 @@ export function getShortMonthName(month: number): TShortMonthName {
     throw new Error('Invalid month index');
   }
   return months[month];
+}
+
+export function formatTwoDigits(value: number): string {
+  return value.toString().padStart(2, '0');
 }
