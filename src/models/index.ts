@@ -12,6 +12,7 @@ import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
 import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
+import { TCoinHistoricalChartItem } from "./dataTypes/CoinHistoricalChartItem.type";
 import { TCoinInfoMetric } from "./dataTypes/CoinInfoMetric.type";
 import { TCoinInfoTimeRange } from "./dataTypes/CoinInfoTimeRange.type";
 import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
@@ -50,8 +51,7 @@ export type {
     IPriceChangeIndicatorProps,
     ISparklineChartProps,
     ITableViewStore,
-    ITransformedCoinsMarketData,
-    TCoinInfoMetric,
+    ITransformedCoinsMarketData, TCoinHistoricalChartItem, TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
     TCryptoTableCurrency,
