@@ -1,0 +1,1 @@
+export type TCoinHistoricalChartItem  = [number, number];
