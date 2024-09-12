@@ -1,5 +1,6 @@
 import {
   ICoinsMarketData,
+  IPeriodMapData,
   ITransformedCoinsMarketData,
   TCoinHistoricalChartItem,
   TCoinInfoTimeRange,
@@ -120,7 +121,6 @@ const formatLabel = (date: Date, period: TCoinInfoTimeRange) => {
   const month = getShortMonthName(date.getMonth());
   const day = date.getDate();
   const hours = formatTwoDigits(date.getHours());
-  const minutes = formatTwoDigits(date.getMinutes());
 
   switch (period) {
     case "7d":
@@ -129,8 +129,10 @@ const formatLabel = (date: Date, period: TCoinInfoTimeRange) => {
       return `${day}. ${month}`;
     case "1y":
       return `${month} '${year}`;
+    case "24h":
+      return hours === "00" ? `${day}. ${month}` : `${hours}:00`;
     default:
-      return `${hours}:${minutes}`;
+      return `${hours}:00`;
   }
 };
 
@@ -139,3 +141,51 @@ const extractTimestamps = (data: TCoinHistoricalChartItem[]): number[] =>
 
 const extractValues = (data: TCoinHistoricalChartItem[]): number[] =>
   data.map((item) => item[1]);
+
+export const generateXAxisLabels = (
+  startTimestamp: number,
+  endTimestamp: number
+): string[] => {
+  const labels: string[] = [];
+  const duration = endTimestamp - startTimestamp;
+
+  const periodMap: IPeriodMapData[] = [
+    { maxDuration: 24 * 3600 * 1000, interval: 3 * 3600 * 1000, period: "24h" },
+    {
+      maxDuration: 7 * 24 * 3600 * 1000,
+      interval: 24 * 3600 * 1000,
+      period: "7d",
+    },
+    {
+      maxDuration: 30 * 24 * 3600 * 1000,
+      interval: 4 * 24 * 3600 * 1000,
+      period: "1m",
+    },
+    {
+      maxDuration: 90 * 24 * 3600 * 1000,
+      interval: 12 * 24 * 3600 * 1000,
+      period: "3m",
+    },
+    { maxDuration: Infinity, interval: 30 * 24 * 3600 * 1000, period: "1y" },
+  ];
+
+  const { interval, period } =
+    periodMap.find(({ maxDuration }) => duration <= maxDuration) ||
+    periodMap[0];
+
+  const current = new Date(endTimestamp);
+
+  while (current.getTime() >= startTimestamp && labels.length <= 11) {
+    if (current.getHours() <= 1) {
+      current.setHours(0);
+      current.setMinutes(0);
+      labels.push(formatLabel(current, period));
+      current.setTime(current.getTime() - interval);
+    } else {
+      labels.push(formatLabel(current, period));
+      current.setTime(current.getTime() - interval);
+    }
+  }
+
+  return labels.reverse();
+};
