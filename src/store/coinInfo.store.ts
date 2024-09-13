@@ -6,6 +6,8 @@ import useCoinsStore from "./coins.store.ts";
 const useCoinInfoStore = create<ICoinInfoStore>()(
   devtools(
     (set) => ({
+      selectedCoinId: "",
+      setSelectedCoinId: (id) => set({ selectedCoinId: id }),
       selectedCoin: {
         id: "",
         symbol: "",
@@ -78,7 +80,7 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
           return { selectedCoin };
         }),
     }),
-    { name: "CoinsStore" }
+    { name: "CoinInfoStore" }
   )
 );
 
