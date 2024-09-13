@@ -144,7 +144,7 @@ const CoinInfo: React.FC = () => {
               <img className="w-8" src={image} alt={name} />
               <h3 className="text-2xl font-bold leading-none">
                 {name}{" "}
-                <span className="text-base font-normal">
+                <span className="text-base font-normal text-nowrap">
                   <span className="uppercase">{symbol}</span> Price
                 </span>
               </h3>
