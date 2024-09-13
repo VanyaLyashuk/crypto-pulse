@@ -52,9 +52,9 @@ class CoinGeckoService {
 
   public async _getCoinHistoricalChartDataById(
     id: string,
-    vsCurrency: string = this._vsCurrency,
     from: number,
-    to: number
+    to: number,
+    vsCurrency: string = this._vsCurrency,
   ): Promise<ICoinHistoricalChartDataById> {
     const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}&precision=2`;
     const data = await this.getResource<ICoinHistoricalChartDataById>(url);
