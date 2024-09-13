@@ -1,9 +1,9 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import { ICoinDetailsStore } from "../models";
+import { ICoinInfoStore } from "../models/index.ts";
 import useCoinsStore from "./coins.store.ts";
 
-const useCoinDetailsStore = create<ICoinDetailsStore>()(
+const useCoinInfoStore = create<ICoinInfoStore>()(
   devtools(
     (set) => ({
       selectedCoin: {
@@ -82,4 +82,4 @@ const useCoinDetailsStore = create<ICoinDetailsStore>()(
   )
 );
 
-export default useCoinDetailsStore;
+export default useCoinInfoStore;
