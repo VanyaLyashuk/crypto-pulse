@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
+import { useShallow } from "zustand/react/shallow";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import {
@@ -14,16 +15,23 @@ import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 
 const CoinInfo: React.FC = () => {
-  const [selectedMetric, setSelectedMetric] =
-    useState<TCoinInfoMetric>("Price");
   const [selectedTimeRange, setSelectedTimeRange] =
     useState<TCoinInfoTimeRange>("24h");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const coinId = useCoinInfoStore((state) => state.selectedCoinId);
-  const coin = useCoinsStore((state) => state.coins.filter((coin) => coin.id === coinId)[0]);
+  const { selectedCoinId, selectedMetric, setSelectedMetric } = 
+  useCoinInfoStore(
+    useShallow((state) => ({
+      selectedCoinId: state.selectedCoinId,
+      selectedMetric: state.selectedMetric,
+      setSelectedMetric: state.setSelectedMetric,
+    }))
+  );
+  const coin = useCoinsStore(
+    (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0]
+  );
 
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
