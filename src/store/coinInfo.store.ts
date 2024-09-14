@@ -7,6 +7,8 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
     (set) => ({
       selectedCoinId: "",
       setSelectedCoinId: (id) => set({ selectedCoinId: id }),
+      selectedMetric: "Price",
+      setSelectedMetric: (value) => set({selectedMetric: value}),
     }),
     { name: "CoinInfoStore" }
   )
