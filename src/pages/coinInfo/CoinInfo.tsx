@@ -11,6 +11,7 @@ import {
   TDateChangeHandler,
 } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
+import useCoinsStore from "../../store/coins.store";
 
 const CoinInfo: React.FC = () => {
   const [selectedMetric, setSelectedMetric] =
@@ -21,7 +22,8 @@ const CoinInfo: React.FC = () => {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const coin = useCoinInfoStore((state) => state.selectedCoin);
+  const coinId = useCoinInfoStore((state) => state.selectedCoinId);
+  const coin = useCoinsStore((state) => state.coins.filter((coin) => coin.id === coinId)[0]);
 
   const navigate = useNavigate();
   const closeModal = () => navigate(-1);
