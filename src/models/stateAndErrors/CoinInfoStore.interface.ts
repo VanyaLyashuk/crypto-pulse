@@ -1,5 +1,6 @@
 import { TCoinInfoMetric } from "../dataTypes/CoinInfoMetric.type";
 import { TCoinInfoTimeRange } from "../dataTypes/CoinInfoTimeRange.type";
+import { TDateOrNull } from "../dataTypes/DateOrNull.type";
 
 export interface ICoinInfoStore {
   selectedCoinId: string;
@@ -10,4 +11,8 @@ export interface ICoinInfoStore {
   setSelectedTimeRange: (value: TCoinInfoTimeRange) => void;
   isDatepickerOpen: boolean;
   setIsDatepickerOpen: (value: boolean) => void;
+  startDate: TDateOrNull;
+  setStartDate: (date: TDateOrNull) => void;
+  endDate: TDateOrNull;
+  setEndDate: (date: TDateOrNull) => void;
 }
