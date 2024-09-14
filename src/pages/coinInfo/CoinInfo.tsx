@@ -31,10 +31,6 @@ const CoinInfo: React.FC = () => {
     return () => document.body.classList.remove("overflow-hidden");
   }, []);
 
-  const handleInnerClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-  };
-
   const {
     name,
     symbol,
@@ -65,7 +61,7 @@ const CoinInfo: React.FC = () => {
       className="fixed inset-0 z-50 pt-6 overflow-y-scroll bg-black bg-opacity-50 sm:justify-end sm:flex sm:p-6 sm:items-center"
     >
       <div
-        onClick={handleInnerClick}
+        onClick={e => e.stopPropagation()}
         className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-[592px]  md:max-w-[720px] lg:max-w-[976px] sm:m-auto sm:px-4 lg:px-6"
       >
         <div className="mb-2 lg:mb-8">
