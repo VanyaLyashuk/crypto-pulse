@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { set } from "react-datepicker/dist/date_utils";
 import { BsCalendar2 } from "react-icons/bs";
 import { useShallow } from "zustand/react/shallow";
 import {
@@ -13,9 +12,6 @@ import CoinInfoDatepicker from "../coinInfoDatePicker/CoinInfoDatePicker";
 const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   filterOptions,
   activeFilter,
-  startDate,
-  endDate,
-  handleDateChange,
 }) => {
   const {
     isDatepickerOpen,
@@ -42,7 +38,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
     }
     setIsDatepickerOpen(isDateRange);
   };
-  
+
   const buttons = filterOptions.map((filter) => {
     const btnClasses = clsx("px-2 py-1 text-sm font-medium", {
       "bg-white rounded-md shadow-sm": activeFilter === filter,
@@ -59,13 +55,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
         >
           <BsCalendar2 className="w-4 h-5" />
         </button>
-        {isDatepickerOpen && (
-          <CoinInfoDatepicker
-            handleDateChange={handleDateChange}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        )}
+        {isDatepickerOpen && <CoinInfoDatepicker />}
       </div>
     ) : (
       <button
