@@ -34,14 +34,12 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   ]);
 
   const coins = useCoinsStore((state) => state.coins);
-  const setSelectedCoin = useCoinInfoStore((state) => state.setSelectedCoin);
   const setSelectedCoinId = useCoinInfoStore(
     (state) => state.setSelectedCoinId
   );
 
   const openModal = (id: string) => {
     setSelectedCoinId(id);
-    setSelectedCoin(id);
     const backgroundLocation = { pathname: location.pathname };
     navigate(`/coin/${id}`, { state: { backgroundLocation } });
   };
