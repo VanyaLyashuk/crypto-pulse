@@ -5,16 +5,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useMemo } from "react";
+import { ICoinInfoTableProps } from "../../models";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
-
-interface ICoinInfoTableItem {
-  label: string;
-  value: number;
-}
-
-interface ICoinInfoTableProps {
-  data: ICoinInfoTableItem[];
-}
 
 const CoinInfoTable: React.FC<ICoinInfoTableProps> = ({ data }) => {
   const columns = useMemo<ColumnDef<Record<string, number>>[]>(
