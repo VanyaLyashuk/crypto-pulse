@@ -36,12 +36,6 @@ const CoinInfo: React.FC = () => {
     symbol,
     image,
     market_cap_rank,
-    market_cap_formatted,
-    fully_diluted_valuation,
-    trading_volume_24h,
-    circulating_supply,
-    total_supply,
-    max_supply,
     current_price_formatted,
     price_change_percentage_1h_in_currency,
     price_change_percentage_24h_in_currency,
@@ -49,10 +43,8 @@ const CoinInfo: React.FC = () => {
     price_change_percentage_14d_in_currency,
     price_change_percentage_30d_in_currency,
     price_change_percentage_1y_in_currency,
-    range_24h,
-    range_7d,
-    ath,
-    atl,
+    coin_statistics,
+    coin_historical_price,
   } = coin;
 
   return (
@@ -61,7 +53,7 @@ const CoinInfo: React.FC = () => {
       className="fixed inset-0 z-50 pt-6 overflow-y-scroll bg-black bg-opacity-50 sm:justify-end sm:flex sm:p-6 sm:items-center"
     >
       <div
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => e.stopPropagation()}
         className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-[592px]  md:max-w-[720px] lg:max-w-[976px] sm:m-auto sm:px-4 lg:px-6"
       >
         <div className="mb-2 lg:mb-8">
@@ -126,19 +118,12 @@ const CoinInfo: React.FC = () => {
           <CoinInfoList
             name={symbol}
             title="Statistics"
-            data={{
-              market_cap_formatted,
-              fully_diluted_valuation,
-              trading_volume_24h,
-              circulating_supply,
-              total_supply,
-              max_supply,
-            }}
+            data={coin_statistics}
           />
           <CoinInfoList
             name={symbol}
             title="Historical Price"
-            data={{ range_24h, range_7d, ath, atl }}
+            data={coin_historical_price}
           />
         </div>
       </div>
