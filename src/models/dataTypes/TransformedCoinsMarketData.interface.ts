@@ -1,3 +1,4 @@
+import { ICoinInfoTableItem } from "./CoinInfoTableItem.interface";
 import { ICoinStatisticsData } from "./CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "./HistoricalPriceData.interface";
 
@@ -22,4 +23,5 @@ export interface ITransformedCoinsMarketData {
   price_change_percentage_1y_in_currency: number;
   coin_statistics: ICoinStatisticsData;
   coin_historical_price: IHistoricalPriceData;
+  coin_percentage_table: ICoinInfoTableItem[]
 }
