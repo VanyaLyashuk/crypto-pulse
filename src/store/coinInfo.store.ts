@@ -12,7 +12,18 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       selectedTimeRange: "24h",
       setSelectedTimeRange: (value) => set({ selectedTimeRange: value }),
       isDatepickerOpen: false,
-      setIsDatepickerOpen: (value) => set({isDatepickerOpen: value}),
+      setIsDatepickerOpen: (value) => set({ isDatepickerOpen: value }),
+      onFilterChange: (filter) => {
+        const isMetric = filter === "Price" || filter === "Market Cap";
+        const isDateRange = filter === "date range";
+
+        if (isMetric) {
+          set({ selectedMetric: filter });
+        } else {
+          set({ selectedTimeRange: filter });
+        }
+        set({ isDatepickerOpen: isDateRange });
+      },
     }),
     { name: "CoinInfoStore" }
   )
