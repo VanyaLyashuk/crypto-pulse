@@ -2,6 +2,7 @@ import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
 import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
+import { ICoinInfoTableProps } from "./componentProps/CoinInfoTableProps.interface";
 import { ICoinListItemProps } from "./componentProps/CoinListItemProps.interface";
 import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
@@ -34,7 +35,7 @@ export type {
     IArrowIconProps, ICoinHistoricalChartDataById,
     ICoinInfoFilterProps,
     ICoinInfoListProps,
-    ICoinInfoProps, ICoinInfoStore, ICoinListItemProps,
+    ICoinInfoProps, ICoinInfoStore, ICoinInfoTableProps, ICoinListItemProps,
     ICoinsListData,
     ICoinsMarketData,
     ICoinsStore,
