@@ -1,0 +1,1 @@
+export type TDateOrUndefined = Date | undefined;
