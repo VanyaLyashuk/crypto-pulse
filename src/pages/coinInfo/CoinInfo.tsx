@@ -18,18 +18,6 @@ const CoinInfo: React.FC = () => {
         selectedTimeRange: state.selectedTimeRange,
       }))
     );
-  const coin = useCoinsStore(
-    (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0]
-  );
-
-  const navigate = useNavigate();
-  const closeModal = () => navigate(-1);
-
-  useEffect(() => {
-    document.body.classList.add("overflow-hidden");
-
-    return () => document.body.classList.remove("overflow-hidden");
-  }, []);
 
   const {
     name,
@@ -41,7 +29,18 @@ const CoinInfo: React.FC = () => {
     coin_statistics,
     coin_historical_price,
     coin_percentage_table,
-  } = coin;
+  } = useCoinsStore(
+    (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0] || {}
+  );
+
+  const navigate = useNavigate();
+  const closeModal = () => navigate(-1);
+
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+
+    return () => document.body.classList.remove("overflow-hidden");
+  }, []);
 
   return (
     <div
