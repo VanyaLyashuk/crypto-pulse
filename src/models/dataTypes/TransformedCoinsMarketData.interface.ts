@@ -1,9 +1,7 @@
 import { ICoinStatisticsData } from "./CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "./HistoricalPriceData.interface";
 
-export interface ITransformedCoinsMarketData
-  extends ICoinStatisticsData,
-    IHistoricalPriceData {
+export interface ITransformedCoinsMarketData {
   id: string;
   symbol: string;
   name: string;
@@ -22,4 +20,6 @@ export interface ITransformedCoinsMarketData
   price_change_percentage_14d_in_currency: number;
   price_change_percentage_30d_in_currency: number;
   price_change_percentage_1y_in_currency: number;
+  coin_statistics: ICoinStatisticsData;
+  coin_historical_price: IHistoricalPriceData;
 }
