@@ -5,7 +5,6 @@ import { TDateChangeHandler } from "../dataTypes/DateChangeHandler.type";
 export interface ICoinInfoFilterProps {
   filterOptions: TCoinInfoMetric[] | TCoinInfoTimeRange[];
   activeFilter: string;
-  onFilterChange: (filter: TCoinInfoMetric | TCoinInfoTimeRange) => void;
   startDate?: Date | null;
   endDate?: Date | null;
   handleDateChange?: TDateChangeHandler;
