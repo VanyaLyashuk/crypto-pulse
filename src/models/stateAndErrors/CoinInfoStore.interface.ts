@@ -8,4 +8,6 @@ export interface ICoinInfoStore {
   setSelectedMetric: (value: TCoinInfoMetric) => void;
   selectedTimeRange: TCoinInfoTimeRange;
   setSelectedTimeRange: (value: TCoinInfoTimeRange) => void;
+  isDatepickerOpen: boolean;
+  setIsDatepickerOpen: (value: boolean) => void;
 }
