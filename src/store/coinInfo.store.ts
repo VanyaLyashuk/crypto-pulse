@@ -11,6 +11,8 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       setSelectedMetric: (value) => set({ selectedMetric: value }),
       selectedTimeRange: "24h",
       setSelectedTimeRange: (value) => set({ selectedTimeRange: value }),
+      isDatepickerOpen: false,
+      setIsDatepickerOpen: (value) => set({isDatepickerOpen: value}),
     }),
     { name: "CoinInfoStore" }
   )
