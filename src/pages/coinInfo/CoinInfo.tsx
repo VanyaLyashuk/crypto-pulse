@@ -15,18 +15,23 @@ import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 
 const CoinInfo: React.FC = () => {
-  const [selectedTimeRange, setSelectedTimeRange] =
-    useState<TCoinInfoTimeRange>("24h");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
-  const { selectedCoinId, selectedMetric, setSelectedMetric } = 
-  useCoinInfoStore(
+  const {
+    selectedCoinId,
+    selectedMetric,
+    setSelectedMetric,
+    selectedTimeRange,
+    setSelectedTimeRange,
+  } = useCoinInfoStore(
     useShallow((state) => ({
       selectedCoinId: state.selectedCoinId,
       selectedMetric: state.selectedMetric,
       setSelectedMetric: state.setSelectedMetric,
+      selectedTimeRange: state.selectedTimeRange,
+      setSelectedTimeRange: state.setSelectedTimeRange,
     }))
   );
   const coin = useCoinsStore(
