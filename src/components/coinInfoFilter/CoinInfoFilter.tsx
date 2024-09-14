@@ -1,7 +1,12 @@
 import clsx from "clsx";
+import { set } from "react-datepicker/dist/date_utils";
 import { BsCalendar2 } from "react-icons/bs";
 import { useShallow } from "zustand/react/shallow";
-import { ICoinInfoFilterProps } from "../../models";
+import {
+  ICoinInfoFilterProps,
+  TCoinInfoMetric,
+  TCoinInfoTimeRange,
+} from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import CoinInfoDatepicker from "../coinInfoDatePicker/CoinInfoDatePicker";
 
@@ -12,13 +17,32 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   endDate,
   handleDateChange,
 }) => {
-  const { isDatepickerOpen, setIsDatepickerOpen, onFilterChange } = useCoinInfoStore(
+  const {
+    isDatepickerOpen,
+    setIsDatepickerOpen,
+    setSelectedMetric,
+    setSelectedTimeRange,
+  } = useCoinInfoStore(
     useShallow((state) => ({
       isDatepickerOpen: state.isDatepickerOpen,
       setIsDatepickerOpen: state.setIsDatepickerOpen,
-      onFilterChange: state.onFilterChange,
+      setSelectedMetric: state.setSelectedMetric,
+      setSelectedTimeRange: state.setSelectedTimeRange,
     }))
   );
+
+  const onFilterChange = (filter: TCoinInfoMetric | TCoinInfoTimeRange) => {
+    const isMetric = filter === "Price" || filter === "Market Cap";
+    const isDateRange = filter === "date range";
+
+    if (isMetric) {
+      setSelectedMetric(filter);
+    } else {
+      setSelectedTimeRange(filter);
+    }
+    setIsDatepickerOpen(isDateRange);
+  };
+  
   const buttons = filterOptions.map((filter) => {
     const btnClasses = clsx("px-2 py-1 text-sm font-medium", {
       "bg-white rounded-md shadow-sm": activeFilter === filter,

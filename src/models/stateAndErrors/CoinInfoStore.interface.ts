@@ -10,5 +10,4 @@ export interface ICoinInfoStore {
   setSelectedTimeRange: (value: TCoinInfoTimeRange) => void;
   isDatepickerOpen: boolean;
   setIsDatepickerOpen: (value: boolean) => void;
-  onFilterChange: (filter: TCoinInfoMetric | TCoinInfoTimeRange) => void;
 }
