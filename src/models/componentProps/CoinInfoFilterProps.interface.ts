@@ -8,7 +8,5 @@ export interface ICoinInfoFilterProps {
   onFilterChange: (filter: TCoinInfoMetric | TCoinInfoTimeRange) => void;
   startDate?: Date | null;
   endDate?: Date | null;
-  isOpen?: boolean;
   handleDateChange?: TDateChangeHandler;
-  toggleDatepicker?: () => void;
 }
