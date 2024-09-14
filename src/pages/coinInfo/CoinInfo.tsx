@@ -17,7 +17,6 @@ import useCoinsStore from "../../store/coins.store";
 const CoinInfo: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
-  const [isOpen, setIsOpen] = useState(false);
 
   const {
     selectedCoinId,
@@ -25,6 +24,7 @@ const CoinInfo: React.FC = () => {
     setSelectedMetric,
     selectedTimeRange,
     setSelectedTimeRange,
+    setIsDatepickerOpen,
   } = useCoinInfoStore(
     useShallow((state) => ({
       selectedCoinId: state.selectedCoinId,
@@ -32,6 +32,7 @@ const CoinInfo: React.FC = () => {
       setSelectedMetric: state.setSelectedMetric,
       selectedTimeRange: state.selectedTimeRange,
       setSelectedTimeRange: state.setSelectedTimeRange,
+      setIsDatepickerOpen: state.setIsDatepickerOpen,
     }))
   );
   const coin = useCoinsStore(
@@ -62,12 +63,10 @@ const CoinInfo: React.FC = () => {
         setSelectedTimeRange(filter);
       }
 
-      setIsOpen(isDateRange);
+      setIsDatepickerOpen(isDateRange);
     },
     []
   );
-
-  const toggleDatepicker = () => setIsOpen(!isOpen);
 
   const handleDateChange: TDateChangeHandler = (dates) => {
     if (dates) {
@@ -123,9 +122,7 @@ const CoinInfo: React.FC = () => {
               onFilterChange={handleFilterChange}
               startDate={startDate}
               endDate={endDate}
-              isOpen={isOpen}
               handleDateChange={handleDateChange}
-              toggleDatepicker={toggleDatepicker}
             />
           </div>
           <div className="grid w-full bg-gray-200 aspect-video place-items-center">
