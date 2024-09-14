@@ -1,5 +1,4 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
-import { ICoinInfoDatePickerProps } from "./componentProps/CoinInfoDatePickerProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
 import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
@@ -19,8 +18,7 @@ import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
 import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
 import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
-import { TDateChangeHandler } from "./dataTypes/DateChangeHandler.type";
-import { TDateOrNull } from "./dataTypes/DateOrNull.type";
+import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
 import { IPeriodMapData } from "./dataTypes/PeriodMapData.interface";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
@@ -34,7 +32,6 @@ import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps, ICoinHistoricalChartDataById,
-    ICoinInfoDatePickerProps,
     ICoinInfoFilterProps,
     ICoinInfoListProps,
     ICoinInfoProps, ICoinInfoStore, ICoinListItemProps,
@@ -60,6 +57,6 @@ export type {
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
     TCryptoTableCurrency,
-    TDateChangeHandler, TDateOrNull, TShortMonthName
+    TDateOrUndefined, TShortMonthName
 };
 
