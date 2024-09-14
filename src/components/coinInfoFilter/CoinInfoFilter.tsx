@@ -8,15 +8,15 @@ import CoinInfoDatepicker from "../coinInfoDatePicker/CoinInfoDatePicker";
 const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   filterOptions,
   activeFilter,
-  onFilterChange,
   startDate,
   endDate,
   handleDateChange,
 }) => {
-  const { isDatepickerOpen, setIsDatepickerOpen } = useCoinInfoStore(
+  const { isDatepickerOpen, setIsDatepickerOpen, onFilterChange } = useCoinInfoStore(
     useShallow((state) => ({
       isDatepickerOpen: state.isDatepickerOpen,
       setIsDatepickerOpen: state.setIsDatepickerOpen,
+      onFilterChange: state.onFilterChange,
     }))
   );
   const buttons = filterOptions.map((filter) => {
