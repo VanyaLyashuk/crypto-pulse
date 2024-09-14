@@ -13,10 +13,10 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       setSelectedTimeRange: (value) => set({ selectedTimeRange: value }),
       isDatepickerOpen: false,
       setIsDatepickerOpen: (value) => set({ isDatepickerOpen: value }),
-      startDate: null,
-      setStartDate: (date) => set({startDate: date}),
-      endDate: null,
-      setEndDate: (date) => set({endDate: date}),
+      startDate: undefined,
+      setStartDate: (date) => set({ startDate: date }),
+      endDate: undefined,
+      setEndDate: (date) => set({ endDate: date }),
     }),
     { name: "CoinInfoStore" }
   )
