@@ -37,14 +37,10 @@ const CoinInfo: React.FC = () => {
     image,
     market_cap_rank,
     current_price_formatted,
-    price_change_percentage_1h_in_currency,
     price_change_percentage_24h_in_currency,
-    price_change_percentage_7d_in_currency,
-    price_change_percentage_14d_in_currency,
-    price_change_percentage_30d_in_currency,
-    price_change_percentage_1y_in_currency,
     coin_statistics,
     coin_historical_price,
+    coin_percentage_table,
   } = coin;
 
   return (
@@ -73,25 +69,7 @@ const CoinInfo: React.FC = () => {
         </div>
         <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
           <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start lg:overflow-auto">
-            <CoinInfoTable
-              data={[
-                { label: "1h", value: price_change_percentage_1h_in_currency },
-                {
-                  label: "24h",
-                  value: price_change_percentage_24h_in_currency,
-                },
-                { label: "7d", value: price_change_percentage_7d_in_currency },
-                {
-                  label: "14d",
-                  value: price_change_percentage_14d_in_currency,
-                },
-                {
-                  label: "30d",
-                  value: price_change_percentage_30d_in_currency,
-                },
-                { label: "1y", value: price_change_percentage_1y_in_currency },
-              ]}
-            />
+            <CoinInfoTable data={coin_percentage_table} />
           </div>
           <div className="mb-5 lg:col-span-3 lg:mb-0">
             <div className="flex items-center gap-2 mb-3">
