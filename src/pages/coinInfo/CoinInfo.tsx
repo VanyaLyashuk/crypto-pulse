@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
@@ -6,14 +6,10 @@ import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceCha
 import { useShallow } from "zustand/react/shallow";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
-import { TDateChangeHandler } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 
 const CoinInfo: React.FC = () => {
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
-
   const { selectedCoinId, selectedMetric, selectedTimeRange } =
     useCoinInfoStore(
       useShallow((state) => ({
@@ -37,14 +33,6 @@ const CoinInfo: React.FC = () => {
 
   const handleInnerClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-  };
-
-  const handleDateChange: TDateChangeHandler = (dates) => {
-    if (dates) {
-      const [start, end] = dates;
-      setStartDate(start);
-      setEndDate(end);
-    }
   };
 
   const {
@@ -89,9 +77,6 @@ const CoinInfo: React.FC = () => {
             <CoinInfoFilter
               filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
               activeFilter={selectedTimeRange}
-              startDate={startDate}
-              endDate={endDate}
-              handleDateChange={handleDateChange}
             />
           </div>
           <div className="grid w-full bg-gray-200 aspect-video place-items-center">
