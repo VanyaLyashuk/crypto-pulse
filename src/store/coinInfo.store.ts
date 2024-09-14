@@ -8,7 +8,9 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       selectedCoinId: "",
       setSelectedCoinId: (id) => set({ selectedCoinId: id }),
       selectedMetric: "Price",
-      setSelectedMetric: (value) => set({selectedMetric: value}),
+      setSelectedMetric: (value) => set({ selectedMetric: value }),
+      selectedTimeRange: "24h",
+      setSelectedTimeRange: (value) => set({ selectedTimeRange: value }),
     }),
     { name: "CoinInfoStore" }
   )
