@@ -119,6 +119,23 @@ export const transformCoinsListWithMarketData = (
           date: formatDate(atl_date),
         },
       },
+      coin_percentage_table: [
+        { label: "1h", value: price_change_percentage_1h_in_currency },
+        {
+          label: "24h",
+          value: price_change_percentage_24h_in_currency,
+        },
+        { label: "7d", value: price_change_percentage_7d_in_currency },
+        {
+          label: "14d",
+          value: price_change_percentage_14d_in_currency,
+        },
+        {
+          label: "30d",
+          value: price_change_percentage_30d_in_currency,
+        },
+        { label: "1y", value: price_change_percentage_1y_in_currency },
+      ]
     })
   );
 };
