@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
@@ -6,11 +6,7 @@ import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceCha
 import { useShallow } from "zustand/react/shallow";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
-import {
-  TCoinInfoMetric,
-  TCoinInfoTimeRange,
-  TDateChangeHandler,
-} from "../../models";
+import { TDateChangeHandler } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 
@@ -18,23 +14,14 @@ const CoinInfo: React.FC = () => {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
-  const {
-    selectedCoinId,
-    selectedMetric,
-    setSelectedMetric,
-    selectedTimeRange,
-    setSelectedTimeRange,
-    setIsDatepickerOpen,
-  } = useCoinInfoStore(
-    useShallow((state) => ({
-      selectedCoinId: state.selectedCoinId,
-      selectedMetric: state.selectedMetric,
-      setSelectedMetric: state.setSelectedMetric,
-      selectedTimeRange: state.selectedTimeRange,
-      setSelectedTimeRange: state.setSelectedTimeRange,
-      setIsDatepickerOpen: state.setIsDatepickerOpen,
-    }))
-  );
+  const { selectedCoinId, selectedMetric, selectedTimeRange } =
+    useCoinInfoStore(
+      useShallow((state) => ({
+        selectedCoinId: state.selectedCoinId,
+        selectedMetric: state.selectedMetric,
+        selectedTimeRange: state.selectedTimeRange,
+      }))
+    );
   const coin = useCoinsStore(
     (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0]
   );
@@ -51,22 +38,6 @@ const CoinInfo: React.FC = () => {
   const handleInnerClick = (event: React.MouseEvent) => {
     event.stopPropagation();
   };
-
-  const handleFilterChange = useCallback(
-    (filter: TCoinInfoMetric | TCoinInfoTimeRange) => {
-      const isMetric = filter === "Price" || filter === "Market Cap";
-      const isDateRange = filter === "date range";
-
-      if (isMetric) {
-        setSelectedMetric(filter);
-      } else {
-        setSelectedTimeRange(filter);
-      }
-
-      setIsDatepickerOpen(isDateRange);
-    },
-    []
-  );
 
   const handleDateChange: TDateChangeHandler = (dates) => {
     if (dates) {
@@ -114,12 +85,10 @@ const CoinInfo: React.FC = () => {
             <CoinInfoFilter
               filterOptions={["Price", "Market Cap"]}
               activeFilter={selectedMetric}
-              onFilterChange={handleFilterChange}
             />
             <CoinInfoFilter
               filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
               activeFilter={selectedTimeRange}
-              onFilterChange={handleFilterChange}
               startDate={startDate}
               endDate={endDate}
               handleDateChange={handleDateChange}
