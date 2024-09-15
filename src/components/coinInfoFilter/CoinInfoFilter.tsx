@@ -7,6 +7,7 @@ import {
   TCoinInfoTimeRange,
 } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
+import { calcEndDate } from "../../utils/CryptoTableUtils";
 import CoinInfoDatepicker from "../coinInfoDatePicker/CoinInfoDatePicker";
 
 const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
@@ -18,12 +19,16 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
     setIsDatepickerOpen,
     setSelectedMetric,
     setSelectedTimeRange,
+    startDate,
+    setEndDate,
   } = useCoinInfoStore(
     useShallow((state) => ({
       isDatepickerOpen: state.isDatepickerOpen,
       setIsDatepickerOpen: state.setIsDatepickerOpen,
       setSelectedMetric: state.setSelectedMetric,
       setSelectedTimeRange: state.setSelectedTimeRange,
+      startDate: state.startDate,
+      setEndDate: state.setEndDate,
     }))
   );
 
@@ -35,6 +40,8 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
       setSelectedMetric(filter);
     } else {
       setSelectedTimeRange(filter);
+      const endDate = calcEndDate(startDate, filter);
+      setEndDate(endDate);
     }
     setIsDatepickerOpen(isDateRange);
   };
