@@ -1,6 +1,6 @@
-import { TCoinInfoTimeRange } from "../dataTypes/CoinInfoTimeRange.type";
+import { ICoinInfoTableTimeRange } from "./CoinInfoTableTimeRange.type";
 
 export interface ICoinInfoTableItem {
-  label: TCoinInfoTimeRange;
+  label: ICoinInfoTableTimeRange;
   value: number;
 }
