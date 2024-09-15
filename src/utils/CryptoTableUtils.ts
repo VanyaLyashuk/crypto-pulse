@@ -110,3 +110,4 @@ export function calcEndDate(
       return endDate;
   }
 }
+export const getUnixTimestamp = (date: Date): number => date.getTime() / 1000;
