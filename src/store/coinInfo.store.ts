@@ -1,6 +1,10 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
 import { ICoinInfoStore } from "../models/index.ts";
+import { calcStartDate } from "../utils/CryptoTableUtils.ts";
+
+const defaultEndDate = new Date();
+const defaultPeriod = "24h";
 
 const useCoinInfoStore = create<ICoinInfoStore>()(
   devtools(
@@ -9,13 +13,13 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       setSelectedCoinId: (id) => set({ selectedCoinId: id }),
       selectedMetric: "Price",
       setSelectedMetric: (value) => set({ selectedMetric: value }),
-      selectedTimeRange: "24h",
+      selectedTimeRange: defaultPeriod,
       setSelectedTimeRange: (value) => set({ selectedTimeRange: value }),
       isDatepickerOpen: false,
       setIsDatepickerOpen: (value) => set({ isDatepickerOpen: value }),
-      startDate: undefined,
+      startDate: calcStartDate(defaultEndDate, defaultPeriod),
       setStartDate: (date) => set({ startDate: date }),
-      endDate: undefined,
+      endDate: defaultEndDate,
       setEndDate: (date) => set({ endDate: date }),
     }),
     { name: "CoinInfoStore" }
