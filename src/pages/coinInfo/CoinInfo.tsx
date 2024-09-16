@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
@@ -6,18 +6,29 @@ import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceCha
 import { useShallow } from "zustand/react/shallow";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
+import { TCoinInfoChartData, TCoinInfoTimeRange } from "../../models";
+import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
+import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
-  const { selectedCoinId, selectedMetric, selectedTimeRange } =
-    useCoinInfoStore(
-      useShallow((state) => ({
-        selectedCoinId: state.selectedCoinId,
-        selectedMetric: state.selectedMetric,
-        selectedTimeRange: state.selectedTimeRange,
-      }))
-    );
+  const [chartData, setChartData] = useState<TCoinInfoChartData | {}>({})
+  const {
+    selectedCoinId,
+    selectedMetric,
+    selectedTimeRange,
+    startDate,
+    endDate,
+  } = useCoinInfoStore(
+    useShallow((state) => ({
+      selectedCoinId: state.selectedCoinId,
+      selectedMetric: state.selectedMetric,
+      selectedTimeRange: state.selectedTimeRange,
+      startDate: state.startDate,
+      endDate: state.endDate,
+    }))
+  );
 
   const {
     name,
@@ -33,14 +44,46 @@ const CoinInfo: React.FC = () => {
     (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0] || {}
   );
 
+  const coinGecoService = new CoinGeckoService();
+
   const navigate = useNavigate();
-  const closeModal = () => navigate(-1);
+  const closeModal = () => {
+    navigate(-1);
+    setChartData({});
+  };
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
 
     return () => document.body.classList.remove("overflow-hidden");
   }, []);
+
+  useEffect(() => {
+    if(endDate) {
+      onRequest(selectedTimeRange);
+    }
+  }, [endDate])
+  
+  const onRequest = (period: TCoinInfoTimeRange) => {
+    
+    if (period in chartData && period !== "date range") return;
+
+    const from = getUnixTimestamp(startDate);
+    const to = getUnixTimestamp(endDate);
+
+    coinGecoService
+      ._getCoinHistoricalChartDataById(
+        selectedCoinId,
+        from,
+        to
+      )
+      .then(data => {
+        if(period in chartData && period !== "date range") return;
+        const newChartData = {...chartData, [period]: data};
+        
+        setChartData(newChartData)
+      });
+  };
 
   return (
     <div
