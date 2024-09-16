@@ -15,7 +15,9 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
     { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
 
-  const onRowsChange: ICryptoTableRowsPerPageProps["onRowsChange"] = (e) => {
+  const onRowsChange = (
+    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
+  ) => {
     setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
   };
 
