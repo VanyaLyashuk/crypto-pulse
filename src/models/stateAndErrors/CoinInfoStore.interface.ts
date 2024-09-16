@@ -11,8 +11,8 @@ export interface ICoinInfoStore {
   setSelectedTimeRange: (value: TCoinInfoTimeRange) => void;
   isDatepickerOpen: boolean;
   setIsDatepickerOpen: (value: boolean) => void;
-  startDate: TDateOrUndefined;
-  setStartDate: (date: TDateOrUndefined) => void;
+  startDate: Date;
+  setStartDate: (date: Date) => void;
   endDate: TDateOrUndefined;
-  setEndDate: (date: TDateOrUndefined) => void;
+  setEndDate: (date: Date) => void;
 }
