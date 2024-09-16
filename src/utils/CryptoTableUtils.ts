@@ -86,10 +86,7 @@ export function formatTwoDigits(value: number): string {
   return value.toString().padStart(2, "0");
 }
 
-export function calcEndDate(
-  startDate: TDateOrUndefined,
-  period: TCoinInfoTimeRange
-): Date {
+export function calcStartDate(startDate: Date, period: TCoinInfoTimeRange): Date {
   const endDate = startDate ? new Date(startDate) : new Date();
 
   switch (period) {
@@ -110,4 +107,5 @@ export function calcEndDate(
       return endDate;
   }
 }
-export const getUnixTimestamp = (date: Date): number => date.getTime() / 1000;
+export const getUnixTimestamp = (date: TDateOrUndefined): number =>
+  date ? Math.floor(date.getTime() / 1000) : 0;
