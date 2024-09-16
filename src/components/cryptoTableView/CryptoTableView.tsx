@@ -20,7 +20,10 @@ import {
 } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
-import { calcEndDate, renderCurrencyCell } from "../../utils/CryptoTableUtils";
+import {
+  calcStartDate,
+  renderCurrencyCell,
+} from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
 
@@ -48,10 +51,10 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   const openModal = (id: string) => {
     const backgroundLocation = { pathname: location.pathname };
     navigate(`/coin/${id}`, { state: { backgroundLocation } });
-    
-    const startDate = new Date();
-    const endDate = calcEndDate(startDate, selectedTimeRange);
-    
+
+    const endDate = new Date();
+    const startDate = calcStartDate(endDate, selectedTimeRange);
+
     setStartDate(startDate);
     setEndDate(endDate);
     setSelectedCoinId(id);
