@@ -4,7 +4,10 @@ import {
   ICoinsMarketData,
   ITransformedCoinsMarketData,
 } from "../models";
-import { transformCoinsListWithMarketData } from "../utils/CoinGeckoServiceUtils";
+import {
+  transformCoinHistoricalChartDataById,
+  transformCoinsListWithMarketData,
+} from "../utils/CoinGeckoServiceUtils";
 
 class CoinGeckoService {
   private readonly _apiKey: string = import.meta.env.VITE_COINGECKO_API_KEY;
@@ -54,12 +57,13 @@ class CoinGeckoService {
     id: string,
     from: number,
     to: number,
-    vsCurrency: string = this._vsCurrency,
+    vsCurrency: string = this._vsCurrency
   ): Promise<ICoinHistoricalChartDataById> {
     const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}&precision=2`;
     const data = await this.getResource<ICoinHistoricalChartDataById>(url);
+    const labeledData = transformCoinHistoricalChartDataById(data);
 
-    return data;
+    return labeledData;
   }
 }
 
