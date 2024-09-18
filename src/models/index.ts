@@ -11,6 +11,7 @@ import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interfa
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
+import { TChartDateFormat } from "./dataTypes/ChartDateFormat.type";
 import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
 import { TCoinHistoricalChartItem } from "./dataTypes/CoinHistoricalChartItem.type";
 import { TCoinInfoChartData } from "./dataTypes/CoinInfoChartData.type";
@@ -22,8 +23,8 @@ import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
 import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
-import { IPeriodMapData } from "./dataTypes/PeriodMapData.interface";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
+import { ITransformedCoinHistoricalChartDataById } from "./dataTypes/TransformedCoinHistoricalChartDataById.interface";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
 import { IPaginationComponentProps } from "./pagination/PaginationComponentProps.interface";
@@ -54,15 +55,18 @@ export type {
     IPaginationComponentProps,
     IPaginationProps,
     IPaginationStore,
-    IPeriodMapData,
     IPriceChangeIndicatorProps,
     ISparklineChartProps,
     ITableViewStore,
-    ITransformedCoinsMarketData,
-    TCoinHistoricalChartItem, TCoinInfoChartData, TCoinInfoMetric,
+    ITransformedCoinHistoricalChartDataById,
+    ITransformedCoinsMarketData, TChartDateFormat, TCoinHistoricalChartItem,
+    TCoinInfoChartData,
+    TCoinInfoMetric,
     TCoinInfoTimeRange,
     TCryptoTableCellContext,
-    TCryptoTableCurrency, TDateOrNull, TDateOrUndefined,
+    TCryptoTableCurrency,
+    TDateOrNull,
+    TDateOrUndefined,
     TShortMonthName
 };
 
