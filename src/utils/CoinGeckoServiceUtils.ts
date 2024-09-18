@@ -1,9 +1,10 @@
 import {
+  ICoinHistoricalChartDataById,
   ICoinsMarketData,
-  IPeriodMapData,
+  ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
+  TChartDateFormat,
   TCoinHistoricalChartItem,
-  TCoinInfoTimeRange,
 } from "../models";
 import {
   formatCurrencyValue,
@@ -13,9 +14,113 @@ import {
   getShortMonthName,
 } from "./CryptoTableUtils";
 
-export const transformCoinsListWithMarketData = (
+const HOUR_TIMESTAMP = 3600 * 1000;
+const DAY_TIMESTAMP = 24 * HOUR_TIMESTAMP;
+
+function defineInterval(
+  duration: number,
+  hourTimestamp: number,
+  dayTimestamp: number
+): number {
+  if (duration >= 2 && duration <= 4) {
+    return 6 * HOUR_TIMESTAMP;
+  } else if (duration >= 5 && duration <= 9) {
+    return dayTimestamp;
+  } else if (duration >= 10 && duration <= 20) {
+    return 2 * dayTimestamp;
+  } else if (duration >= 20 && duration <= 29) {
+    return 3 * dayTimestamp;
+  } else if (duration >= 30 && duration <= 40) {
+    return 4 * dayTimestamp;
+  } else if (duration >= 41 && duration <= 130) {
+    return 10 * dayTimestamp;
+  } else if (duration >= 131) {
+    return 30 * dayTimestamp;
+  } else {
+    return 3 * hourTimestamp;
+  }
+}
+function defineFormat(duration: number): TChartDateFormat {
+  if (duration >= 5 && duration <= 130) {
+    return "dd. month";
+  } else if (duration >= 131) {
+    return "month 'year";
+  } else {
+    return "hours";
+  }
+}
+function formatLabel(date: Date, format: TChartDateFormat) {
+  const year = date.getFullYear().toString().slice(-2);
+  const month = getShortMonthName(date.getMonth());
+  const day = date.getDate();
+  const hours = formatTwoDigits(date.getHours());
+
+  switch (format) {
+    case "dd. month":
+      return `${day}. ${month}`;
+    case "month 'year":
+      return `${month} '${year}`;
+    case "hours":
+      return hours === "00" ? `${day}. ${month}` : `${hours}:00`;
+    default:
+      return `${hours}:00`;
+  }
+}
+
+function extractTimestamps(data: TCoinHistoricalChartItem[]): number[] {
+  return data.map((item) => item[0]);
+}
+
+function extractValues(data: TCoinHistoricalChartItem[]): number[] {
+  return data.map((item) => item[1]);
+}
+
+function generateXAxisLabels(
+  startTimestamp: number,
+  endTimestamp: number,
+  hourTimestamp: number,
+  dayTimestamp: number
+): string[] {
+  const labels: string[] = [];
+  let duration = Math.ceil((endTimestamp - startTimestamp) / DAY_TIMESTAMP);
+
+  let interval = defineInterval(duration, hourTimestamp, dayTimestamp);
+  let format = defineFormat(duration);
+
+  const current = new Date(endTimestamp);
+
+  while (current.getTime() >= startTimestamp && labels.length <= 11) {
+    if (current.getHours() <= 2) {
+      current.setHours(0);
+      current.setMinutes(0);
+      labels.push(formatLabel(current, format));
+      current.setTime(current.getTime() - interval);
+    } else {
+      labels.push(formatLabel(current, format));
+      current.setTime(current.getTime() - interval);
+    }
+  }
+
+  return labels.reverse();
+}
+
+export function transformCoinHistoricalChartDataById(
+  data: ICoinHistoricalChartDataById
+): ITransformedCoinHistoricalChartDataById {
+  const timestampsArr = extractTimestamps(data.prices);
+  const xAsixLabels = generateXAxisLabels(
+    timestampsArr[0],
+    timestampsArr[timestampsArr.length - 1],
+    HOUR_TIMESTAMP,
+    DAY_TIMESTAMP
+  );
+
+  return { ...data, xAxisLabels: xAsixLabels };
+}
+
+export function transformCoinsListWithMarketData(
   data: ICoinsMarketData[]
-): ITransformedCoinsMarketData[] => {
+): ITransformedCoinsMarketData[] {
   return data.map(
     ({
       id,
@@ -135,81 +240,7 @@ export const transformCoinsListWithMarketData = (
           value: price_change_percentage_30d_in_currency,
         },
         { label: "1y", value: price_change_percentage_1y_in_currency },
-      ]
+      ],
     })
   );
-};
-
-const formatLabel = (date: Date, period: TCoinInfoTimeRange) => {
-  const year = date.getFullYear().toString().slice(-2);
-  const month = getShortMonthName(date.getMonth());
-  const day = date.getDate();
-  const hours = formatTwoDigits(date.getHours());
-
-  switch (period) {
-    case "7d":
-    case "1m":
-    case "3m":
-      return `${day}. ${month}`;
-    case "1y":
-      return `${month} '${year}`;
-    case "24h":
-      return hours === "00" ? `${day}. ${month}` : `${hours}:00`;
-    default:
-      return `${hours}:00`;
-  }
-};
-
-const extractTimestamps = (data: TCoinHistoricalChartItem[]): number[] =>
-  data.map((item) => item[0]);
-
-const extractValues = (data: TCoinHistoricalChartItem[]): number[] =>
-  data.map((item) => item[1]);
-
-export const generateXAxisLabels = (
-  startTimestamp: number,
-  endTimestamp: number
-): string[] => {
-  const labels: string[] = [];
-  const duration = endTimestamp - startTimestamp;
-
-  const periodMap: IPeriodMapData[] = [
-    { maxDuration: 24 * 3600 * 1000, interval: 3 * 3600 * 1000, period: "24h" },
-    {
-      maxDuration: 7 * 24 * 3600 * 1000,
-      interval: 24 * 3600 * 1000,
-      period: "7d",
-    },
-    {
-      maxDuration: 30 * 24 * 3600 * 1000,
-      interval: 4 * 24 * 3600 * 1000,
-      period: "1m",
-    },
-    {
-      maxDuration: 90 * 24 * 3600 * 1000,
-      interval: 12 * 24 * 3600 * 1000,
-      period: "3m",
-    },
-    { maxDuration: Infinity, interval: 30 * 24 * 3600 * 1000, period: "1y" },
-  ];
-
-  const { interval, period } =
-    periodMap.find(({ maxDuration }) => duration <= maxDuration) ||
-    periodMap[0];
-
-  const current = new Date(endTimestamp);
-
-  while (current.getTime() >= startTimestamp && labels.length <= 11) {
-    if (current.getHours() <= 1) {
-      current.setHours(0);
-      current.setMinutes(0);
-      labels.push(formatLabel(current, period));
-      current.setTime(current.getTime() - interval);
-    } else {
-      labels.push(formatLabel(current, period));
-      current.setTime(current.getTime() - interval);
-    }
-  }
-
-  return labels.reverse();
-};
+}
