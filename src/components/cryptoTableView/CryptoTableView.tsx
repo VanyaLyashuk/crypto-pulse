@@ -53,7 +53,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     navigate(`/coin/${id}`, { state: { backgroundLocation } });
 
     const endDate = new Date();
-    const startDate = calcStartDate(endDate, selectedTimeRange);
+    const startDate = calcStartDate(selectedTimeRange, endDate);
 
     setStartDate(startDate);
     setEndDate(endDate);

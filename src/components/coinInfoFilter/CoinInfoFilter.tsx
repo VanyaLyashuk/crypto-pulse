@@ -45,7 +45,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   
       if (startDate && !isDateRange) {
         const endDate = new Date();
-        const startDate = calcStartDate(endDate, filter);
+        const startDate = calcStartDate(filter, endDate);
         setStartDate(startDate);
         setEndDate(endDate);
       }
