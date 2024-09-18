@@ -86,26 +86,27 @@ export function formatTwoDigits(value: number): string {
   return value.toString().padStart(2, "0");
 }
 
-export function calcStartDate(startDate: Date, period: TCoinInfoTimeRange): Date {
-  const endDate = startDate ? new Date(startDate) : new Date();
+export function calcStartDate(period: TCoinInfoTimeRange, date?: Date,): Date {
+  const startDate = date ? new Date(date) : new Date();
 
   switch (period) {
     case "7d":
-      endDate.setDate(endDate.getDate() - 7);
-      return endDate;
+      startDate.setDate(startDate.getDate() - 7);
+      return startDate;
     case "1m":
-      endDate.setMonth(endDate.getMonth() - 1);
-      return endDate;
+      startDate.setMonth(startDate.getMonth() - 1);
+      return startDate;
     case "3m":
-      endDate.setMonth(endDate.getMonth() - 3);
-      return endDate;
+      startDate.setMonth(startDate.getMonth() - 3);
+      return startDate;
     case "1y":
-      endDate.setFullYear(endDate.getFullYear() - 1);
-      return endDate;
+      startDate.setFullYear(startDate.getFullYear() - 1);
+      return startDate;
     default:
-      endDate.setHours(endDate.getHours() - 24);
-      return endDate;
+      startDate.setHours(startDate.getHours() - 24);
+      return startDate;
   }
 }
+
 export const getUnixTimestamp = (date: TDateOrUndefined): number =>
   date ? Math.floor(date.getTime() / 1000) : 0;
