@@ -90,16 +90,24 @@ export function calcStartDate(period: TCoinInfoTimeRange, date?: Date): Date {
 }
 
 export function formatCurrencyValue(
-  value: number,
+  value: number | null | undefined,
   currency?: TCryptoTableCurrency,
   options?: Intl.NumberFormatOptions
 ): string {
-  if (value && options && currency) {
-    return currency + value.toLocaleString("en-US", options);
-  } else if (value && currency) {
-    return currency + value.toLocaleString("en-US");
-  } else if (value) {
-    return value.toLocaleString("en-US");
+  if (value !== null && value !== undefined) {
+    if (value < 1 && value > 0) {
+      return currency
+        ? currency + value.toFixed(Math.min(9, value.toString().split('.')[1]?.length || 9))
+        : value.toFixed(Math.min(9, value.toString().split('.')[1]?.length || 9));
+    }
+
+    if (currency && options) {
+      return currency + value.toLocaleString("en-US", options);
+    } else if (currency) {
+      return currency + value.toLocaleString("en-US");
+    } else {
+      return value.toLocaleString("en-US");
+    }
   }
   return "-";
 }
