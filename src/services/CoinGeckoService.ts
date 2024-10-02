@@ -13,7 +13,7 @@ class CoinGeckoService {
   private readonly _apiKey: string = import.meta.env.VITE_COINGECKO_API_KEY;
   private readonly _apiBase: string = "https://api.coingecko.com/api/v3/";
   private readonly _vsCurrency: string = "usd";
-  private readonly _perPage: number = 10;
+  private readonly _perPage: number = 30;
   private readonly _page: number = 1;
 
   private async getResource<T>(url: string): Promise<T> {
@@ -59,7 +59,7 @@ class CoinGeckoService {
     to: number,
     vsCurrency: string = this._vsCurrency
   ): Promise<ICoinHistoricalChartDataById> {
-    const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}&precision=2`;
+    const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}`;
     const data = await this.getResource<ICoinHistoricalChartDataById>(url);
     const labeledData = transformCoinHistoricalChartDataById(data);
 
