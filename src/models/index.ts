@@ -23,6 +23,7 @@ import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
 import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
+import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
 import { ITransformedCoinHistoricalChartDataById } from "./dataTypes/TransformedCoinHistoricalChartDataById.interface";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
@@ -59,7 +60,9 @@ export type {
     ISparklineChartProps,
     ITableViewStore,
     ITransformedCoinHistoricalChartDataById,
-    ITransformedCoinsMarketData, TChartDateFormat, TCoinHistoricalChartItem,
+    ITransformedCoinsMarketData,
+    TChartDateFormat,
+    TCoinHistoricalChartItem,
     TCoinInfoChartData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
@@ -67,6 +70,7 @@ export type {
     TCryptoTableCurrency,
     TDateOrNull,
     TDateOrUndefined,
+    TPriceFormatCoinfig,
     TShortMonthName
 };
 
