@@ -5,4 +5,5 @@ export interface ITransformedCoinHistoricalChartDataById {
   market_caps: TCoinHistoricalChartItem[],
   total_volumes: TCoinHistoricalChartItem[],
   xAxisLabels: string[],
+  yAsixLabels: string[]
 }
