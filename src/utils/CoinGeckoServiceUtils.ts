@@ -3,77 +3,21 @@ import {
   ICoinsMarketData,
   ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
-  TChartDateFormat,
-  TCoinHistoricalChartItem,
 } from "../models";
 import {
+  defineFormat,
+  defineInterval,
+  extractTimestamps,
+  extractValues,
   formatCurrencyValue,
   formatDate,
-  formatTwoDigits,
+  formatXAxisLabel,
+  formatYAxisLabel,
   getMinMaxValue,
-  getShortMonthName,
 } from "./CryptoTableUtils";
 
 const HOUR_TIMESTAMP = 3600 * 1000;
 const DAY_TIMESTAMP = 24 * HOUR_TIMESTAMP;
-
-function defineInterval(
-  duration: number,
-  hourTimestamp: number,
-  dayTimestamp: number
-): number {
-  if (duration >= 2 && duration <= 4) {
-    return 6 * HOUR_TIMESTAMP;
-  } else if (duration >= 5 && duration <= 9) {
-    return dayTimestamp;
-  } else if (duration >= 10 && duration <= 20) {
-    return 2 * dayTimestamp;
-  } else if (duration >= 20 && duration <= 29) {
-    return 3 * dayTimestamp;
-  } else if (duration >= 30 && duration <= 40) {
-    return 4 * dayTimestamp;
-  } else if (duration >= 41 && duration <= 130) {
-    return 10 * dayTimestamp;
-  } else if (duration >= 131) {
-    return 30 * dayTimestamp;
-  } else {
-    return 3 * hourTimestamp;
-  }
-}
-function defineFormat(duration: number): TChartDateFormat {
-  if (duration >= 5 && duration <= 130) {
-    return "dd. month";
-  } else if (duration >= 131) {
-    return "month 'year";
-  } else {
-    return "hours";
-  }
-}
-function formatLabel(date: Date, format: TChartDateFormat) {
-  const year = date.getFullYear().toString().slice(-2);
-  const month = getShortMonthName(date.getMonth());
-  const day = date.getDate();
-  const hours = formatTwoDigits(date.getHours());
-
-  switch (format) {
-    case "dd. month":
-      return `${day}. ${month}`;
-    case "month 'year":
-      return `${month} '${year}`;
-    case "hours":
-      return hours === "00" ? `${day}. ${month}` : `${hours}:00`;
-    default:
-      return `${hours}:00`;
-  }
-}
-
-function extractTimestamps(data: TCoinHistoricalChartItem[]): number[] {
-  return data.map((item) => item[0]);
-}
-
-function extractValues(data: TCoinHistoricalChartItem[]): number[] {
-  return data.map((item) => item[1]);
-}
 
 function generateXAxisLabels(
   startTimestamp: number,
@@ -93,10 +37,10 @@ function generateXAxisLabels(
     if (current.getHours() <= 2) {
       current.setHours(0);
       current.setMinutes(0);
-      labels.push(formatLabel(current, format));
+      labels.push(formatXAxisLabel(current, format));
       current.setTime(current.getTime() - interval);
     } else {
-      labels.push(formatLabel(current, format));
+      labels.push(formatXAxisLabel(current, format));
       current.setTime(current.getTime() - interval);
     }
   }
@@ -104,18 +48,59 @@ function generateXAxisLabels(
   return labels.reverse();
 }
 
+function generateYAxisLabels(prices: number[]): string[] {
+  const { min: minValue, max: maxValue } = getMinMaxValue(prices);
+  const range = maxValue - minValue;
+  const roughStep = range / 5;
+  const stepMagnitude = Math.pow(10, Math.floor(Math.log10(roughStep)));
+  const normalizedStep = roughStep / stepMagnitude;
+  let step;
+
+  if (normalizedStep < 1.5) {
+    step = 1 * stepMagnitude;
+  } else if (normalizedStep < 3) {
+    step = 2 * stepMagnitude;
+  } else if (normalizedStep < 7.5) {
+    step = 5 * stepMagnitude;
+  } else {
+    step = 10 * stepMagnitude;
+  }
+
+  const start = Math.floor(minValue / step) * step;
+  const labels: string[] = [];
+  let value = start;
+
+  while (value <= maxValue) {
+    let currentValue = +value.toFixed(
+      step < 1 ? Math.max(0, Math.abs(Math.floor(Math.log10(step)))) : 0
+    );
+    labels.push(formatYAxisLabel(currentValue));
+    value += step;
+  }
+
+  let nextValue = +value.toFixed(
+    step < 1 ? Math.max(0, Math.abs(Math.floor(Math.log10(step)))) : 0
+  );
+  labels.push(formatYAxisLabel(nextValue));
+
+  return Array.from(new Set(labels));
+}
+
 export function transformCoinHistoricalChartDataById(
   data: ICoinHistoricalChartDataById
 ): ITransformedCoinHistoricalChartDataById {
   const timestampsArr = extractTimestamps(data.prices);
+  const pricesArr = extractValues(data.prices);
+
   const xAsixLabels = generateXAxisLabels(
     timestampsArr[0],
     timestampsArr[timestampsArr.length - 1],
     HOUR_TIMESTAMP,
     DAY_TIMESTAMP
   );
+  const yAsixLabels = generateYAxisLabels(pricesArr);
 
-  return { ...data, xAxisLabels: xAsixLabels };
+  return { ...data, xAxisLabels: xAsixLabels, yAsixLabels: yAsixLabels };
 }
 
 export function transformCoinsListWithMarketData(
