@@ -13,16 +13,18 @@ import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useShallow } from "zustand/react/shallow";
+import useFormattedSmallCurrency from "../../hooks/useFormattedSmallCurrency";
 import {
   ICryptoTableViewProps,
   ITransformedCoinsMarketData,
   TCryptoTableCellContext,
+  TCryptoTableCurrency,
 } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 import {
   calcStartDate,
-  renderCurrencyCell,
+  formatCurrencyValue,
 } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
@@ -73,6 +75,22 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
       "text-right": index > 2,
     });
   };
+
+  const renderCurrencyCell =
+    (currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
+    (info: TCryptoTableCellContext) => {
+      const value = info.getValue<number>();
+      if (value < 1) {
+        const fractionalPart = value.toString().split(".")[1] || "";
+        const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
+
+        if (leadingZeros >= 4) {
+          return useFormattedSmallCurrency(value, currency, options);
+        }
+      }
+
+      return formatCurrencyValue(value, currency, options);
+    };
 
   const columns = useMemo(
     () => [
