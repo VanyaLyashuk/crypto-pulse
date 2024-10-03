@@ -4,7 +4,6 @@ import {
   TChartDateFormat,
   TCoinHistoricalChartItem,
   TCoinInfoTimeRange,
-  TCryptoTableCellContext,
   TCryptoTableCurrency,
   TDateOrUndefined,
   TShortMonthName,
@@ -19,13 +18,6 @@ export const handlePageChange = debounce(
   },
   300
 );
-
-export const renderCurrencyCell =
-  (currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
-  (info: TCryptoTableCellContext) => {
-    const value = info.getValue<number>();
-    return formatCurrencyValue(value, currency, options);
-  };
 
 export const getUnixTimestamp = (date: TDateOrUndefined): number =>
   date ? Math.floor(date.getTime() / 1000) : 0;
@@ -95,12 +87,6 @@ export function formatCurrencyValue(
   options?: Intl.NumberFormatOptions
 ): string {
   if (value !== null && value !== undefined) {
-    if (value < 1 && value > 0) {
-      return currency
-        ? currency + value.toFixed(Math.min(9, value.toString().split('.')[1]?.length || 9))
-        : value.toFixed(Math.min(9, value.toString().split('.')[1]?.length || 9));
-    }
-
     if (currency && options) {
       return currency + value.toLocaleString("en-US", options);
     } else if (currency) {
