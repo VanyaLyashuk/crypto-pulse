@@ -98,9 +98,9 @@ export function transformCoinHistoricalChartDataById(
     HOUR_TIMESTAMP,
     DAY_TIMESTAMP
   );
-  const yAsixLabels = generateYAxisLabels(pricesArr);
+  const yAxisLabels = generateYAxisLabels(pricesArr);
 
-  return { ...data, xAxisLabels: xAsixLabels, yAsixLabels: yAsixLabels };
+  return { ...data, xAxisLabels: xAsixLabels, yAxisLabels: yAxisLabels };
 }
 
 export function transformCoinsListWithMarketData(
