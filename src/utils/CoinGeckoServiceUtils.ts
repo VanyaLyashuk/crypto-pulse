@@ -181,30 +181,21 @@ export function transformCoinsListWithMarketData(
       coin_historical_price: {
         range_24h: {
           label: "24h Range",
-          price:
-            formatCurrencyValue(low_24h, "$") +
-            "-" +
-            formatCurrencyValue(high_24h, "$"),
+          price: [low_24h, high_24h],
         },
         range_7d: {
           label: "7d Range",
-          price:
-            formatCurrencyValue(
-              getMinMaxValue(sparkline_in_7d.price).min,
-              "$"
-            ) +
-            "-" +
-            formatCurrencyValue(getMinMaxValue(sparkline_in_7d.price).max, "$"),
+          price: [getMinMaxValue(sparkline_in_7d.price).min, getMinMaxValue(sparkline_in_7d.price).max],
         },
         ath: {
           label: "All-Time High",
-          price: formatCurrencyValue(ath, "$"),
+          price: ath,
           percentage: ath_change_percentage,
           date: formatDate(ath_date),
         },
         atl: {
           label: "All-Time Low",
-          price: formatCurrencyValue(atl, "$"),
+          price: atl,
           percentage: atl_change_percentage,
           date: formatDate(atl_date),
         },
@@ -228,4 +219,22 @@ export function transformCoinsListWithMarketData(
       ],
     })
   );
+}
+
+export const convertScientificToStandard = (x: number): string => {
+  if (Math.abs(x) < 1.0) {
+    const e = parseInt(x.toString().split('e-')[1]);
+    if (e) {
+      x *= Math.pow(10, e - 1);
+      return '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+    }
+  } else {
+    const e = parseInt(x.toString().split('+')[1]);
+    if (e > 20) {
+      const adjustedE = e - 20;
+      x /= Math.pow(10, adjustedE);
+      return x.toString() + (new Array(adjustedE + 1)).join('0');
+    }
+  }
+  return x.toString();
 }
