@@ -1,4 +1,4 @@
 export interface ILabeledValue {
   label: string;
-  price: string | number;
+  price: string | number | number[];
 }
