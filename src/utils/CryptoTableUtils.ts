@@ -102,13 +102,27 @@ export function formatPercentageValue(value: number): string {
   return value ? `${Math.abs(value).toFixed(1)}%` : "-";
 }
 
-export function formatDate(date: string): string {
+export function formatDate(date: string | number, includeTime: boolean = false): string {
   const dateObj = new Date(date);
   const month = getShortMonthName(dateObj.getMonth());
   const day = formatTwoDigits(dateObj.getDate());
   const year = dateObj.getFullYear();
 
-  return `${month} ${day}, ${year}`;
+  let formattedDate = `${month} ${day}, ${year}`;
+
+  if (includeTime) {
+    const hours = formatTwoDigits(dateObj.getHours());
+    const minutes = formatTwoDigits(dateObj.getMinutes());
+    const seconds = formatTwoDigits(dateObj.getSeconds());
+    
+    const timezoneOffset = -dateObj.getTimezoneOffset() / 60;
+    const offsetSign = timezoneOffset >= 0 ? '+' : '-';
+    const formattedOffset = `GMT${offsetSign}${Math.abs(timezoneOffset)}`;
+
+    formattedDate += `, ${hours}:${minutes}:${seconds} ${formattedOffset}`;
+  }
+
+  return formattedDate;
 }
 
 export function formatTwoDigits(value: number): string {
