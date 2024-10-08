@@ -80,6 +80,11 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     (currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
     (info: TCryptoTableCellContext) => {
       const value = info.getValue<number>();
+
+      if (value === null) {
+        return "-";
+      }
+
       if (value < 1) {
         const fractionalPart = value.toString().split(".")[1] || "";
         const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
