@@ -1,5 +1,4 @@
 import debounce from "debounce";
-import React from "react";
 import {
   TChartDateFormat,
   TCoinHistoricalChartItem,
@@ -11,10 +10,10 @@ import {
 
 export const handlePageChange = debounce(
   (
-    count: number,
-    setCurrentPage: React.Dispatch<React.SetStateAction<number>>
+    page: number,
+    setCurrentPage: (page: number) => void
   ): void => {
-    setCurrentPage(count);
+    setCurrentPage(page);
   },
   300
 );
