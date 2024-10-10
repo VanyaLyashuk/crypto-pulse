@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
 import { useShallow } from "zustand/react/shallow";
+import CoinInfoChart from "../../components/coinInfoChart/CoinInfoChart";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import { TCoinInfoChartData, TCoinInfoTimeRange } from "../../models";
@@ -13,18 +14,29 @@ import useCoinsStore from "../../store/coins.store";
 import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
-  const [chartData, setChartData] = useState<TCoinInfoChartData | {}>({})
+  const {coinId} = useParams<{coinId: string}>();
+  const [chartData, setChartData] = useState<
+    TCoinInfoChartData | Record<TCoinInfoTimeRange, any>
+  >({});
+
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
+
   const {
     selectedCoinId,
+    setSelectedCoinId,
     selectedMetric,
     selectedTimeRange,
+    setSelectedTimeRange,
     startDate,
     endDate,
   } = useCoinInfoStore(
     useShallow((state) => ({
       selectedCoinId: state.selectedCoinId,
+      setSelectedCoinId: state.setSelectedCoinId,
       selectedMetric: state.selectedMetric,
       selectedTimeRange: state.selectedTimeRange,
+      setSelectedTimeRange: state.setSelectedTimeRange,
       startDate: state.startDate,
       endDate: state.endDate,
     }))
@@ -49,7 +61,7 @@ const CoinInfo: React.FC = () => {
   const navigate = useNavigate();
   const closeModal = () => {
     navigate(-1);
-    setChartData({});
+    setSelectedTimeRange("24h");
   };
 
   useEffect(() => {
@@ -59,29 +71,37 @@ const CoinInfo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if(endDate) {
+    
+    if (!selectedCoinId && coinId) {
+      setSelectedCoinId(coinId);
+    }
+  }, [coinId, selectedCoinId]);
+
+  useEffect(() => {
+    if (endDate && selectedCoinId) {
       onRequest(selectedTimeRange);
     }
-  }, [endDate])
-  
+  }, [endDate, selectedCoinId]);
+
   const onRequest = (period: TCoinInfoTimeRange) => {
-    
-    if (period in chartData && period !== "date range") return;
+    if (chartData[period] && period !== "date range") return;
+
+    setLoading(true);
+    setError(false);
 
     const from = getUnixTimestamp(startDate);
     const to = getUnixTimestamp(endDate);
 
     coinGecoService
-      ._getCoinHistoricalChartDataById(
-        selectedCoinId,
-        from,
-        to
-      )
-      .then(data => {
-        if(period in chartData && period !== "date range") return;
-        const newChartData = {...chartData, [period]: data};
-        
-        setChartData(newChartData)
+      ._getCoinHistoricalChartDataById(selectedCoinId, from, to)
+      .then((data) => {
+        if (chartData[period] && period !== "date range") return;
+        const newChartData = { ...chartData, [period]: data };
+
+        setChartData(newChartData);
+
+        setLoading(false);
+        setError(false);
       });
   };
 
@@ -105,9 +125,13 @@ const CoinInfo: React.FC = () => {
               activeFilter={selectedTimeRange}
             />
           </div>
-          <div className="grid w-full bg-gray-200 aspect-video place-items-center">
-            <p>Coin chart for {name}</p>
-          </div>
+          {!loading && !error && chartData[selectedTimeRange] ? (
+            <CoinInfoChart data={chartData[selectedTimeRange]} />
+          ) : (
+            <div className="grid w-full bg-gray-200 aspect-video place-items-center">
+              <p>Coin chart for {name}</p>
+            </div>
+          )}
         </div>
         <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
           <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start lg:overflow-auto">
