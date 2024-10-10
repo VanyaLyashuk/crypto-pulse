@@ -11,11 +11,11 @@ const App: React.FC = () => {
       <>
         <Routes location={state?.backgroundLocation || location}>
           <Route path="/" element={<Home />} />
-          <Route path="/coin/:id" element={<CoinInfo />} />
+          <Route path="/coin/:coinId" element={<CoinInfo />} />
         </Routes>
         {state?.backgroundLocation && (
           <Routes>
-            <Route path="/coin/:id" element={<CoinInfo />} />
+            <Route path="/coin/:coinId" element={<CoinInfo />} />
           </Routes>
         )}
       </>
