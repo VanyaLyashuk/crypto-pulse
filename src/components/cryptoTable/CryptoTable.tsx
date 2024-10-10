@@ -129,8 +129,8 @@ const CryptoTable: React.FC = () => {
               currentPage={currentPage}
               totalCount={totalCoins}
               pageSize={rowsPerPage}
-              onPageChange={(count: number) =>
-                handlePageChange(count, setCurrentPage)
+              onPageChange={(page: number) =>
+                handlePageChange(page, setCurrentPage)
               }
             />
           </CryptoTableControls>
