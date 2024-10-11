@@ -148,11 +148,13 @@ export function formatXAxisLabel(date: Date, format: TChartDateFormat) {
 
 export function formatYAxisLabel(value: number, currency: string = '$') {
   if (value >= 1e12) {
-    return currency + (value % 1e12 === 0 ? (value / 1e12).toFixed(0) : (value / 1e12).toFixed(2)) + 'T';
+    return currency + (value / 1e12).toFixed(2) + 'T';
+  } else if (value >= 1e9) {
+    return currency + (value / 1e9).toFixed(0) + 'B';
   } else if (value >= 1e6) {
-    return currency + (value % 1e6 === 0 ? (value / 1e6).toFixed(0) : (value / 1e6).toFixed(2)) + 'M';
+    return currency + (value / 1e6).toFixed(0) + 'M';
   } else if (value >= 1e3) {
-    return currency + (value % 1e3 === 0 ? (value / 1e3).toFixed(0) : (value / 1e3).toFixed(2)) + 'K';
+    return currency + (value / 1e3).toFixed(2) + 'K';
   } else if (value >= 1) {
     return currency + (Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2));
   } else {
