@@ -5,8 +5,10 @@ import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceCha
 
 import { useShallow } from "zustand/react/shallow";
 import CoinInfoChart from "../../components/coinInfoChart/CoinInfoChart";
+import CoinInfoChartSkeleton from "../../components/coinInfoChartSkeleton/CoinInfoChartSkeleton";
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
+import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import { TCoinInfoChartData, TCoinInfoTimeRange } from "../../models";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
@@ -14,7 +16,7 @@ import useCoinsStore from "../../store/coins.store";
 import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
-  const {coinId} = useParams<{coinId: string}>();
+  const { coinId } = useParams<{ coinId: string }>();
   const [chartData, setChartData] = useState<
     TCoinInfoChartData | Record<TCoinInfoTimeRange, any>
   >({});
@@ -71,7 +73,6 @@ const CoinInfo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    
     if (!selectedCoinId && coinId) {
       setSelectedCoinId(coinId);
     }
@@ -83,11 +84,20 @@ const CoinInfo: React.FC = () => {
     }
   }, [endDate, selectedCoinId]);
 
+  const onLoading = () => {
+    setLoading(true);
+    setError(false);
+  };
+
+  const onError = () => {
+    setLoading(false);
+    setError(true);
+  }
+
   const onRequest = (period: TCoinInfoTimeRange) => {
     if (chartData[period] && period !== "date range") return;
 
-    setLoading(true);
-    setError(false);
+    onLoading();
 
     const from = getUnixTimestamp(startDate);
     const to = getUnixTimestamp(endDate);
@@ -102,6 +112,9 @@ const CoinInfo: React.FC = () => {
 
         setLoading(false);
         setError(false);
+      })
+      .catch(e => {
+        onError();
       });
   };
 
@@ -126,11 +139,11 @@ const CoinInfo: React.FC = () => {
             />
           </div>
           {!loading && !error && chartData[selectedTimeRange] ? (
-            <CoinInfoChart data={chartData[selectedTimeRange]} />
+            <ErrorBoundary>
+              <CoinInfoChart data={chartData[selectedTimeRange]} />
+            </ErrorBoundary>
           ) : (
-            <div className="grid w-full bg-gray-200 aspect-video place-items-center">
-              <p>Coin chart for {name}</p>
-            </div>
+            <CoinInfoChartSkeleton />
           )}
         </div>
         <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
