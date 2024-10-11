@@ -147,7 +147,9 @@ export function formatXAxisLabel(date: Date, format: TChartDateFormat) {
 }
 
 export function formatYAxisLabel(value: number, currency: string = '$') {
-  if (value >= 1e6) {
+  if (value >= 1e12) {
+    return currency + (value % 1e12 === 0 ? (value / 1e12).toFixed(0) : (value / 1e12).toFixed(2)) + 'T';
+  } else if (value >= 1e6) {
     return currency + (value % 1e6 === 0 ? (value / 1e6).toFixed(0) : (value / 1e6).toFixed(2)) + 'M';
   } else if (value >= 1e3) {
     return currency + (value % 1e3 === 0 ? (value / 1e3).toFixed(0) : (value / 1e3).toFixed(2)) + 'K';
