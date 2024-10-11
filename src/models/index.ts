@@ -1,4 +1,5 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
+import { ICoinInfoChartProps } from "./componentProps/CoinInfoChartSkeletonProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
 import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
@@ -37,8 +38,7 @@ import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps,
-    ICoinHistoricalChartDataById,
-    ICoinInfoFilterProps,
+    ICoinHistoricalChartDataById, ICoinInfoChartProps, ICoinInfoFilterProps,
     ICoinInfoListProps,
     ICoinInfoProps,
     ICoinInfoStore,
