@@ -89,18 +89,33 @@ function generateYAxisLabels(prices: number[]): string[] {
 export function transformCoinHistoricalChartDataById(
   data: ICoinHistoricalChartDataById
 ): ITransformedCoinHistoricalChartDataById {
-  const timestampsArr = extractTimestamps(data.prices);
+  const timestampsPrice = extractTimestamps(data.prices);
+  const timestampsMarketCap = extractTimestamps(data.market_caps);
   const pricesArr = extractValues(data.prices);
+  const marketCapArr = extractValues(data.market_caps);
 
-  const xAsixLabels = generateXAxisLabels(
-    timestampsArr[0],
-    timestampsArr[timestampsArr.length - 1],
+  const xAxisLabelsPrice = generateXAxisLabels(
+    timestampsPrice[0],
+    timestampsPrice[timestampsPrice.length - 1],
     HOUR_TIMESTAMP,
     DAY_TIMESTAMP
   );
-  const yAxisLabels = generateYAxisLabels(pricesArr);
+  const xAxisLabelsMarketCap = generateXAxisLabels(
+    timestampsMarketCap[0],
+    timestampsMarketCap[timestampsMarketCap.length - 1],
+    HOUR_TIMESTAMP,
+    DAY_TIMESTAMP
+  );
+  const yAxisLabelsPrice = generateYAxisLabels(pricesArr);
+  const yAxisLabelsMarketCap = generateYAxisLabels(marketCapArr);
 
-  return { ...data, xAxisLabels: xAsixLabels, yAxisLabels: yAxisLabels };
+  return {
+    ...data,
+    xAxisLabelsPrice,
+    xAxisLabelsMarketCap,
+    yAxisLabelsPrice,
+    yAxisLabelsMarketCap,
+  };
 }
 
 export function transformCoinsListWithMarketData(
@@ -185,7 +200,10 @@ export function transformCoinsListWithMarketData(
         },
         range_7d: {
           label: "7d Range",
-          price: [getMinMaxValue(sparkline_in_7d.price).min, getMinMaxValue(sparkline_in_7d.price).max],
+          price: [
+            getMinMaxValue(sparkline_in_7d.price).min,
+            getMinMaxValue(sparkline_in_7d.price).max,
+          ],
         },
         ath: {
           label: "All-Time High",
@@ -223,18 +241,18 @@ export function transformCoinsListWithMarketData(
 
 export const convertScientificToStandard = (x: number): string => {
   if (Math.abs(x) < 1.0) {
-    const e = parseInt(x.toString().split('e-')[1]);
+    const e = parseInt(x.toString().split("e-")[1]);
     if (e) {
       x *= Math.pow(10, e - 1);
-      return '0.' + (new Array(e)).join('0') + x.toString().substring(2);
+      return "0." + new Array(e).join("0") + x.toString().substring(2);
     }
   } else {
-    const e = parseInt(x.toString().split('+')[1]);
+    const e = parseInt(x.toString().split("+")[1]);
     if (e > 20) {
       const adjustedE = e - 20;
       x /= Math.pow(10, adjustedE);
-      return x.toString() + (new Array(adjustedE + 1)).join('0');
+      return x.toString() + new Array(adjustedE + 1).join("0");
     }
   }
   return x.toString();
-}
+};
