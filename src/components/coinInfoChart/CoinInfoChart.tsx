@@ -14,7 +14,9 @@ import {
 
 import React, { useRef } from "react";
 import { Line } from "react-chartjs-2";
+import { useShallow } from "zustand/react/shallow";
 import { ITransformedCoinHistoricalChartDataById } from "../../models";
+import useCoinInfoStore from "../../store/coinInfo.store";
 import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
 import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
 
@@ -57,20 +59,40 @@ const verticalLinePlugin: Plugin = {
 
 const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
-  const { prices, total_volumes, xAxisLabels, yAxisLabels } = data;
+  const {
+    prices,
+    market_caps,
+    total_volumes,
+    xAxisLabelsPrice,
+    xAxisLabelsMarketCap,
+    yAxisLabelsPrice,
+    yAxisLabelsMarketCap,
+  } = data;
 
-  if (!prices.length) {
+  const { selectedMetric } = useCoinInfoStore(
+    useShallow((state) => ({
+      selectedMetric: state.selectedMetric,
+    }))
+  );
+
+  const selectedData = selectedMetric === "Price" ? prices : market_caps;
+  const selectedXAxisLabels =
+    selectedMetric === "Price" ? xAxisLabelsPrice : xAxisLabelsMarketCap;
+  const selectedYAxisLabels =
+    selectedMetric === "Price" ? yAxisLabelsPrice : yAxisLabelsMarketCap;
+
+  if (!selectedData.length || !market_caps.length) {
     return <CoinInfoChartSkeleton message="No data available" />;
   }
 
   const chartData = {
-    labels: prices.map(([timestamp]) => timestamp),
+    labels: selectedData.map(([timestamp]) => timestamp),
     datasets: [
       {
         label: "Price",
-        data: prices.map(([, value]) => value),
+        data: selectedData.map(([, value]) => value),
         borderColor:
-          prices[0][1] > prices[prices.length - 1][1]
+          selectedData[0][1] > selectedData[selectedData.length - 1][1]
             ? "rgba(220, 38, 38, 1)"
             : "rgba(34, 197, 94, 1)",
         borderWidth: 2,
@@ -96,9 +118,9 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         ticks: {
           callback: function (index: any) {
             const labelIndex = Math.floor(
-              (index / prices.length) * xAxisLabels.length
+              (index / selectedData.length) * selectedXAxisLabels.length
             );
-            return xAxisLabels[labelIndex] || "";
+            return selectedXAxisLabels[labelIndex] || "";
           },
           autoSkip: true,
           maxTicksLimit: 10,
@@ -121,16 +143,16 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         },
         ticks: {
           callback: function (_value: any, index: number) {
-            return yAxisLabels[index] || "";
+            return selectedYAxisLabels[index] || "";
           },
-          maxTicksLimit: yAxisLabels.length,
+          maxTicksLimit: selectedYAxisLabels.length,
           padding: 14,
         },
         border: {
           display: false,
         },
-        suggestedMin: Math.min(...prices.map(([, value]) => value)),
-        suggestedMax: Math.max(...prices.map(([, value]) => value)),
+        suggestedMin: Math.min(...selectedData.map(([, value]) => value)),
+        suggestedMax: Math.max(...selectedData.map(([, value]) => value)),
       },
     },
     plugins: {
@@ -138,17 +160,17 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         displayColors: false,
         callbacks: {
           title: (tooltipItems) => {
-            const timestamp = prices[tooltipItems[0].dataIndex][0];
+            const timestamp = selectedData[tooltipItems[0].dataIndex][0];
             const formattedDate = formatDate(timestamp, true);
             return `${formattedDate}`;
           },
 
           label: (tooltipItem) => {
-            const price = prices[tooltipItem.dataIndex][1];
+            const price = selectedData[tooltipItem.dataIndex][1];
             const volume = total_volumes[tooltipItem.dataIndex][1];
 
             return [
-              `Price: ${formatCurrencyValue(price, "$")}`,
+              `${selectedMetric}: ${formatCurrencyValue(price, "$")}`,
               `Volume: ${formatCurrencyValue(volume, "$")}`,
             ];
           },
