@@ -15,6 +15,9 @@ export default {
       },
       minHeight: {
         '50vh': '50vh'
+      },
+      colors: {
+        'primary': '#e76e4e',
       }
     },
   },
