@@ -13,34 +13,34 @@ const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({
           <tr>
             <th className="px-2 py-3.5 bg-white"></th>
             <th className="px-2 py-3.5 bg-white">
-              <div className="w-6 h-6 bg-gray-300 animate-pulse"></div>
+              <div className="w-6 h-6 bg-gray-200 animate-pulse"></div>
             </th>
             <th
               className="px-2 py-3.5 bg-white w-full"
               style={{ minWidth: "200px" }}
             >
-              <div className="h-6 bg-gray-300 w-14 animate-pulse"></div>
+              <div className="h-6 bg-gray-200 w-14 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white">
-              <div className="h-6 ml-auto bg-gray-300 w-14 animate-pulse"></div>
+              <div className="h-6 ml-auto bg-gray-200 w-14 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "71px" }}>
-              <div className="w-8 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-8 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "71px" }}>
-              <div className="w-8 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-8 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "71px" }}>
-              <div className="w-8 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-8 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "145px" }}>
-              <div className="w-24 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-24 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "145px" }}>
-              <div className="w-24 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-24 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
             <th className="px-2 py-3.5 bg-white" style={{ width: "151px" }}>
-              <div className="w-24 h-6 ml-auto bg-gray-300 animate-pulse"></div>
+              <div className="w-24 h-6 ml-auto bg-gray-200 animate-pulse"></div>
             </th>
           </tr>
         </thead>
