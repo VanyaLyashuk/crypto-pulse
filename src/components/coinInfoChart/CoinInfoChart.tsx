@@ -16,6 +16,7 @@ import React, { useRef } from "react";
 import { Line } from "react-chartjs-2";
 import { ITransformedCoinHistoricalChartDataById } from "../../models";
 import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
+import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
 
 ChartJS.register(
   CategoryScale,
@@ -57,6 +58,10 @@ const verticalLinePlugin: Plugin = {
 const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
   const { prices, total_volumes, xAxisLabels, yAxisLabels } = data;
+
+  if (!prices.length) {
+    return <CoinInfoChartSkeleton message="No data available" />;
+  }
 
   const chartData = {
     labels: prices.map(([timestamp]) => timestamp),
