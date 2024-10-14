@@ -175,7 +175,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
             return selectedYAxisLabels[index] || "";
           },
           maxTicksLimit: selectedYAxisLabels.length,
-          padding: 14,
+          // padding: 14,
         },
         border: {
           display: false,
