@@ -28,6 +28,7 @@ const CoinInfo: React.FC = () => {
     selectedCoinId,
     setSelectedCoinId,
     selectedMetric,
+    setSelectedMetric,
     selectedTimeRange,
     setSelectedTimeRange,
     startDate,
@@ -37,6 +38,7 @@ const CoinInfo: React.FC = () => {
       selectedCoinId: state.selectedCoinId,
       setSelectedCoinId: state.setSelectedCoinId,
       selectedMetric: state.selectedMetric,
+      setSelectedMetric: state.setSelectedMetric,
       selectedTimeRange: state.selectedTimeRange,
       setSelectedTimeRange: state.setSelectedTimeRange,
       startDate: state.startDate,
@@ -63,6 +65,7 @@ const CoinInfo: React.FC = () => {
   const navigate = useNavigate();
   const closeModal = () => {
     navigate(-1);
+    setSelectedMetric("Price");
     setSelectedTimeRange("24h");
   };
 
