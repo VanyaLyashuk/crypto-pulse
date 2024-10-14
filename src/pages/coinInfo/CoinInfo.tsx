@@ -87,18 +87,15 @@ const CoinInfo: React.FC = () => {
     }
   }, [endDate, selectedCoinId]);
 
-  const onLoading = () => {
-    setLoading(true);
-    setError(false);
-  };
-
-  const onError = () => {
-    setLoading(false);
-    setError(true);
-  }
-
   const onRequest = (period: TCoinInfoTimeRange) => {
-    if (chartData[period] && period !== "date range") return;
+
+    if (hasDataForPeriod(period)) {
+      setChartData({
+        ...chartData,
+        ["date range"]: chartData[period],
+      })
+      return
+    };
 
     onLoading();
 
@@ -108,17 +105,34 @@ const CoinInfo: React.FC = () => {
     coinGecoService
       ._getCoinHistoricalChartDataById(selectedCoinId, from, to)
       .then((data) => {
-        if (chartData[period] && period !== "date range") return;
-        const newChartData = { ...chartData, [period]: data };
+        const newChartData = {
+          ...chartData,
+          [period]: data,
+          ["date range"]: data,
+        };
 
         setChartData(newChartData);
 
         setLoading(false);
         setError(false);
       })
-      .catch(e => {
+      .catch((e) => {
         onError();
       });
+  };
+
+  const hasDataForPeriod = (period: TCoinInfoTimeRange): boolean => {
+    return chartData[period] && period !== "date range"
+  }
+
+  const onLoading = () => {
+    setLoading(true);
+    setError(false);
+  };
+
+  const onError = () => {
+    setLoading(false);
+    setError(true);
   };
 
   return (
