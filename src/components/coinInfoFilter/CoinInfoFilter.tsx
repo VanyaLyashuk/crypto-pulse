@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import debounce from "debounce";
 import { BsCalendar2 } from "react-icons/bs";
 import { useShallow } from "zustand/react/shallow";
 import {
@@ -34,7 +35,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
     }))
   );
 
-  const onFilterChange = (filter: TCoinInfoMetric | TCoinInfoTimeRange) => {
+  const onFilterChange = debounce((filter: TCoinInfoMetric | TCoinInfoTimeRange) => {
     const isMetric = filter === "Price" || filter === "Market Cap";
     const isDateRange = filter === "date range";
   
@@ -52,7 +53,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
       
       setIsDatepickerOpen(isDateRange);
     }
-  };
+  }, 100);
 
   const buttons = filterOptions.map((filter) => {
     const btnClasses = clsx("px-2 py-1 text-sm font-medium", {
