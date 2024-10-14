@@ -1,9 +1,9 @@
+import debounce from "debounce";
 import { useEffect, useState } from "react";
 import CoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
 import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
-import { handlePageChange } from "../../utils/CryptoTableUtils";
 import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
 import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
@@ -98,6 +98,13 @@ const CryptoTable: React.FC = () => {
         onError();
       });
   };
+
+  const handlePageChange = debounce(
+    (page: number, setCurrentPage: (page: number) => void): void => {
+      setCurrentPage(page);
+    },
+    300
+  );
 
   const errMsg = error ? (
     <ErrorMessage message="Ooops! Something went wrong!" />

@@ -1,4 +1,3 @@
-import debounce from "debounce";
 import {
   TChartDateFormat,
   TCoinHistoricalChartItem,
@@ -7,13 +6,6 @@ import {
   TDateOrUndefined,
   TShortMonthName,
 } from "../models";
-
-export const handlePageChange = debounce(
-  (page: number, setCurrentPage: (page: number) => void): void => {
-    setCurrentPage(page);
-  },
-  300
-);
 
 export const getUnixTimestamp = (date: TDateOrUndefined): number =>
   date ? Math.floor(date.getTime() / 1000) : 0;
