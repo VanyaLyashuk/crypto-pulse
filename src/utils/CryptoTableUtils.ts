@@ -9,10 +9,7 @@ import {
 } from "../models";
 
 export const handlePageChange = debounce(
-  (
-    page: number,
-    setCurrentPage: (page: number) => void
-  ): void => {
+  (page: number, setCurrentPage: (page: number) => void): void => {
     setCurrentPage(page);
   },
   300
@@ -101,7 +98,10 @@ export function formatPercentageValue(value: number): string {
   return value ? `${Math.abs(value).toFixed(1)}%` : "-";
 }
 
-export function formatDate(date: string | number, includeTime: boolean = false): string {
+export function formatDate(
+  date: string | number,
+  includeTime: boolean = false
+): string {
   const dateObj = new Date(date);
   const month = getShortMonthName(dateObj.getMonth());
   const day = formatTwoDigits(dateObj.getDate());
@@ -113,9 +113,9 @@ export function formatDate(date: string | number, includeTime: boolean = false):
     const hours = formatTwoDigits(dateObj.getHours());
     const minutes = formatTwoDigits(dateObj.getMinutes());
     const seconds = formatTwoDigits(dateObj.getSeconds());
-    
+
     const timezoneOffset = -dateObj.getTimezoneOffset() / 60;
-    const offsetSign = timezoneOffset >= 0 ? '+' : '-';
+    const offsetSign = timezoneOffset >= 0 ? "+" : "-";
     const formattedOffset = `GMT${offsetSign}${Math.abs(timezoneOffset)}`;
 
     formattedDate += `, ${hours}:${minutes}:${seconds} ${formattedOffset}`;
@@ -146,20 +146,48 @@ export function formatXAxisLabel(date: Date, format: TChartDateFormat) {
   }
 }
 
-export function formatYAxisLabel(value: number, currency: string = '$') {
+export function formatYAxisLabel(value: number, currency: string = "$") {
+  let formattedValue: string;
+
   if (value >= 1e12) {
-    return currency + (value / 1e12).toFixed(2) + 'T';
+    formattedValue =
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }).format(value / 1e12) + "T";
   } else if (value >= 1e9) {
-    return currency + (value / 1e9).toFixed(0) + 'B';
+    formattedValue =
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }).format(value / 1e9) + "B";
   } else if (value >= 1e6) {
-    return currency + (value / 1e6).toFixed(0) + 'M';
+    formattedValue =
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }).format(value / 1e6) + "M";
   } else if (value >= 1e3) {
-    return currency + (value / 1e3).toFixed(2) + 'K';
-  } else if (value >= 1) {
-    return currency + (Number.isInteger(value) ? value.toFixed(0) : value.toFixed(2));
+    formattedValue =
+      new Intl.NumberFormat("en-US", {
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2,
+      }).format(value / 1e3) + "K";
+  } else if (value < 1 && value >= 0.001) {
+    formattedValue = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 3,
+    }).format(value);
+  } else if (value < 0.0001) {
+    formattedValue = new Intl.NumberFormat("en-US", {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 7,
+    }).format(value);
   } else {
-    return currency + value.toString();
+    formattedValue = new Intl.NumberFormat("en-US").format(value);
   }
+
+  return currency + formattedValue;
 }
 
 export function defineInterval(
