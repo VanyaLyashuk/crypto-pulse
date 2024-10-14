@@ -2,6 +2,7 @@ import {
   CategoryScale,
   Chart as ChartJS,
   ChartOptions,
+  Filler, // Імпорт плагіну Filler
   Legend,
   LinearScale,
   LineElement,
@@ -12,7 +13,7 @@ import {
   Tooltip,
 } from "chart.js";
 
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useShallow } from "zustand/react/shallow";
 import { ITransformedCoinHistoricalChartDataById } from "../../models";
@@ -20,6 +21,7 @@ import useCoinInfoStore from "../../store/coinInfo.store";
 import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
 import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
 
+// Реєстрація Filler разом з іншими компонентами ChartJS
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -28,7 +30,8 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  TimeScale
+  TimeScale,
+  Filler // Додано плагін Filler
 );
 
 interface CoinInfoChartProps {
@@ -59,6 +62,8 @@ const verticalLinePlugin: Plugin = {
 
 const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
+  const [backgroundColor, setBackgroundColor] = useState<string | CanvasGradient>("");
+
   const {
     prices,
     market_caps,
@@ -81,6 +86,29 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const selectedYAxisLabels =
     selectedMetric === "Price" ? yAxisLabelsPrice : yAxisLabelsMarketCap;
 
+  useEffect(() => {
+    if (!chartRef.current) return;
+
+    const chartCanvas = chartRef.current.ctx;
+    if (!chartCanvas) return;
+
+    const gradient = chartCanvas.createLinearGradient(0, 0, 0, 500);
+    const chartColor =
+      selectedData[0][1] > selectedData[selectedData.length - 1][1]
+        ? "rgba(220, 38, 38, 1)" // червона лінія
+        : "rgba(34, 197, 94, 1)"; // зелена лінія
+
+    if (chartColor === "rgba(220, 38, 38, 1)") {
+      gradient.addColorStop(0, "rgba(220, 38, 38, 0.5)"); // червоний градієнт
+      gradient.addColorStop(1, "rgba(220, 38, 38, 0)");   // прозорий
+    } else {
+      gradient.addColorStop(0, "rgba(34, 197, 94, 0.5)"); // зелений градієнт
+      gradient.addColorStop(1, "rgba(34, 197, 94, 0)");   // прозорий
+    }
+
+    setBackgroundColor(gradient);
+  }, [selectedData]);
+
   if (!selectedData.length || !market_caps.length) {
     return <CoinInfoChartSkeleton message="No data available" />;
   }
@@ -93,10 +121,11 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         data: selectedData.map(([, value]) => value),
         borderColor:
           selectedData[0][1] > selectedData[selectedData.length - 1][1]
-            ? "rgba(220, 38, 38, 1)"
-            : "rgba(34, 197, 94, 1)",
+            ? "rgba(220, 38, 38, 1)" // червона лінія
+            : "rgba(34, 197, 94, 1)", // зелена лінія
+        backgroundColor: backgroundColor,
         borderWidth: 2,
-        fill: false,
+        fill: true, // активація заповнення градієнтом
         pointRadius: 0,
         pointHitRadius: 10,
       },
