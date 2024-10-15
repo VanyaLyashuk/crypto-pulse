@@ -47,7 +47,7 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   } else {
     return (
       <li className={liClasses}>
-        <h5 className="text-gray-500">{value.label}</h5>{" "}
+        <h5 className="mr-2 text-gray-500 lg:mr-4">{value.label}</h5>{" "}
         {Array.isArray(value.price) ? (
           <div>
             {useFormattedSmallCurrency(value.price[0], "$")}-
