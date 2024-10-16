@@ -88,14 +88,13 @@ const CoinInfo: React.FC = () => {
   }, [endDate, selectedCoinId]);
 
   const onRequest = (period: TCoinInfoTimeRange) => {
-
     if (hasDataForPeriod(period)) {
       setChartData({
         ...chartData,
         ["date range"]: chartData[period],
-      })
-      return
-    };
+      });
+      return;
+    }
 
     onLoading();
 
@@ -122,8 +121,8 @@ const CoinInfo: React.FC = () => {
   };
 
   const hasDataForPeriod = (period: TCoinInfoTimeRange): boolean => {
-    return chartData[period] && period !== "date range"
-  }
+    return chartData[period] && period !== "date range";
+  };
 
   const onLoading = () => {
     setLoading(true);
@@ -142,63 +141,74 @@ const CoinInfo: React.FC = () => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-[592px]  md:max-w-[720px] lg:max-w-[976px] sm:m-auto sm:px-4 lg:px-6"
+        className="w-full px-2 py-9 bg-white rounded-tl-xl rounded-tr-xl sm:rounded-xl sm:max-w-full  sm:m-auto sm:px-4 lg:px-6 xl:max-w-[1300px] xl:flex xl:items-start xl:gap-6"
       >
-        <div className="mb-2 lg:mb-8">
-          <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-            <CoinInfoFilter
-              filterOptions={["Price", "Market Cap"]}
-              activeFilter={selectedMetric}
-            />
-            <CoinInfoFilter
-              filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
-              activeFilter={selectedTimeRange}
-            />
-          </div>
-          {!loading && !error && chartData[selectedTimeRange] ? (
-            <ErrorBoundary>
-              <CoinInfoChart data={chartData[selectedTimeRange]} />
-            </ErrorBoundary>
-          ) : (
-            <CoinInfoChartSkeleton />
-          )}
-        </div>
-        <div className="lg:grid lg:grid-rows-[auto, auto, 1fr] lg:grid-cols-8 lg:gap-6">
-          <div className="w-full mb-8 overflow-x-scroll border rounded-lg lg:col-span-5 lg:col-start-4 lg:row-start-1 lg:mb-0 lg:self-start lg:overflow-auto">
-            <CoinInfoTable data={coin_percentage_table} />
-          </div>
-          <div className="mb-5 lg:col-span-3 lg:mb-0">
-            <div className="flex items-center gap-2 mb-3">
-              <img className="w-8" src={image} alt={name} />
-              <h3 className="text-2xl font-bold leading-none">
-                {name}{" "}
-                <span className="text-base font-normal text-nowrap">
-                  <span className="uppercase">{symbol}</span> Price
-                </span>
-              </h3>
-              <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md">
-                #{market_cap_rank}
-              </div>
-            </div>
-            <div className="flex items-center gap-x-2">
-              <h4 className="text-4xl font-bold">{current_price_formatted}</h4>
-              <PriceChangeIndicator
-                arrowSize="w-4 h-4"
-                className="text-xl font-bold"
-                value={price_change_percentage_24h_in_currency}
+        <div className="w-full xl:order-2">
+          <div className="mb-3 md:mb-5">
+            <div className="flex flex-wrap items-start justify-between gap-2 mb-2.5">
+              <CoinInfoFilter
+                filterOptions={["Price", "Market Cap"]}
+                activeFilter={selectedMetric}
+              />
+              <CoinInfoFilter
+                filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
+                activeFilter={selectedTimeRange}
               />
             </div>
+            {!loading && !error && chartData[selectedTimeRange] ? (
+              <ErrorBoundary>
+                <CoinInfoChart data={chartData[selectedTimeRange]} />
+              </ErrorBoundary>
+            ) : (
+              <CoinInfoChartSkeleton />
+            )}
           </div>
-          <CoinInfoList
-            name={symbol}
-            title="Statistics"
-            data={coin_statistics}
-          />
-          <CoinInfoList
-            name={symbol}
-            title="Historical Price"
-            data={coin_historical_price}
-          />
+          <div className="mb-6 overflow-x-auto border rounded-lg md:hidden xl:block xl:mb-0">
+            <CoinInfoTable data={coin_percentage_table} />
+          </div>
+        </div>
+        <div className="xl:shrink-0 xl:w-max xl:order-1">
+          <div className="w-full mb-5 md:flex md:gap-4">
+            <div className="md:w-max">
+              <div className="flex items-center gap-2 mb-2">
+                <img className="w-8" src={image} alt={name} />
+                <h3 className="text-2xl font-bold leading-none">
+                  <span className="break-normal">{name}</span>&nbsp;
+                  <span className="text-base font-normal text-nowrap">
+                    <span className="uppercase">{symbol}</span> Price
+                  </span>
+                </h3>
+                <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md">
+                  #{market_cap_rank}
+                </div>
+              </div>
+              <div className="flex items-center gap-x-2">
+                <h4 className="text-4xl font-bold">
+                  {current_price_formatted}
+                </h4>
+                <PriceChangeIndicator
+                  arrowSize="w-4 h-4"
+                  className="text-xl font-bold"
+                  value={price_change_percentage_24h_in_currency}
+                />
+              </div>
+            </div>
+            <div className="hidden w-full overflow-x-auto border rounded-lg md:block md:order-1 md:flex-grow lg:overflow-auto xl:hidden">
+              <CoinInfoTable data={coin_percentage_table} />
+            </div>
+          </div>
+          <div className="flex flex-col w-full gap-y-6 md:mt-6 md:flex-row md:gap-4 md:order-none lg:gap-6 xl:flex-col xl:mt-0">
+            <CoinInfoList
+              name={symbol}
+              title="Statistics"
+              data={coin_statistics}
+            />
+            <CoinInfoList
+              name={symbol}
+              title="Historical Price"
+              data={coin_historical_price}
+            />
+          </div>
         </div>
       </div>
     </div>
