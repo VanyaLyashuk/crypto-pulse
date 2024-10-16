@@ -68,8 +68,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
     prices,
     market_caps,
     total_volumes,
-    xAxisLabelsPrice,
-    xAxisLabelsMarketCap,
+    xAxisLabels,
     yAxisLabelsPrice,
     yAxisLabelsMarketCap,
   } = data;
@@ -81,8 +80,6 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   );
 
   const selectedData = selectedMetric === "Price" ? prices : market_caps;
-  const selectedXAxisLabels =
-    selectedMetric === "Price" ? xAxisLabelsPrice : xAxisLabelsMarketCap;
   const selectedYAxisLabels =
     selectedMetric === "Price" ? yAxisLabelsPrice : yAxisLabelsMarketCap;
 
@@ -147,9 +144,9 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         ticks: {
           callback: function (index: any) {
             const labelIndex = Math.floor(
-              (index / selectedData.length) * selectedXAxisLabels.length
+              (index / selectedData.length) * xAxisLabels.length
             );
-            return selectedXAxisLabels[labelIndex] || "";
+            return xAxisLabels[labelIndex] || "";
           },
           autoSkip: true,
           maxTicksLimit: 10,

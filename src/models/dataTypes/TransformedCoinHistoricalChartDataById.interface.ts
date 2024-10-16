@@ -4,8 +4,7 @@ export interface ITransformedCoinHistoricalChartDataById {
   prices: TCoinHistoricalChartItem[],
   market_caps: TCoinHistoricalChartItem[],
   total_volumes: TCoinHistoricalChartItem[],
-  xAxisLabelsPrice: string[],
-  xAxisLabelsMarketCap: string[],
+  xAxisLabels: string[],
   yAxisLabelsPrice: string[],
   yAxisLabelsMarketCap: string[],
 }

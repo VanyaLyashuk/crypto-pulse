@@ -90,19 +90,12 @@ export function transformCoinHistoricalChartDataById(
   data: ICoinHistoricalChartDataById
 ): ITransformedCoinHistoricalChartDataById {
   const timestampsPrice = extractTimestamps(data.prices);
-  const timestampsMarketCap = extractTimestamps(data.market_caps);
   const pricesArr = extractValues(data.prices);
   const marketCapArr = extractValues(data.market_caps);
 
-  const xAxisLabelsPrice = generateXAxisLabels(
+  const xAxisLabels = generateXAxisLabels(
     timestampsPrice[0],
     timestampsPrice[timestampsPrice.length - 1],
-    HOUR_TIMESTAMP,
-    DAY_TIMESTAMP
-  );
-  const xAxisLabelsMarketCap = generateXAxisLabels(
-    timestampsMarketCap[0],
-    timestampsMarketCap[timestampsMarketCap.length - 1],
     HOUR_TIMESTAMP,
     DAY_TIMESTAMP
   );
@@ -111,8 +104,7 @@ export function transformCoinHistoricalChartDataById(
 
   return {
     ...data,
-    xAxisLabelsPrice,
-    xAxisLabelsMarketCap,
+    xAxisLabels,
     yAxisLabelsPrice,
     yAxisLabelsMarketCap,
   };

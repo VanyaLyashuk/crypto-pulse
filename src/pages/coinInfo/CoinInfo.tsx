@@ -115,7 +115,7 @@ const CoinInfo: React.FC = () => {
         setLoading(false);
         setError(false);
       })
-      .catch((e) => {
+      .catch(() => {
         onError();
       });
   };
