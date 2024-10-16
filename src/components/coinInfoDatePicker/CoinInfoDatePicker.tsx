@@ -24,7 +24,7 @@ const CoinInfoDatepicker: React.FC = () => {
     <div
       className="absolute z-50 mt-2"
       style={{
-        right: 0,
+        right: -5,
         top: 37,
       }}
     >
