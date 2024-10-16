@@ -50,13 +50,11 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
         setStartDate(startDate);
         setEndDate(endDate);
       }
-      
-      setIsDatepickerOpen(isDateRange);
     }
   }, 100);
 
   const buttons = filterOptions.map((filter) => {
-    const btnClasses = clsx("px-2 py-1 text-sm font-medium", {
+    const btnClasses = clsx("px-2 py-1.5 text-sm font-medium", {
       "bg-white rounded-md shadow-sm": activeFilter === filter,
     });
 
@@ -77,7 +75,10 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
       <button
         key={filter}
         className={btnClasses}
-        onClick={() => onFilterChange(filter)}
+        onClick={() => {
+          onFilterChange(filter)
+          setIsDatepickerOpen(false);
+        }}
       >
         {filter}
       </button>
@@ -85,7 +86,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   });
 
   return (
-    <div className="flex items-center gap-1 p-1 bg-gray-100 rounded-md">
+    <div className="flex items-center gap-1 p-1.5 bg-gray-100 rounded-md">
       {buttons}
     </div>
   );
