@@ -169,16 +169,16 @@ const CoinInfo: React.FC = () => {
         </div>
         <div className="xl:shrink-0 xl:w-max xl:order-1">
           <div className="w-full mb-5 md:flex md:gap-4">
-            <div className="md:w-max">
+            <div className="w-full md:w-max shrink-0">
               <div className="flex items-center gap-2 mb-2">
-                <img className="w-8" src={image} alt={name} />
+                <img className="w-8 shrink-0" src={image} alt={name} />
                 <h3 className="text-2xl font-bold leading-none">
                   <span className="break-normal">{name}</span>&nbsp;
                   <span className="text-base font-normal text-nowrap">
                     <span className="uppercase">{symbol}</span> Price
                   </span>
                 </h3>
-                <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md">
+                <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md shrink-0">
                   #{market_cap_rank}
                 </div>
               </div>
