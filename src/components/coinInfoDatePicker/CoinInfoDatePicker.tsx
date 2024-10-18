@@ -20,6 +20,10 @@ const CoinInfoDatepicker: React.FC = () => {
     }
   };
 
+  const today = new Date();
+  const oneYearAgo = new Date(today);
+  oneYearAgo.setFullYear(today.getFullYear() - 1);
+
   return (
     <div
       className="absolute z-50 mt-2"
@@ -34,6 +38,8 @@ const CoinInfoDatepicker: React.FC = () => {
         onChange={handleDateChange}
         startDate={startDate}
         endDate={endDate}
+        minDate={oneYearAgo}
+        maxDate={today}
         selectsRange
         inline
       />
