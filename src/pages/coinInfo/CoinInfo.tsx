@@ -10,7 +10,7 @@ import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import { TCoinInfoChartData, TCoinInfoTimeRange } from "../../models";
-import CoinGeckoService from "../../services/CoinGeckoService";
+import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
@@ -20,9 +20,6 @@ const CoinInfo: React.FC = () => {
   const [chartData, setChartData] = useState<
     TCoinInfoChartData | Record<TCoinInfoTimeRange, any>
   >({});
-
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<boolean>(false);
 
   const {
     selectedCoinId,
@@ -60,7 +57,8 @@ const CoinInfo: React.FC = () => {
     (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0] || {}
   );
 
-  const coinGecoService = new CoinGeckoService();
+  const { loading, error, getCoinHistoricalChartDataById } =
+    useCoinGeckoService();
 
   const navigate = useNavigate();
   const closeModal = () => {
@@ -96,42 +94,22 @@ const CoinInfo: React.FC = () => {
       return;
     }
 
-    onLoading();
-
     const from = getUnixTimestamp(startDate);
     const to = getUnixTimestamp(endDate);
 
-    coinGecoService
-      ._getCoinHistoricalChartDataById(selectedCoinId, from, to)
-      .then((data) => {
-        const newChartData = {
-          ...chartData,
-          [period]: data,
-          ["date range"]: data,
-        };
+    getCoinHistoricalChartDataById(selectedCoinId, from, to).then((data) => {
+      const newChartData = {
+        ...chartData,
+        [period]: data,
+        ["date range"]: data,
+      };
 
-        setChartData(newChartData);
-
-        setLoading(false);
-        setError(false);
-      })
-      .catch(() => {
-        onError();
-      });
+      setChartData(newChartData);
+    });
   };
 
   const hasDataForPeriod = (period: TCoinInfoTimeRange): boolean => {
     return chartData[period] && period !== "date range";
-  };
-
-  const onLoading = () => {
-    setLoading(true);
-    setError(false);
-  };
-
-  const onError = () => {
-    setLoading(false);
-    setError(true);
   };
 
   return (
