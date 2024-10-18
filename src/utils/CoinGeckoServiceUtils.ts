@@ -5,48 +5,12 @@ import {
   ITransformedCoinsMarketData,
 } from "../models";
 import {
-  defineFormat,
-  defineInterval,
-  extractTimestamps,
   extractValues,
   formatCurrencyValue,
   formatDate,
-  formatXAxisLabel,
   formatYAxisLabel,
   getMinMaxValue,
 } from "./CryptoTableUtils";
-
-const HOUR_TIMESTAMP = 3600 * 1000;
-const DAY_TIMESTAMP = 24 * HOUR_TIMESTAMP;
-
-function generateXAxisLabels(
-  startTimestamp: number,
-  endTimestamp: number,
-  hourTimestamp: number,
-  dayTimestamp: number
-): string[] {
-  const labels: string[] = [];
-  let duration = Math.ceil((endTimestamp - startTimestamp) / DAY_TIMESTAMP);
-
-  let interval = defineInterval(duration, hourTimestamp, dayTimestamp);
-  let format = defineFormat(duration);
-
-  const current = new Date(endTimestamp);
-
-  while (current.getTime() >= startTimestamp && labels.length <= 11) {
-    if (current.getHours() <= 2) {
-      current.setHours(0);
-      current.setMinutes(0);
-      labels.push(formatXAxisLabel(current, format));
-      current.setTime(current.getTime() - interval);
-    } else {
-      labels.push(formatXAxisLabel(current, format));
-      current.setTime(current.getTime() - interval);
-    }
-  }
-
-  return labels.reverse();
-}
 
 function generateYAxisLabels(prices: number[]): string[] {
   const { min: minValue, max: maxValue } = getMinMaxValue(prices);
@@ -89,22 +53,14 @@ function generateYAxisLabels(prices: number[]): string[] {
 export function transformCoinHistoricalChartDataById(
   data: ICoinHistoricalChartDataById
 ): ITransformedCoinHistoricalChartDataById {
-  const timestampsPrice = extractTimestamps(data.prices);
   const pricesArr = extractValues(data.prices);
   const marketCapArr = extractValues(data.market_caps);
 
-  const xAxisLabels = generateXAxisLabels(
-    timestampsPrice[0],
-    timestampsPrice[timestampsPrice.length - 1],
-    HOUR_TIMESTAMP,
-    DAY_TIMESTAMP
-  );
   const yAxisLabelsPrice = generateYAxisLabels(pricesArr);
   const yAxisLabelsMarketCap = generateYAxisLabels(marketCapArr);
 
   return {
     ...data,
-    xAxisLabels,
     yAxisLabelsPrice,
     yAxisLabelsMarketCap,
   };

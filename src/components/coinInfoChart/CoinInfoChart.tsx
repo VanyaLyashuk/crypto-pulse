@@ -2,7 +2,7 @@ import {
   CategoryScale,
   Chart as ChartJS,
   ChartOptions,
-  Filler, // Імпорт плагіну Filler
+  Filler,
   Legend,
   LinearScale,
   LineElement,
@@ -12,6 +12,7 @@ import {
   Title,
   Tooltip,
 } from "chart.js";
+import "chartjs-adapter-date-fns";
 
 import React, { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
@@ -21,7 +22,6 @@ import useCoinInfoStore from "../../store/coinInfo.store";
 import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
 import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
 
-// Реєстрація Filler разом з іншими компонентами ChartJS
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -31,7 +31,7 @@ ChartJS.register(
   Tooltip,
   Legend,
   TimeScale,
-  Filler // Додано плагін Filler
+  Filler
 );
 
 interface CoinInfoChartProps {
@@ -62,22 +62,24 @@ const verticalLinePlugin: Plugin = {
 
 const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
-  const [backgroundColor, setBackgroundColor] = useState<string | CanvasGradient>("");
+  const [backgroundColor, setBackgroundColor] = useState<
+    string | CanvasGradient
+  >("");
 
   const {
     prices,
     market_caps,
     total_volumes,
-    xAxisLabels,
     yAxisLabelsPrice,
     yAxisLabelsMarketCap,
   } = data;
 
-  const { selectedMetric } = useCoinInfoStore(
-    useShallow((state) => ({
-      selectedMetric: state.selectedMetric,
-    }))
-  );
+  const { selectedMetric } =
+    useCoinInfoStore(
+      useShallow((state) => ({
+        selectedMetric: state.selectedMetric,
+      }))
+    );
 
   const selectedData = selectedMetric === "Price" ? prices : market_caps;
   const selectedYAxisLabels =
@@ -92,15 +94,15 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
     const gradient = chartCanvas.createLinearGradient(0, 0, 0, 500);
     const chartColor =
       selectedData[0][1] > selectedData[selectedData.length - 1][1]
-        ? "rgba(220, 38, 38, 1)" // червона лінія
-        : "rgba(34, 197, 94, 1)"; // зелена лінія
+        ? "rgba(220, 38, 38, 1)"
+        : "rgba(34, 197, 94, 1)";
 
     if (chartColor === "rgba(220, 38, 38, 1)") {
-      gradient.addColorStop(0, "rgba(220, 38, 38, 0.5)"); // червоний градієнт
-      gradient.addColorStop(1, "rgba(220, 38, 38, 0)");   // прозорий
+      gradient.addColorStop(0, "rgba(220, 38, 38, 0.5)");
+      gradient.addColorStop(1, "rgba(220, 38, 38, 0)");
     } else {
-      gradient.addColorStop(0, "rgba(34, 197, 94, 0.5)"); // зелений градієнт
-      gradient.addColorStop(1, "rgba(34, 197, 94, 0)");   // прозорий
+      gradient.addColorStop(0, "rgba(34, 197, 94, 0.5)");
+      gradient.addColorStop(1, "rgba(34, 197, 94, 0)");
     }
 
     setBackgroundColor(gradient);
@@ -118,11 +120,11 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         data: selectedData.map(([, value]) => value),
         borderColor:
           selectedData[0][1] > selectedData[selectedData.length - 1][1]
-            ? "rgba(220, 38, 38, 1)" // червона лінія
-            : "rgba(34, 197, 94, 1)", // зелена лінія
+            ? "rgba(220, 38, 38, 1)"
+            : "rgba(34, 197, 94, 1)",
         backgroundColor: backgroundColor,
         borderWidth: 2,
-        fill: true, // активація заповнення градієнтом
+        fill: true,
         pointRadius: 0,
         pointHitRadius: 10,
       },
@@ -134,6 +136,12 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
     maintainAspectRatio: false,
     scales: {
       x: {
+        type: "time",
+        time: {
+          displayFormats: {
+            year: 'MMM yy'
+          }
+        },
         grid: {
           display: true,
           drawOnChartArea: false,
@@ -142,14 +150,8 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
           z: 1,
         },
         ticks: {
-          callback: function (index: any) {
-            const labelIndex = Math.floor(
-              (index / selectedData.length) * xAxisLabels.length
-            );
-            return xAxisLabels[labelIndex] || "";
-          },
           autoSkip: true,
-          maxTicksLimit: 10,
+          maxTicksLimit: 12,
         },
       },
       y: {
@@ -172,7 +174,6 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
             return selectedYAxisLabels[index] || "";
           },
           maxTicksLimit: selectedYAxisLabels.length,
-          // padding: 14,
         },
         border: {
           display: false,

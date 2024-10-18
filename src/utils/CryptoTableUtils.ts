@@ -1,5 +1,4 @@
 import {
-  TChartDateFormat,
   TCoinHistoricalChartItem,
   TCoinInfoTimeRange,
   TCryptoTableCurrency,
@@ -37,10 +36,6 @@ export function getShortMonthName(month: number): TShortMonthName {
     throw new Error("Invalid month index");
   }
   return months[month];
-}
-
-export function extractTimestamps(data: TCoinHistoricalChartItem[]): number[] {
-  return data.map((item) => item[0]);
 }
 
 export function extractValues(data: TCoinHistoricalChartItem[]): number[] {
@@ -120,24 +115,6 @@ export function formatTwoDigits(value: number): string {
   return value.toString().padStart(2, "0");
 }
 
-export function formatXAxisLabel(date: Date, format: TChartDateFormat) {
-  const year = date.getFullYear().toString().slice(-2);
-  const month = getShortMonthName(date.getMonth());
-  const day = date.getDate();
-  const hours = formatTwoDigits(date.getHours());
-
-  switch (format) {
-    case "dd. month":
-      return `${day}. ${month}`;
-    case "month 'year":
-      return `${month} '${year}`;
-    case "hours":
-      return hours === "00" ? `${day}. ${month}` : `${hours}:00`;
-    default:
-      return `${hours}:00`;
-  }
-}
-
 export function formatYAxisLabel(value: number, currency: string = "$") {
   let formattedValue: string;
 
@@ -180,37 +157,4 @@ export function formatYAxisLabel(value: number, currency: string = "$") {
   }
 
   return currency + formattedValue;
-}
-
-export function defineInterval(
-  duration: number,
-  hourTimestamp: number,
-  dayTimestamp: number
-): number {
-  if (duration >= 2 && duration <= 4) {
-    return 6 * hourTimestamp;
-  } else if (duration >= 5 && duration <= 9) {
-    return dayTimestamp;
-  } else if (duration >= 10 && duration <= 20) {
-    return 2 * dayTimestamp;
-  } else if (duration >= 20 && duration <= 29) {
-    return 3 * dayTimestamp;
-  } else if (duration >= 30 && duration <= 40) {
-    return 4 * dayTimestamp;
-  } else if (duration >= 41 && duration <= 130) {
-    return 10 * dayTimestamp;
-  } else if (duration >= 131) {
-    return 30 * dayTimestamp;
-  } else {
-    return 3 * hourTimestamp;
-  }
-}
-export function defineFormat(duration: number): TChartDateFormat {
-  if (duration >= 5 && duration <= 130) {
-    return "dd. month";
-  } else if (duration >= 131) {
-    return "month 'year";
-  } else {
-    return "hours";
-  }
 }
