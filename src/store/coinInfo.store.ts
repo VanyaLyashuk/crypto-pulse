@@ -19,7 +19,7 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       setIsDatepickerOpen: (value) => set({ isDatepickerOpen: value }),
       startDate: calcStartDate(defaultPeriod),
       setStartDate: (date) => set({ startDate: date }),
-      endDate: null,
+      endDate: undefined,
       setEndDate: (date) => set({ endDate: date }),
     }),
     { name: "CoinInfoStore" }
