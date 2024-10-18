@@ -21,7 +21,6 @@ class CoinGeckoService {
       method: "GET",
       headers: {
         accept: "application/json",
-        "x-cg-demo-api-key": this._apiKey,
       },
     };
 
@@ -39,7 +38,7 @@ class CoinGeckoService {
     perPage: number = this._perPage,
     page: number = this._page
   ): Promise<ITransformedCoinsMarketData[]> {
-    const url = `${this._apiBase}coins/markets?vs_currency=${vsCurrency}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
+    const url = `${this._apiBase}coins/markets?x_cg_demo_api_key=${this._apiKey}&vs_currency=${vsCurrency}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
     const data = await this.getResource<ICoinsMarketData[]>(url);
     const transformedData = transformCoinsListWithMarketData(data);
 
@@ -47,7 +46,7 @@ class CoinGeckoService {
   }
 
   public async _getCoinsListLength(): Promise<number> {
-    const url = `${this._apiBase}coins/list`;
+    const url = `${this._apiBase}coins/list?x_cg_demo_api_key=${this._apiKey}`;
     const data = await this.getResource<ICoinsListData[]>(url);
 
     return data.length;
@@ -59,7 +58,7 @@ class CoinGeckoService {
     to: number,
     vsCurrency: string = this._vsCurrency
   ): Promise<ICoinHistoricalChartDataById> {
-    const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}`;
+    const url = `${this._apiBase}coins/${id}/market_chart/range?vs_currency=${vsCurrency}&from=${from}&to=${to}&x_cg_demo_api_key=${this._apiKey}`;
     const data = await this.getResource<ICoinHistoricalChartDataById>(url);
     const labeledData = transformCoinHistoricalChartDataById(data);
 
