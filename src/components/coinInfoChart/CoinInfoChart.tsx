@@ -159,7 +159,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         grid: {
           display: true,
           drawOnChartArea: true,
-          drawTicks: false,
+          drawTicks: true,
           color: (context) => {
             if (context.index === 0) {
               return "transparent";
