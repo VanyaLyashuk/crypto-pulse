@@ -23,6 +23,7 @@ import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
 import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
+import { IHttpRequestOptions } from "./dataTypes/HttpRequestOptions.interface";
 import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
 import { ITransformedCoinHistoricalChartDataById } from "./dataTypes/TransformedCoinHistoricalChartDataById.interface";
@@ -51,8 +52,7 @@ export type {
     ICryptoTableViewProps,
     IErrorBoundaryProps,
     IErrorBoundaryState,
-    IErrorMessageProps,
-    IPaginationComponentProps,
+    IErrorMessageProps, IHttpRequestOptions, IPaginationComponentProps,
     IPaginationProps,
     IPaginationStore,
     IPriceChangeIndicatorProps,
