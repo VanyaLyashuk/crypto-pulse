@@ -1,6 +1,7 @@
 import debounce from "debounce";
 import { useEffect, useState } from "react";
-import CoinGeckoService from "../../services/CoinGeckoService";
+import { useShallow } from "zustand/react/shallow";
+import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
 import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
@@ -12,19 +13,35 @@ import ErrorMessage from "../errorMessage/ErrorMessage";
 import Pagination from "../pagination/Pagination";
 
 const CryptoTable: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(true);
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
-  const [error, setError] = useState(false);
 
-  const { setCoins, totalCoins, setTotalCoins } = useCoinsStore();
-  const rowsPerPage = useTableViewStore((state) => state.rowsPerPage);
-  const setIsRowsSelectOpen = useTableViewStore(
-    (state) => state.setIsRowsSelectOpen
+  const { setCoins, totalCoins, setTotalCoins } = useCoinsStore(
+    useShallow((state) => ({
+      setCoins: state.setCoins,
+      totalCoins: state.totalCoins,
+      setTotalCoins: state.setTotalCoins,
+    }))
   );
-  const { currentPage, setCurrentPage, lastPage, setLastPage } =
-    usePaginationStore();
 
-  const coinGeckoService = new CoinGeckoService();
+  const { rowsPerPage, setIsRowsSelectOpen } = useTableViewStore(
+    useShallow((state) => ({
+      rowsPerPage: state.rowsPerPage,
+      setIsRowsSelectOpen: state.setIsRowsSelectOpen,
+    }))
+  );
+
+  const { currentPage, setCurrentPage, lastPage, setLastPage } =
+    usePaginationStore(
+      useShallow((state) => ({
+        currentPage: state.currentPage,
+        setCurrentPage: state.setCurrentPage,
+        lastPage: state.lastPage,
+        setLastPage: state.setLastPage,
+      }))
+    );
+
+  const { loading, error, getCoinsListWithMarketData, getCoinsListLength } =
+    useCoinGeckoService();
 
   useEffect(() => {
     onTotalCoinsRequest();
@@ -58,45 +75,18 @@ const CryptoTable: React.FC = () => {
     }
   }, [loading]);
 
-  const onLoading = () => {
-    setLoading(true);
-    setLoadingDelay(true);
-    setError(false);
-  };
-
-  const onError = () => {
-    setLoading(false);
-    setError(true);
-  };
-
   const onCoinsDataRequest = () => {
-    onLoading();
+    setLoadingDelay(true);
 
-    coinGeckoService
-      ._getCoinsListWithMarketData("usd", rowsPerPage, currentPage)
-      .then((res) => {
-        setCoins(res);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching coins data:", error);
-        onError();
-      });
+    getCoinsListWithMarketData("usd", rowsPerPage, currentPage).then((res) => {
+      setCoins(res);
+    });
   };
 
   const onTotalCoinsRequest = () => {
-    onLoading();
-
-    coinGeckoService
-      ._getCoinsListLength()
-      .then((res) => {
-        setTotalCoins(res);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching total coins data:", error);
-        onError();
-      });
+    getCoinsListLength().then((res) => {
+      setTotalCoins(res);
+    });
   };
 
   const handlePageChange = debounce(
@@ -109,10 +99,12 @@ const CryptoTable: React.FC = () => {
   const errMsg = error ? (
     <ErrorMessage message="Ooops! Something went wrong!" />
   ) : null;
+
   const skeleton =
     loading || (loadingDelay && !error) ? (
       <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
     ) : null;
+
   const tableContent =
     !error && !loading && !loadingDelay ? (
       <CryptoTableView currency="$" />
