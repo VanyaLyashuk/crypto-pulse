@@ -103,7 +103,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
         header: () => "",
         id: "favorite",
         cell: () => (
-          <button>
+          <button disabled>
             <FaRegStar />
           </button>
         ),
