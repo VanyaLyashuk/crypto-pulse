@@ -167,7 +167,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
             return "rgba(211,211,211,0.5)";
           },
           lineWidth: 1,
-          z: 1,
+          z: 0,
         },
         ticks: {
           callback: function (_value: any, index: number) {
