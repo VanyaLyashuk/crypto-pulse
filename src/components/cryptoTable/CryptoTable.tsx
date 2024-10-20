@@ -119,7 +119,7 @@ const CryptoTable: React.FC = () => {
           <CryptoTableControls>
             <CryptoTableRowsPerPage options={[10, 30, 50, 100]} />
           </CryptoTableControls>
-          <div className="m-auto max-w-[1300px] overflow-x-auto mb-3">
+          <div className="container px-0 mb-3 overflow-x-auto">
             {skeleton}
             {tableContent}
           </div>

@@ -4,7 +4,7 @@ const CryptoTableControls: React.FC<React.PropsWithChildren<{}>> = ({
   children,
 }) => {
   return (
-    <div className="flex justify-center w-full px-2 max-w-[1300px] m-auto">
+    <div className="container flex justify-center">
       {children}
     </div>
   );
