@@ -18,6 +18,9 @@ export default {
       },
       colors: {
         'primary': '#e76e4e',
+      },
+      fontFamily: {
+        'pixelify-sans': ['Pixelify Sans', 'serif']
       }
     },
   },
