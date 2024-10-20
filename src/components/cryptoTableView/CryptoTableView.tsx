@@ -275,7 +275,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
       </thead>
       <tbody className="bg-white ">
         {table.getRowModel().rows.map((row) => (
-          <tr key={row.original.id} onClick={() => openModal(row.original.id)}>
+          <tr key={row.original.id} onClick={() => openModal(row.original.id)} className="cursor-pointer">
             {row.getVisibleCells().map((cell, index) => {
               return (
                 <td
