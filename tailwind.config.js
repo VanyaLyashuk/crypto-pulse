@@ -8,7 +8,7 @@ export default {
     extend: {
       container: {
         center: true,
-        padding: '1rem',
+        padding: '0.5rem',
       },
       screens: {
         'hover-hover': {'raw': '(hover: hover)'}
@@ -24,6 +24,17 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    function({addComponents}) {
+      addComponents({
+        '.container': {
+          width: '100%',
+          maxWidth: '1300px',
+          paddingLeft: '8px',
+          paddingRight: '8px',
+        }
+      });
+    },
+  ],
 }
 
