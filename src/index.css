@@ -11,6 +11,12 @@
   src: url('assets/fonts/pixelify-sans-v1-latin-ext-700.woff2') format('woff2');
 }
 
+:root {
+  --logo-shadow-offset: 2px;
+  --crypto-shadow-color: rgb(255 175 15);
+  --pulse-shadow-color: rgb(18 161 144);
+}
+
 @layer components {
   .table-sticky-cell {
     @apply sticky left-0 bg-white min-w-[170px] z-20;
@@ -47,4 +53,8 @@ td:after {
   border-top-left-radius: 0.5rem;
   background-color: #f3f4f6;
   border-bottom: 1px solid #e5e7eb;
+}
+
+.crypto-shadow {
+  text-shadow: var(--logo-shadow-offset) var(--logo-shadow-offset) 0 var(--crypto-shadow-color);
 }

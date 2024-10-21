@@ -17,7 +17,8 @@ export default {
         '50vh': '50vh'
       },
       colors: {
-        'primary': '#e76e4e',
+        'primary': '#ffaf0f',
+        'coinGold': 'rgb(254 220 10)',
       },
       fontFamily: {
         'pixelify-sans': ['Pixelify Sans', 'serif']
