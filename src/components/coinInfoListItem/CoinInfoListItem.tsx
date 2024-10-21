@@ -19,7 +19,7 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   );
 
   const liClasses =
-    "flex items-start justify-between py-3 font-medium border-b last:border-b-0 last:pb-0";
+    "flex items-start justify-between py-3 font-medium border-b last:border-b-0 last:pb-0 dark:border-b-darkModeBgLighter";
 
   if ("percentage" in value) {
     return (

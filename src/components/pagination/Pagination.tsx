@@ -56,7 +56,7 @@ const Pagination = ({
               className={clsx(
                 "px-2.5 py-1 text-base rounded-md cursor-pointer sm:px-4 sm:py-2",
                 {
-                  "bg-slate-100": pageNumber === currentPage,
+                  "bg-slate-100 dark:bg-darkModeBgLighter": pageNumber === currentPage,
                 }
               )}
               onClick={() => onPageChange(Number(pageNumber))}

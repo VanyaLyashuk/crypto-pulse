@@ -168,7 +168,7 @@ const CoinInfo: React.FC = () => {
           top: 0,
           bottom: 0.5,
         }}
-        className="absolute bottom-0 h-[85vh] overflow-hidden w-full bg-white rounded-tl-xl rounded-tr-xl md:overflow-visible md:py-9 md:relative md:h-auto md:rounded-xl md:max-w-full  md:m-auto md:px-4 lg:px-6 xl:max-w-[1300px] "
+        className="absolute bottom-0 h-[85vh] overflow-hidden w-full bg-white rounded-tl-xl rounded-tr-xl md:overflow-visible md:py-9 md:relative md:h-auto md:rounded-xl md:max-w-full  md:m-auto md:px-4 lg:px-6 xl:max-w-[1300px] dark:bg-darkModeBg"
       >
         <div
           onPointerDown={(e) => {
@@ -177,7 +177,7 @@ const CoinInfo: React.FC = () => {
           className="absolute top-0 left-0 right-0 z-10 flex justify-center py-5 bg-white md:bg-transparent md:top-[-38px] md:right-[-16px] md:p-2 md:left-auto md:z-[100] md:cursor-pointer"
         >
           <button className="hidden md:block" onClick={handleClose}>
-            <IoClose className="w-8 h-8 text-slate-100" />
+            <IoClose className="w-8 h-8 text-slate-100 dark:text-second-primary" />
           </button>
           <button className="w-20 h-1.5 rounded cursor-grab touch-none-full bg-neutral-600 active:cursor-grabbing md:hidden" />
         </div>
@@ -202,7 +202,7 @@ const CoinInfo: React.FC = () => {
                 <CoinInfoChartSkeleton />
               )}
             </div>
-            <div className="mb-6 overflow-x-auto border rounded-lg md:hidden xl:block xl:mb-0">
+            <div className="mb-6 overflow-x-auto border rounded-lg md:hidden xl:block xl:mb-0 dark:border-darkModeBgLighter">
               <CoinInfoTable data={coin_percentage_table} />
             </div>
           </div>
@@ -217,7 +217,7 @@ const CoinInfo: React.FC = () => {
                       <span className="uppercase">{symbol}</span> Price
                     </span>
                   </h3>
-                  <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md shrink-0">
+                  <div className="px-2 py-1 text-sm font-normal bg-gray-200 rounded-md dark:bg-darkModeBgDarker shrink-0">
                     #{market_cap_rank}
                   </div>
                 </div>

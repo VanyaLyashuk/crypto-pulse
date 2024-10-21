@@ -17,9 +17,16 @@
   --pulse-shadow-color: rgb(18 161 144);
 }
 
+@layer base {
+  body {
+    @apply text-neutral-800 dark:bg-darkModeBg dark:text-neutral-300;
+  }
+}
+
+
 @layer components {
   .table-sticky-cell {
-    @apply sticky left-0 bg-white min-w-[170px] z-20;
+    @apply sticky left-0 bg-white dark:bg-darkModeBg min-w-[170px] z-20;
   }
   .table-head-arrow {
     @apply w-2 h-2 relative top-[1px];
@@ -42,6 +49,10 @@ td:after {
 td:after {
   top: -1px;
   border-top: 1px solid #e5e7eb;
+}
+
+.dark td:after {
+  border-top: 1px solid #374151;
 }
 
 .react-datepicker {

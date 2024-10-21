@@ -47,13 +47,19 @@ const verticalLinePlugin: Plugin = {
       const x = activeElements[0].element.x;
       const topY = chart.scales.y.top;
       const bottomY = chart.scales.y.bottom;
+      const isDarkTheme = document
+        .querySelector("html")
+        ?.classList.contains("dark");
+      const lineColor = isDarkTheme
+        ? "rgba(55, 65, 81, 1)"
+        : "rgba(211, 211, 211, 0.5)";
 
       ctx.save();
       ctx.beginPath();
       ctx.moveTo(x, topY);
       ctx.lineTo(x, bottomY);
       ctx.lineWidth = 1;
-      ctx.strokeStyle = "rgba(0, 0, 0, 0.2)";
+      ctx.strokeStyle = lineColor;
       ctx.stroke();
       ctx.restore();
     }
@@ -74,16 +80,23 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
     yAxisLabelsMarketCap,
   } = data;
 
-  const { selectedMetric } =
-    useCoinInfoStore(
-      useShallow((state) => ({
-        selectedMetric: state.selectedMetric,
-      }))
-    );
+  const { selectedMetric } = useCoinInfoStore(
+    useShallow((state) => ({
+      selectedMetric: state.selectedMetric,
+    }))
+  );
 
   const selectedData = selectedMetric === "Price" ? prices : market_caps;
   const selectedYAxisLabels =
     selectedMetric === "Price" ? yAxisLabelsPrice : yAxisLabelsMarketCap;
+
+  const isDarkTheme = document
+    .querySelector("html")
+    ?.classList.contains("dark");
+  const gridColor = isDarkTheme
+    ? "rgba(55, 65, 81, 1)"
+    : "rgba(211, 211, 211, 0.5)";
+  const labelColor = "rgba(107, 114, 128, 1)";
 
   useEffect(() => {
     if (!chartRef.current) return;
@@ -139,19 +152,20 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
         type: "time",
         time: {
           displayFormats: {
-            year: 'MMM yy'
-          }
+            year: "MMM yy",
+          },
         },
         grid: {
           display: true,
           drawOnChartArea: false,
-          color: "rgba(211,211,211,0.5)",
+          color: gridColor,
           lineWidth: 1,
           z: 1,
         },
         ticks: {
           autoSkip: true,
           maxTicksLimit: 12,
+          color: labelColor,
         },
       },
       y: {
@@ -164,7 +178,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
             if (context.index === 0) {
               return "transparent";
             }
-            return "rgba(211,211,211,0.5)";
+            return gridColor;
           },
           lineWidth: 1,
           z: 0,
@@ -174,6 +188,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
             return selectedYAxisLabels[index] || "";
           },
           maxTicksLimit: selectedYAxisLabels.length,
+          color: labelColor,
         },
         border: {
           display: false,

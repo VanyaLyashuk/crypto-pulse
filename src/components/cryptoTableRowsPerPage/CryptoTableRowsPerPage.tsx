@@ -11,7 +11,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
     useTableViewStore();
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
-    "absolute right-0 z-40 bg-white border rounded-md w-36 transition-all top-[34px]",
+    "absolute right-0 z-40 bg-white border rounded-md w-36 transition-all top-[34px] dark:bg-darkModeBg dark:border-gray-700",
     { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
 
@@ -30,7 +30,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   return (
     <div className="relative ml-auto">
       <button
-        className="flex items-center px-2 py-1 text-sm font-medium border rounded-md"
+        className="flex items-center px-2 py-1 text-sm font-medium border rounded-md dark:border-gray-700"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
@@ -42,8 +42,8 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       <ul className={listClasses}>
         {options.map((item) => {
           const liClasses = clsx(
-            "w-full p-2 text-sm border-b cursor-pointer last:border-b-0 hover-hover:hover:bg-slate-50 focus:bg-slate-50",
-            { "bg-slate-100": rowsPerPage === item }
+            "w-full p-2 text-sm border-b cursor-pointer last:border-b-0 hover-hover:hover:bg-slate-50 focus:bg-slate-50 dark:border-b-gray-700 focus:dark:bg-gray-800 hover-hover:hover:dark:bg-gray-800",
+            { "bg-slate-100 dark:bg-gray-700": rowsPerPage === item }
           );
           return (
             <li

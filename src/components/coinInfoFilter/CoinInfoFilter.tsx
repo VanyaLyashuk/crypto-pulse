@@ -55,7 +55,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
 
   const buttons = filterOptions.map((filter) => {
     const btnClasses = clsx("px-2 py-1.5 text-sm font-medium", {
-      "bg-white rounded-md shadow-sm": activeFilter === filter,
+      "bg-white rounded-md shadow-sm dark:bg-darkModeBg": activeFilter === filter,
     });
 
     return filter === "date range" ? (
@@ -86,7 +86,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   });
 
   return (
-    <div className="flex items-center gap-1 p-1.5 bg-gray-100 rounded-md">
+    <div className="flex items-center gap-1 p-1.5 bg-gray-100 rounded-md dark:bg-darkModeBgDarker dark:text-darkModeText">
       {buttons}
     </div>
   );

@@ -4,6 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
       container: {
@@ -18,7 +19,12 @@ export default {
       },
       colors: {
         'primary': '#ffaf0f',
+        'second-primary': '#14b8a6',
         'coinGold': 'rgb(254 220 10)',
+        'darkModeBg': '#22232a',
+        'darkModeBgLighter': '#374151',
+        'darkModeBgDarker': '#18181b',
+        'darkModeText': '#d4d4d4',
       },
       fontFamily: {
         'pixelify-sans': ['Pixelify Sans', 'serif']

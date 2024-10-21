@@ -69,7 +69,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => {
-    return clsx("p-2 text-sm text-gray-700 bg-white", {
+    return clsx("p-2 text-sm text-gray-700 bg-white dark:bg-darkModeBg dark:text-darkModeText", {
       "w-8": cell.column.id === "favorite",
       "table-sticky-cell": cell.column.id === "name",
       "text-right": index > 2,
@@ -232,7 +232,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, index) => {
               const cellClasses = clsx(
-                "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white cursor-pointer group",
+                "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white dark:bg-darkModeBg dark:text-darkModeText cursor-pointer group",
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (
@@ -273,9 +273,13 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           </tr>
         ))}
       </thead>
-      <tbody className="bg-white ">
+      <tbody className="bg-white dark:bg-darkModeBg">
         {table.getRowModel().rows.map((row) => (
-          <tr key={row.original.id} onClick={() => openModal(row.original.id)} className="cursor-pointer">
+          <tr
+            key={row.original.id}
+            onClick={() => openModal(row.original.id)}
+            className="cursor-pointer darkModeText"
+          >
             {row.getVisibleCells().map((cell, index) => {
               return (
                 <td
