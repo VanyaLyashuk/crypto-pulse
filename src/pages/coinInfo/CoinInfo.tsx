@@ -174,7 +174,7 @@ const CoinInfo: React.FC = () => {
           onPointerDown={(e) => {
             constrols.start(e);
           }}
-          className="absolute top-0 left-0 right-0 z-10 flex justify-center py-5 bg-white md:bg-transparent md:top-[-38px] md:right-[-16px] md:p-2 md:left-auto md:z-[100] md:cursor-pointer"
+          className="absolute top-0 left-0 right-0 z-10 flex justify-center py-5 bg-white dark:bg-darkModeBg dark:md:bg-transparent  md:bg-transparent md:top-[-38px] md:right-[-16px] md:p-2 md:left-auto md:z-[100] md:cursor-pointer"
         >
           <button className="hidden md:block" onClick={handleClose}>
             <IoClose className="w-8 h-8 text-slate-100 dark:text-second-primary" />
@@ -206,12 +206,12 @@ const CoinInfo: React.FC = () => {
               <CoinInfoTable data={coin_percentage_table} />
             </div>
           </div>
-          <div className="xl:shrink-0 xl:w-max xl:order-1">
+          <div className="xl:shrink-0 xl:max-w-[400px] xl:order-1">
             <div className="w-full mb-5 md:flex md:gap-4">
               <div className="w-full md:w-max shrink-0">
                 <div className="flex items-center gap-2 mb-2">
                   <img className="w-8 shrink-0" src={image} alt={name} />
-                  <h3 className="text-2xl font-bold leading-none">
+                  <h3 className="text-2xl font-bold leading-none md:max-w-[300px]">
                     <span className="break-normal">{name}</span>&nbsp;
                     <span className="text-base font-normal text-nowrap">
                       <span className="uppercase">{symbol}</span> Price
