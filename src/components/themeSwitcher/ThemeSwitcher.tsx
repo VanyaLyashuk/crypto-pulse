@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
+import { TTheme } from "../../models";
 
 const ThemeSwitcher = () => {
-  const [theme, setTheme] = useState<"dark" | "light">("dark");
+  const [theme, setTheme] = useState<TTheme>(() => {
+    return (localStorage.getItem("theme") as TTheme) || "dark";
+  });
 
   useEffect(() => {
-    if (theme === "dark") {
-      document.querySelector("html")?.classList.add("dark");
-    } else {
-      document.querySelector("html")?.classList.remove("dark");
-    }
+    localStorage.setItem("theme", theme);
+    const html = document.querySelector("html");
+    html?.classList.remove("dark", "light");
+    html?.classList.add(theme);
   }, [theme]);
 
   const changeTheme = () => {
