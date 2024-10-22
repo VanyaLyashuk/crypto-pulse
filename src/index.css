@@ -2,15 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
-  .table-sticky-cell {
-    @apply sticky left-0 bg-primary-bg min-w-[170px] z-20;
-  }
-  .table-head-arrow {
-    @apply w-2 h-2 relative top-[1px];
-  }
-}
-
 /* pixelify-sans-700 - latin-ext */
 @font-face {
   font-display: swap;
@@ -76,6 +67,15 @@
   --select-bg: var(--gray-700);
   --select-bg-hover: var(--gray-800);
   --cross-color: var(--secondary-color);
+}
+
+@layer components {
+  .table-sticky-cell {
+    @apply sticky left-0 bg-primary-bg min-w-[170px] z-20;
+  }
+  .table-head-arrow {
+    @apply w-2 h-2 relative top-[1px];
+  }
 }
 
 body {
