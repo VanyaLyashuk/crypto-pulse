@@ -52,7 +52,7 @@ const verticalLinePlugin: Plugin = {
         ?.classList.contains("dark");
       const lineColor = isDarkTheme
         ? "rgba(55, 65, 81, 1)"
-        : "rgba(211, 211, 211, 0.5)";
+        : "rgb(229, 231, 235)";
 
       ctx.save();
       ctx.beginPath();
@@ -95,8 +95,8 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
     ?.classList.contains("dark");
   const gridColor = isDarkTheme
     ? "rgba(55, 65, 81, 1)"
-    : "rgba(211, 211, 211, 0.5)";
-  const labelColor = "rgba(107, 114, 128, 1)";
+    : "rgb(229, 231, 235)";
+  const labelColor = "rgb(107, 114, 128)";
 
   useEffect(() => {
     if (!chartRef.current) return;
