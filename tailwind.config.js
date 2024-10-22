@@ -18,8 +18,8 @@ export default {
         '50vh': '50vh'
       },
       colors: {
-        'primary': '#ffaf0f',
-        'second-primary': '#14b8a6',
+        'primary': 'var(--primary-color)',
+        'secondary': 'var(--secondary-color)',
         'coinGold': 'rgb(254 220 10)',
         'darkModeBg': '#22232a',
         'darkModeBgLighter': '#374151',
