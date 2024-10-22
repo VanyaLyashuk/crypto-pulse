@@ -24,6 +24,7 @@ export default {
         "spinner-text": "var(--spinner-text-color)",
         "delimeter-color": "var(--delimeter-color)",
         "border-color": "var(--border-color)",
+        "select-border-color": "var(--select-border-color)",
         "primary-bg": "var(--primary-bg)",
         "pagination-bg": "var(--pagination-bg)",
         "skeleton-bg": "var(--skeleton-bg)",
