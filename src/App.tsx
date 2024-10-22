@@ -7,7 +7,6 @@ const App: React.FC = () => {
   const state = location.state as { backgroundLocation?: Location };
 
   return (
-    <div className="pb-10">
       <>
         <Routes location={state?.backgroundLocation || location}>
           <Route path="/" element={<Home />} />
@@ -19,7 +18,6 @@ const App: React.FC = () => {
           </Routes>
         )}
       </>
-    </div>
   );
 };
 
