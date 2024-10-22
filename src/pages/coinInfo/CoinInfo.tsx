@@ -177,7 +177,7 @@ const CoinInfo: React.FC = () => {
           className="absolute top-0 left-0 right-0 z-10 flex justify-center py-5 bg-white dark:bg-darkModeBg dark:md:bg-transparent  md:bg-transparent md:top-[-38px] md:right-[-16px] md:p-2 md:left-auto md:z-[100] md:cursor-pointer"
         >
           <button className="hidden md:block" onClick={handleClose}>
-            <IoClose className="w-8 h-8 text-slate-100 dark:text-second-primary" />
+            <IoClose className="w-8 h-8 text-slate-100 dark:text-secondary" />
           </button>
           <button className="w-20 h-1.5 rounded cursor-grab touch-none-full bg-neutral-600 active:cursor-grabbing md:hidden" />
         </div>
