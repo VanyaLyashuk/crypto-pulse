@@ -4,12 +4,12 @@ import Header from "../../components/header/Header";
 
 const Home: React.FC = () => {
   return (
-    <>
+    <div className="pt-[64px] pb-10">
       <Header />
       <ErrorBoundary>
         <CryptoTable />
       </ErrorBoundary>
-    </>
+    </div>
   );
 };
 
