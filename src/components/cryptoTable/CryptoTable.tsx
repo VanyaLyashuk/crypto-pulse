@@ -115,11 +115,11 @@ const CryptoTable: React.FC = () => {
       {errMsg ? (
         errMsg
       ) : (
-        <>
+        <div className="py-4">
           <CryptoTableControls>
             <CryptoTableRowsPerPage options={[30, 50, 100]} />
           </CryptoTableControls>
-          <div className="container px-0 mb-3 overflow-x-auto">
+          <div className="container px-0 mb-4 overflow-x-auto">
             {skeleton}
             {tableContent}
           </div>
@@ -133,7 +133,7 @@ const CryptoTable: React.FC = () => {
               }
             />
           </CryptoTableControls>
-        </>
+        </div>
       )}
     </>
   );
