@@ -26,6 +26,7 @@ import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
 import { IHttpRequestOptions } from "./dataTypes/HttpRequestOptions.interface";
 import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
+import { TTheme } from "./dataTypes/Theme.type";
 import { ITransformedCoinHistoricalChartDataById } from "./dataTypes/TransformedCoinHistoricalChartDataById.interface";
 import { ITransformedCoinsMarketData } from "./dataTypes/TransformedCoinsMarketData.interface";
 import { IPaginationProps } from "./pagination/Pagination.interface";
@@ -69,6 +70,7 @@ export type {
     TDateOrNull,
     TDateOrUndefined,
     TPriceFormatCoinfig,
-    TShortMonthName
+    TShortMonthName,
+    TTheme
 };
 
