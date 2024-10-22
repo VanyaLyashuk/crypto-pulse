@@ -13,7 +13,7 @@ const PriceChangeIndicator: React.FC<IPriceChangeIndicatorProps> = ({
   const containerClasses = clsx("flex items-center gap-0.5", {
     "text-red-600": value && isNegative,
     "text-green-500": value && !isNegative,
-    "text-gray-700": !value,
+    "text-primary-text": !value,
     "justify-end": alignment === 'end',
     "justify-center": alignment === 'center',
   });

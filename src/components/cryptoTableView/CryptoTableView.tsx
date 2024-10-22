@@ -69,7 +69,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => {
-    return clsx("p-2 text-sm text-gray-700 bg-white dark:bg-darkModeBg dark:text-darkModeText", {
+    return clsx("p-2 text-sm bg-primary-bg", {
       "w-8": cell.column.id === "favorite",
       "table-sticky-cell": cell.column.id === "name",
       "text-right": index > 2,
@@ -139,7 +139,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
             />
             <div className="overflow-hidden break-words">
               <span className="font-medium">{row.original.name}</span>{" "}
-              <span className="text-gray-500 uppercase">
+              <span className="uppercase text-secondary-text">
                 {row.original.symbol}
               </span>
             </div>
@@ -226,13 +226,13 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   });
 
   return (
-    <table className="min-w-full transition-all table-auto sm:rounded-lg">
+    <table className="min-w-full transition-all table-auto crypto-table sm:rounded-lg">
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, index) => {
               const cellClasses = clsx(
-                "px-2 py-4 text-sm font-bold tracking-wider text-gray-700 bg-white dark:bg-darkModeBg dark:text-darkModeText cursor-pointer group",
+                "px-2 py-4 text-sm font-bold tracking-wider bg-primary-bg   cursor-pointer group",
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (
@@ -273,12 +273,12 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           </tr>
         ))}
       </thead>
-      <tbody className="bg-white dark:bg-darkModeBg">
+      <tbody className="bg-primary-bg ">
         {table.getRowModel().rows.map((row) => (
           <tr
             key={row.original.id}
             onClick={() => openModal(row.original.id)}
-            className="cursor-pointer darkModeText"
+            className="cursor-pointer"
           >
             {row.getVisibleCells().map((cell, index) => {
               return (

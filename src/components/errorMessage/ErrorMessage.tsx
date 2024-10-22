@@ -6,7 +6,7 @@ const ErrorMessage: React.FC<IErrorMessageProps> = ({ message }) => {
     <div className="grid place-items-center">
       <div className="grid gap-1 place-items-center">
         <ErrorIcon />
-        <h2 className="text-lg font-bold text-center text-gray-700">
+        <h2 className="text-lg font-bold text-center text-primary-text">
           {message}
         </h2>
       </div>

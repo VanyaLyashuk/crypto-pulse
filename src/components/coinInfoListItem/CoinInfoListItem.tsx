@@ -9,7 +9,7 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState<boolean>(false);
 
   const tooltipClasses = clsx(
-    "absolute top-1/2 translate-y-[-50%] left-[22px] bg-white text-xs shadow-md p-2 rounded-md text-nowrap",
+    "absolute top-1/2 translate-y-[-50%] left-[22px] bg-primary-bg text-xs shadow-md p-2 rounded-md text-nowrap",
     {
       "opacity-0 hidden": !isTooltipOpen,
     },
@@ -19,14 +19,14 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   );
 
   const liClasses =
-    "flex items-start justify-between py-3 font-medium border-b last:border-b-0 last:pb-0 dark:border-b-darkModeBgLighter";
+    "flex items-start justify-between py-3 font-medium border-b border-b-delimeter-color last:border-b-0 last:pb-0";
 
   if ("percentage" in value) {
     return (
       <li className={liClasses}>
         <div
           onClick={() => setIsTooltipOpen(!isTooltipOpen)}
-          className="flex items-center gap-1 text-gray-500 cursor-pointer"
+          className="flex items-center gap-1 cursor-pointer text-secondary-text"
         >
           <h5 className="">{value.label}</h5>{" "}
           <div className="relative">
@@ -47,7 +47,7 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   } else {
     return (
       <li className={liClasses}>
-        <h5 className="mr-2 text-gray-500 lg:mr-4">{value.label}</h5>{" "}
+        <h5 className="mr-2 text-secondary-text lg:mr-4">{value.label}</h5>{" "}
         {Array.isArray(value.price) ? (
           <div>
             {useFormattedSmallCurrency(value.price[0], "$")}-

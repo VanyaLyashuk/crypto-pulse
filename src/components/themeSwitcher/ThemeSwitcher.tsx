@@ -16,7 +16,7 @@ const ThemeSwitcher = () => {
   };
 
   return (
-    <button className="dark:text-darkModeText" onClick={changeTheme}>
+    <button className="" onClick={changeTheme}>
       {theme === "dark" ? "Light" : "Dark"}
     </button>
   );

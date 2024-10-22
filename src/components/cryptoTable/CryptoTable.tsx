@@ -117,7 +117,7 @@ const CryptoTable: React.FC = () => {
       ) : (
         <>
           <CryptoTableControls>
-            <CryptoTableRowsPerPage options={[10, 30, 50, 100]} />
+            <CryptoTableRowsPerPage options={[30, 50, 100]} />
           </CryptoTableControls>
           <div className="container px-0 mb-3 overflow-x-auto">
             {skeleton}

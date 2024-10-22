@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .table-sticky-cell {
+    @apply sticky left-0 bg-primary-bg min-w-[170px] z-20;
+  }
+  .table-head-arrow {
+    @apply w-2 h-2 relative top-[1px];
+  }
+}
+
 /* pixelify-sans-700 - latin-ext */
 @font-face {
   font-display: swap;
@@ -20,11 +29,6 @@
     var(--primary-color-saturation),
     var(--primary-color-lightness)
   );
-  --primary-darker-color: hsl(
-    var(--primary-color-hue),
-    var(--primary-color-saturation),
-    calc(var(--primary-color-lightness) - 5%)
-  );
   --secondary-color-hue: 173;
   --secondary-color-saturation: 80%;
   --secondary-color-lightness: 40%;
@@ -33,28 +37,53 @@
     var(--secondary-color-saturation),
     var(--secondary-color-lightness)
   );
-  --secondary-darker-color: hsl(
-    var(--secondary-color-hue),
-    var(--secondary-color-saturation),
-    calc(var(--secondary-color-lightness) - 5%)
-  );
-  --logo-shadow-offset: 2px;
+  --logo-primary-color: rgb(254 220 10);
+  --logo-shadow-offset-x: 2px;
+  --logo-shadow-offset-y: 2px;
+  --text-primary-color: #262626;
+  --text-secondary-color: #6b7280;
+  --spinner-text-color: #e5e7eb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --slate-50: #f8fafc;
+  --slate-100: #f1f5f9;
+  --zinc-900: #18181b;
+  --primary-bg: #fff;
+  --delimeter-color: var(--gray-100);
+  --border-color: var(--gray-200);
+  --skeleton-bg: var(--gray-200);
+  --filter-bg: var(--gray-100);
+  --datepicker-header-bg: var(--gray-100);
+  --datepicker-border-b-color: var(--gray-200);
+  --spinner-fill-color: var(--primary-color);
+  --pagination-bg: var(--slate-100);
+  --select-bg: var(--slate-100);
+  --select-bg-hover: var(--slate-50);
+  --cross-color: var(--gray-200);
 }
 
-@layer base {
-  body {
-    @apply text-neutral-800 dark:bg-darkModeBg dark:text-neutral-300;
-  }
+.dark {
+  --text-primary-color: #d4d4d4;
+  --spinner-text-color: #4b5563;
+  --primary-bg: #22232a;
+  --delimeter-color: var(--gray-700);
+  --border-color: var(--gray-700);
+  --skeleton-bg: var(--gray-700);
+  --filter-bg: var(--zinc-900);
+  --pagination-bg: var(--gray-700);
+  --select-bg: var(--gray-700);
+  --select-bg-hover: var(--gray-800);
+  --cross-color: var(--secondary-color);
 }
 
-@layer components {
-  .table-sticky-cell {
-    @apply sticky left-0 bg-white dark:bg-darkModeBg min-w-[170px] z-20;
-  }
-  .table-head-arrow {
-    @apply w-2 h-2 relative top-[1px];
-  }
+body {
+  color: var(--text-primary-color);
+  background-color: var(--primary-bg);
 }
+
+
 
 td {
   z-index: 10;
@@ -69,13 +98,9 @@ td:after {
   z-index: 50;
 }
 
-td:after {
+.crypto-table td:after {
   top: -1px;
-  border-top: 1px solid #e5e7eb;
-}
-
-.dark td:after {
-  border-top: 1px solid #374151;
+  border-top: 1px solid var(--delimeter-color);
 }
 
 .react-datepicker {
@@ -85,14 +110,11 @@ td:after {
 
 .react-datepicker__header {
   border-top-left-radius: 0.5rem;
-  background-color: #f3f4f6;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-.dark react-datepicker__header {
+  background-color: var(--datepicker-header-bg);
+  border-bottom: 1px solid var(--datepicker-border-b-color);
 }
 
 .crypto-shadow {
-  text-shadow: var(--logo-shadow-offset) var(--logo-shadow-offset) 0
-    var(--primary-darker-color);
+  text-shadow: var(--logo-shadow-offset-x) var(--logo-shadow-offset-y) 0
+    var(--primary-color);
 }

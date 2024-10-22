@@ -7,7 +7,7 @@ const App: React.FC = () => {
   const state = location.state as { backgroundLocation?: Location };
 
   return (
-    <div className="py-10 dark:darkModeBg dark:darkModeText">
+    <div className="py-10">
       <>
         <Routes location={state?.backgroundLocation || location}>
           <Route path="/" element={<Home />} />

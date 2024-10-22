@@ -42,11 +42,14 @@ const CoinInfoTable: React.FC<ICoinInfoTableProps> = ({ data }) => {
 
   return (
     <table className="w-full overflow-hidden text-center">
-      <thead className="text-sm bg-gray-100 dark:bg-darkModeBgDarker">
+      <thead className="text-sm border-b bg-filter-bg border-b-border-color">
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
-              <th key={header.id} className="px-2 py-2.5 border-r last:border-r-0 dark:border-r-darkModeBgLighter">
+              <th
+                key={header.id}
+                className="px-2 py-2.5 border-r border-r-border-color last:border-r-0"
+              >
                 {flexRender(
                   header.column.columnDef.header,
                   header.getContext()
@@ -60,7 +63,10 @@ const CoinInfoTable: React.FC<ICoinInfoTableProps> = ({ data }) => {
         {table.getRowModel().rows.map((row) => (
           <tr key={row.id}>
             {row.getVisibleCells().map((cell) => (
-              <td key={cell.id} className="px-2 py-2.5 border-r last:border-r-0 dark:border-r-darkModeBgLighter">
+              <td
+                key={cell.id}
+                className="px-2 py-2.5 border-r border-r-border-color last:border-r-0"
+              >
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
               </td>
             ))}
