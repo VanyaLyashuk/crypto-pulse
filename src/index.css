@@ -5,16 +5,40 @@
 /* pixelify-sans-700 - latin-ext */
 @font-face {
   font-display: swap;
-  font-family: 'Pixelify Sans';
+  font-family: "Pixelify Sans";
   font-style: normal;
   font-weight: 700;
-  src: url('assets/fonts/pixelify-sans-v1-latin-ext-700.woff2') format('woff2');
+  src: url("assets/fonts/pixelify-sans-v1-latin-ext-700.woff2") format("woff2");
 }
 
 :root {
+  --primary-color-hue: 40;
+  --primary-color-saturation: 100%;
+  --primary-color-lightness: 53%;
+  --primary-color: hsl(
+    var(--primary-color-hue),
+    var(--primary-color-saturation),
+    var(--primary-color-lightness)
+  );
+  --primary-darker-color: hsl(
+    var(--primary-color-hue),
+    var(--primary-color-saturation),
+    calc(var(--primary-color-lightness) - 5%)
+  );
+  --secondary-color-hue: 173;
+  --secondary-color-saturation: 80%;
+  --secondary-color-lightness: 40%;
+  --secondary-color: hsl(
+    var(--secondary-color-hue),
+    var(--secondary-color-saturation),
+    var(--secondary-color-lightness)
+  );
+  --secondary-darker-color: hsl(
+    var(--secondary-color-hue),
+    var(--secondary-color-saturation),
+    calc(var(--secondary-color-lightness) - 5%)
+  );
   --logo-shadow-offset: 2px;
-  --crypto-shadow-color: rgb(255 175 15);
-  --pulse-shadow-color: rgb(18 161 144);
 }
 
 @layer base {
@@ -22,7 +46,6 @@
     @apply text-neutral-800 dark:bg-darkModeBg dark:text-neutral-300;
   }
 }
-
 
 @layer components {
   .table-sticky-cell {
@@ -66,6 +89,10 @@ td:after {
   border-bottom: 1px solid #e5e7eb;
 }
 
+.dark react-datepicker__header {
+}
+
 .crypto-shadow {
-  text-shadow: var(--logo-shadow-offset) var(--logo-shadow-offset) 0 var(--crypto-shadow-color);
+  text-shadow: var(--logo-shadow-offset) var(--logo-shadow-offset) 0
+    var(--primary-darker-color);
 }
