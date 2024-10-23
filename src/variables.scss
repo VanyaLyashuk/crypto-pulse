@@ -1,0 +1,7 @@
+@import url('index.scss');
+
+$datepicker__background-color: var(--datepicker-header-bg);
+$datepicker__border-color: var(--border-color);
+$datepicker__text-color: var(--text-primary-color) !default;
+$datepicker__header-color: var(--text-primary-color) !default;
+$datepicker__selected-color: hsl( 173, 80%, 40% ) !default;

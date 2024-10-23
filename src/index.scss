@@ -1,6 +1,11 @@
+@import 'variables.scss';
+@import 'react-datepicker/src/stylesheets/datepicker.scss';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
 
 /* pixelify-sans-700 - latin-ext */
 @font-face {
@@ -36,6 +41,9 @@
   --spinner-text-color: #e5e7eb;
   --gray-100: #f3f4f6;
   --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
   --gray-700: #374151;
   --gray-800: #1f2937;
   --slate-50: #f8fafc;
@@ -46,14 +54,17 @@
   --border-color: var(--gray-200);
   --skeleton-bg: var(--gray-200);
   --filter-bg: var(--gray-100);
-  --datepicker-header-bg: var(--gray-100);
-  --datepicker-border-b-color: var(--gray-200);
   --spinner-fill-color: var(--primary-color);
   --pagination-bg: var(--slate-100);
   --select-bg: var(--slate-100);
   --select-bg-hover: var(--slate-50);
   --cross-color: var(--gray-200);
   --select-border-color: var(--gray-100);
+  --datepicker-header-bg: var(--gray-100);
+  --datepicker-body-bg: var(--primary-bg);
+  --datepicker-border-b-color: var(--gray-200);
+  --datepicker-outside-month-color: var(--gray-400);
+  --datepicker-mited-color: var(--gray-300);
 }
 
 .dark {
@@ -69,6 +80,8 @@
   --select-border-color: var(--gray-700);
   --select-bg-hover: var(--gray-800);
   --cross-color: var(--secondary-color);
+  --datepicker-header-bg: var(--zinc-900);
+  --datepicker-border-b-color: var(--gray-700);
 }
 
 @layer components {
@@ -84,8 +97,6 @@ body {
   color: var(--text-primary-color);
   background-color: var(--primary-bg);
 }
-
-
 
 td {
   z-index: 10;
@@ -105,18 +116,12 @@ td:after {
   border-top: 1px solid var(--delimeter-color);
 }
 
-.react-datepicker {
-  border: none;
-  border-radius: 0.5rem;
-}
-
-.react-datepicker__header {
-  border-top-left-radius: 0.5rem;
-  background-color: var(--datepicker-header-bg);
-  border-bottom: 1px solid var(--datepicker-border-b-color);
-}
-
 .crypto-shadow {
   text-shadow: var(--logo-shadow-offset-x) var(--logo-shadow-offset-y) 0
     var(--primary-color);
+}
+
+.react-datepicker {
+  background-color: var(--primary-bg) !important;
+  // border: none !important;
 }
