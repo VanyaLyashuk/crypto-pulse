@@ -76,7 +76,7 @@ const CoinInfo: React.FC = () => {
       y: [yStart, height],
     });
 
-    navigate(-1);
+    navigate("/");
     setIsDatepickerOpen(false);
   };
 
@@ -127,11 +127,11 @@ const CoinInfo: React.FC = () => {
   };
 
   const {
-    name = '',
-    symbol = '',
-    image = '',
+    name = "",
+    symbol = "",
+    image = "",
     market_cap_rank,
-    current_price_formatted = '',
+    current_price_formatted = "",
     price_change_percentage_24h_in_currency,
     coin_statistics = [],
     coin_historical_price = [],
