@@ -77,8 +77,12 @@ const CoinInfo: React.FC = () => {
   //   (state) => state.coins.filter((coin) => coin.id === coinId)[0] || {}
   // );
 
-  const { loading, error, getCoinHistoricalChartDataById } =
-    useCoinGeckoService();
+  const {
+    loading,
+    error,
+    getCoinsListWithMarketData,
+    getCoinHistoricalChartDataById,
+  } = useCoinGeckoService();
 
   const [scope, animate] = useAnimate();
   const [modalBodyRef, { height }] = useMeasure();
@@ -109,11 +113,11 @@ const CoinInfo: React.FC = () => {
 
   useEffect(() => {
     if (endDate && coinId) {
-      onRequest(selectedTimeRange);
+      onHistoricalDataRequest(selectedTimeRange);
     }
   }, [endDate, coinId]);
 
-  const onRequest = (period: TCoinInfoTimeRange) => {
+  const onHistoricalDataRequest = (period: TCoinInfoTimeRange) => {
     if (hasDataForPeriod(period)) {
       setChartData({
         ...chartData,
