@@ -17,21 +17,24 @@ import CoinInfoChartSkeleton from "../../components/coinInfoChartSkeleton/CoinIn
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
-import { TCoinInfoChartData, TCoinInfoTimeRange } from "../../models";
+import {
+  ITransformedCoinsMarketData,
+  TCoinInfoChartData,
+  TCoinInfoTimeRange,
+} from "../../models";
 import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
 import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
-  const { coinId } = useParams<{ coinId: string }>();
   const [chartData, setChartData] = useState<
     TCoinInfoChartData | Record<TCoinInfoTimeRange, any>
   >({});
+  const [coin, setCoin] = useState<ITransformedCoinsMarketData | null>(null);
+  const { coinId } = useParams<{ coinId: string }>();
 
   const {
-    selectedCoinId,
-    setSelectedCoinId,
     selectedMetric,
     selectedTimeRange,
     setIsDatepickerOpen,
@@ -39,8 +42,6 @@ const CoinInfo: React.FC = () => {
     endDate,
   } = useCoinInfoStore(
     useShallow((state) => ({
-      selectedCoinId: state.selectedCoinId,
-      setSelectedCoinId: state.setSelectedCoinId,
       selectedMetric: state.selectedMetric,
       selectedTimeRange: state.selectedTimeRange,
       setIsDatepickerOpen: state.setIsDatepickerOpen,
@@ -60,8 +61,21 @@ const CoinInfo: React.FC = () => {
     coin_historical_price,
     coin_percentage_table,
   } = useCoinsStore(
-    (state) => state.coins.filter((coin) => coin.id === selectedCoinId)[0] || {}
+    (state) => state.coins.filter((coin) => coin.id === coinId)[0] || {}
   );
+  // const {
+  //   name,
+  //   symbol,
+  //   image,
+  //   market_cap_rank,
+  //   current_price_formatted,
+  //   price_change_percentage_24h_in_currency,
+  //   coin_statistics,
+  //   coin_historical_price,
+  //   coin_percentage_table,
+  // } = useCoinsStore(
+  //   (state) => state.coins.filter((coin) => coin.id === coinId)[0] || {}
+  // );
 
   const { loading, error, getCoinHistoricalChartDataById } =
     useCoinGeckoService();
@@ -94,16 +108,10 @@ const CoinInfo: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!selectedCoinId && coinId) {
-      setSelectedCoinId(coinId);
-    }
-  }, [coinId, selectedCoinId]);
-
-  useEffect(() => {
-    if (endDate && selectedCoinId) {
+    if (endDate && coinId) {
       onRequest(selectedTimeRange);
     }
-  }, [endDate, selectedCoinId]);
+  }, [endDate, coinId]);
 
   const onRequest = (period: TCoinInfoTimeRange) => {
     if (hasDataForPeriod(period)) {
@@ -117,7 +125,7 @@ const CoinInfo: React.FC = () => {
     const from = getUnixTimestamp(startDate);
     const to = getUnixTimestamp(endDate);
 
-    getCoinHistoricalChartDataById(selectedCoinId, from, to).then((data) => {
+    getCoinHistoricalChartDataById(coinId as string, from, to).then((data) => {
       const newChartData = {
         ...chartData,
         [period]: data,
