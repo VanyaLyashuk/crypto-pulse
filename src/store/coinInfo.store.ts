@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 import { ICoinInfoStore } from "../models/index.ts";
 import { calcStartDate } from "../utils/CryptoTableUtils.ts";
 
+const defaultEndDate = new Date();
 const defaultPeriod = "24h";
 
 const useCoinInfoStore = create<ICoinInfoStore>()(
@@ -16,7 +17,7 @@ const useCoinInfoStore = create<ICoinInfoStore>()(
       setIsDatepickerOpen: (value) => set({ isDatepickerOpen: value }),
       startDate: calcStartDate(defaultPeriod),
       setStartDate: (date) => set({ startDate: date }),
-      endDate: undefined,
+      endDate: defaultEndDate,
       setEndDate: (date) => set({ endDate: date }),
     }),
     { name: "CoinInfoStore" }
