@@ -1,5 +1,5 @@
-@use 'variables.scss';
-@use 'react-datepicker/src/stylesheets/datepicker.scss';
+@import 'variables.scss';
+@import 'react-datepicker/src/stylesheets/datepicker.scss';
 
 @tailwind base;
 @tailwind components;
