@@ -9,8 +9,6 @@ const defaultPeriod = "24h";
 const useCoinInfoStore = create<ICoinInfoStore>()(
   devtools(
     (set) => ({
-      selectedCoinId: "",
-      setSelectedCoinId: (id) => set({ selectedCoinId: id }),
       selectedMetric: "Price",
       setSelectedMetric: (value) => set({ selectedMetric: value }),
       selectedTimeRange: defaultPeriod,

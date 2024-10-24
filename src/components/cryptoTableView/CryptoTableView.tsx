@@ -40,11 +40,10 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   ]);
 
   const coins = useCoinsStore((state) => state.coins);
-  const { selectedTimeRange, setSelectedCoinId, setStartDate, setEndDate } =
+  const { selectedTimeRange, setStartDate, setEndDate } =
     useCoinInfoStore(
       useShallow((state) => ({
         selectedTimeRange: state.selectedTimeRange,
-        setSelectedCoinId: state.setSelectedCoinId,
         setStartDate: state.setStartDate,
         setEndDate: state.setEndDate,
       }))
@@ -59,7 +58,6 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
 
     setStartDate(startDate);
     setEndDate(endDate);
-    setSelectedCoinId(id);
   };
 
   const navigate = useNavigate();
