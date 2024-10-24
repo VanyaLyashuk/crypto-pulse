@@ -17,14 +17,16 @@ import CoinInfoChartSkeleton from "../../components/coinInfoChartSkeleton/CoinIn
 import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
+import SpinnerIcon from "../../components/UI/SpinnerIcon";
 import {
   ITransformedCoinsMarketData,
   TCoinInfoChartData,
   TCoinInfoTimeRange,
 } from "../../models";
+import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
+import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
 import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
-import useCoinsStore from "../../store/coins.store";
 import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
@@ -49,33 +51,6 @@ const CoinInfo: React.FC = () => {
       endDate: state.endDate,
     }))
   );
-
-  const {
-    name,
-    symbol,
-    image,
-    market_cap_rank,
-    current_price_formatted,
-    price_change_percentage_24h_in_currency,
-    coin_statistics,
-    coin_historical_price,
-    coin_percentage_table,
-  } = useCoinsStore(
-    (state) => state.coins.filter((coin) => coin.id === coinId)[0] || {}
-  );
-  // const {
-  //   name,
-  //   symbol,
-  //   image,
-  //   market_cap_rank,
-  //   current_price_formatted,
-  //   price_change_percentage_24h_in_currency,
-  //   coin_statistics,
-  //   coin_historical_price,
-  //   coin_percentage_table,
-  // } = useCoinsStore(
-  //   (state) => state.coins.filter((coin) => coin.id === coinId)[0] || {}
-  // );
 
   const {
     loading,
@@ -107,6 +82,7 @@ const CoinInfo: React.FC = () => {
 
   useEffect(() => {
     document.body.classList.add("overflow-hidden");
+    onCoinDataRequest();
 
     return () => document.body.classList.remove("overflow-hidden");
   }, []);
@@ -116,6 +92,12 @@ const CoinInfo: React.FC = () => {
       onHistoricalDataRequest(selectedTimeRange);
     }
   }, [endDate, coinId]);
+
+  const onCoinDataRequest = () => {
+    getCoinsListWithMarketData("usd", 30, 1, coinId).then((data) => {
+      setCoin(data[0]);
+    });
+  };
 
   const onHistoricalDataRequest = (period: TCoinInfoTimeRange) => {
     if (hasDataForPeriod(period)) {
@@ -144,7 +126,19 @@ const CoinInfo: React.FC = () => {
     return chartData[period] && period !== "date range";
   };
 
-  return (
+  const {
+    name = '',
+    symbol = '',
+    image = '',
+    market_cap_rank,
+    current_price_formatted = '',
+    price_change_percentage_24h_in_currency,
+    coin_statistics = [],
+    coin_historical_price = [],
+    coin_percentage_table = [],
+  } = coin ?? {};
+
+  return coin ? (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -236,7 +230,7 @@ const CoinInfo: React.FC = () => {
                   <PriceChangeIndicator
                     arrowSize="w-4 h-4"
                     className="text-xl font-bold"
-                    value={price_change_percentage_24h_in_currency}
+                    value={price_change_percentage_24h_in_currency ?? 0}
                   />
                 </div>
               </div>
@@ -248,18 +242,20 @@ const CoinInfo: React.FC = () => {
               <CoinInfoList
                 name={symbol}
                 title="Statistics"
-                data={coin_statistics}
+                data={coin_statistics as ICoinStatisticsData}
               />
               <CoinInfoList
                 name={symbol}
                 title="Historical Price"
-                data={coin_historical_price}
+                data={coin_historical_price as IHistoricalPriceData}
               />
             </div>
           </div>
         </div>
       </motion.div>
     </motion.div>
+  ) : (
+    <SpinnerIcon />
   );
 };
 
