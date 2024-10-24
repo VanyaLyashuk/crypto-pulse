@@ -3,7 +3,6 @@ import { devtools } from "zustand/middleware";
 import { ICoinInfoStore } from "../models/index.ts";
 import { calcStartDate } from "../utils/CryptoTableUtils.ts";
 
-// const defaultEndDate = new Date();
 const defaultPeriod = "24h";
 
 const useCoinInfoStore = create<ICoinInfoStore>()(
