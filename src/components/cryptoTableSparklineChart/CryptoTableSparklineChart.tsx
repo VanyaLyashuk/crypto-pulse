@@ -55,6 +55,10 @@ const CryptoTableSparklineChart: React.FC<ISparklineChartProps> = ({ price }) =>
       line: {
         tension: 0.3,
       },
+      point: {
+        radius: 0,
+        hoverRadius: 0,
+      }
     },
   };
 
