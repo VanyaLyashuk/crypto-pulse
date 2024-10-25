@@ -271,7 +271,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           </tr>
         ))}
       </thead>
-      <tbody className="bg-primary-bg ">
+      <tbody className="bg-primary-bg">
         {table.getRowModel().rows.map((row) => (
           <tr
             key={row.original.id}

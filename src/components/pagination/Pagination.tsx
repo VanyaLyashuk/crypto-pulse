@@ -27,7 +27,7 @@ const Pagination = ({
   const isLastPage = currentPage === lastPage;
 
   const arrowClasses = (page: boolean): string =>
-    clsx("px-2 py-1 cursor-pointer sm:px-4 sm:py-2", {
+    clsx("px-2 py-1 cursor-pointer sm:px-4 sm:py-2 focus-visible-outline", {
       "text-gray-400": page,
     });
 
@@ -54,7 +54,7 @@ const Pagination = ({
           <li key={pageNumber}>
             <button
               className={clsx(
-                "px-2.5 py-1 text-base rounded-md cursor-pointer sm:px-4 sm:py-2",
+                "px-2.5 py-1 text-base rounded-md cursor-pointer sm:px-4 sm:py-2 focus-visible-outline",
                 {
                   "bg-pagination-bg": pageNumber === currentPage,
                 }

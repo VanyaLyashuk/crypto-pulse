@@ -30,7 +30,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   return (
     <div className="relative ml-auto">
       <button
-        className="flex items-center px-2 py-1 text-sm font-medium border rounded-md border-select-border-color"
+        className="flex items-center px-2 py-1 text-sm font-medium border rounded-md border-select-border-color focus-visible-outline"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
@@ -42,7 +42,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       <ul className={listClasses}>
         {options.map((item) => {
           const liClasses = clsx(
-            "w-full p-2 text-sm border-b border-b-select-border-color cursor-pointer last:border-b-0 hover-hover:hover:bg-select-bg-hover focus:bg-select-bg-hover",
+            "w-full p-2 text-sm border-b border-b-select-border-color cursor-pointer last:border-b-0 hover-hover:hover:bg-select-bg-hover focus:bg-select-bg-hover focus-visible-outline",
             { "bg-select-bg": rowsPerPage === item }
           );
           return (

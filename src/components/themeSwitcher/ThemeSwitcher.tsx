@@ -20,13 +20,16 @@ const ThemeSwitcher = () => {
   };
 
   return (
-      <button className="p-2 rounded-full shadow-sm bg-primary-bg dark:shadow-md" onClick={changeTheme}>
-        {theme === "dark" ? (
-          <IoSunny className="w-5 h-5" />
-        ) : (
-          <MdOutlineDarkMode className="w-5 h-5" />
-        )}
-      </button>
+    <button
+      className="p-2 rounded-full shadow-sm bg-primary-bg dark:shadow-md focus-visible-outline focus-visible-rounded"
+      onClick={changeTheme}
+    >
+      {theme === "dark" ? (
+        <IoSunny className="w-5 h-5" />
+      ) : (
+        <MdOutlineDarkMode className="w-5 h-5" />
+      )}
+    </button>
   );
 };
 
