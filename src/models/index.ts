@@ -25,6 +25,8 @@ import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
 import { IHttpRequestOptions } from "./dataTypes/HttpRequestOptions.interface";
 import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
+import { ISearchCoinData } from "./dataTypes/SearchCoinData.interface";
+import { ISearchCoinResult } from "./dataTypes/SearchCoinResult.interface";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
 import { TTheme } from "./dataTypes/Theme.type";
 import { ITransformedCoinHistoricalChartDataById } from "./dataTypes/TransformedCoinHistoricalChartDataById.interface";
@@ -56,8 +58,7 @@ export type {
     IErrorMessageProps, IHttpRequestOptions, IPaginationComponentProps,
     IPaginationProps,
     IPaginationStore,
-    IPriceChangeIndicatorProps,
-    ISparklineChartProps,
+    IPriceChangeIndicatorProps, ISearchCoinData, ISearchCoinResult, ISparklineChartProps,
     ITableViewStore,
     ITransformedCoinHistoricalChartDataById,
     ITransformedCoinsMarketData,
