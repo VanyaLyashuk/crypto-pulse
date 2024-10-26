@@ -3,6 +3,8 @@ import {
   ICoinHistoricalChartDataById,
   ICoinsListData,
   ICoinsMarketData,
+  ISearchCoinData,
+  ISearchCoinResult,
   ITransformedCoinsMarketData,
 } from "../models";
 import {
@@ -52,12 +54,20 @@ const useCoinGeckoService = () => {
     return data.length;
   };
 
+  const searchCoin = async (query: string): Promise<ISearchCoinResult[]> => {
+    const url = `${_apiBase}search?query=${query}&x_cg_demo_api_key=${_apiKey}`;
+    const data = await request<ISearchCoinData>(url, {});
+    
+    return data.coins;
+  };
+
   return {
     loading,
     error,
     getCoinsListWithMarketData,
     getCoinHistoricalChartDataById,
     getCoinsListLength,
+    searchCoin,
   };
 };
 
