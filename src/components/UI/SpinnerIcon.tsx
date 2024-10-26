@@ -1,8 +1,15 @@
-const SpinnerIcon = () => {
+import React from 'react';
+
+interface ISpinnerIconProps {
+  width?: string;
+  height?: string;
+}
+
+const SpinnerIcon: React.FC<ISpinnerIconProps> = ({ width = "w-8", height = "h-8" }) => {
   return (
     <svg
       aria-hidden="true"
-      className="w-8 h-8 text-spinner-text animate-spin fill-spinner-fill"
+      className={`${width} ${height} text-spinner-text animate-spin fill-spinner-fill`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
