@@ -11,8 +11,7 @@ import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import { FaRegStar } from "react-icons/fa";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useShallow } from "zustand/react/shallow";
+import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import useFormattedSmallCurrency from "../../hooks/useFormattedSmallCurrency";
 import {
   ICryptoTableViewProps,
@@ -20,12 +19,8 @@ import {
   TCryptoTableCellContext,
   TCryptoTableCurrency,
 } from "../../models";
-import useCoinInfoStore from "../../store/coinInfo.store";
 import useCoinsStore from "../../store/coins.store";
-import {
-  calcStartDate,
-  formatCurrencyValue,
-} from "../../utils/CryptoTableUtils";
+import { formatCurrencyValue } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
 
@@ -40,28 +35,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   ]);
 
   const coins = useCoinsStore((state) => state.coins);
-  const { selectedTimeRange, setStartDate, setEndDate } =
-    useCoinInfoStore(
-      useShallow((state) => ({
-        selectedTimeRange: state.selectedTimeRange,
-        setStartDate: state.setStartDate,
-        setEndDate: state.setEndDate,
-      }))
-    );
-
-  const openModal = (id: string) => {
-    const backgroundLocation = { pathname: location.pathname };
-    navigate(`/coin/${id}`, { state: { backgroundLocation } });
-
-    const endDate = new Date();
-    const startDate = calcStartDate(selectedTimeRange, endDate);
-
-    setStartDate(startDate);
-    setEndDate(endDate);
-  };
-
-  const navigate = useNavigate();
-  const location = useLocation();
+  const { openModal } = useCoinInfoModal();
 
   const getCellClasses = (
     cell: Cell<ITransformedCoinsMarketData, unknown>,
