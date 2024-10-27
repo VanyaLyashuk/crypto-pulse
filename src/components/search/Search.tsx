@@ -1,7 +1,9 @@
 import clsx from "clsx";
 import debounce from "debounce";
+import { button } from "framer-motion/client";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { MdClear } from "react-icons/md";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import { ISearchCoinResult } from "../../models";
 import useCoinGeckoService from "../../services/CoinGeckoService";
@@ -33,6 +35,11 @@ const Search = () => {
 
   const handleMouseDowm = () => {
     setIsFocusVisible(false);
+  };
+
+  const clearQuery = () => {
+    setQuery("");
+    setData([]);
   };
 
   const onRequest = (query: string) => {
@@ -78,6 +85,22 @@ const Search = () => {
       </ul>
     ) : null;
 
+  const spinner = loading ? (
+    <div className="absolute right-2 top-1/2 translate-y-[-50%]">
+      <SpinnerIcon width="w-5" height="h-5" />
+    </div>
+  ) : null;
+
+  const clearBtn =
+    !loading && !error && query ? (
+      <button
+        onClick={clearQuery}
+        className="absolute p-1 top-1/2 translate-y-[-50%] right-0 text-red-500 focus-visible-outline"
+      >
+        <MdClear className="w-5 h-5" />
+      </button>
+    ) : null;
+
   const inputClasses = clsx(
     "w-full px-2 py-2 pl-8 rounded-md bg-primary-bg placeholder:text-secondary-text outline-none",
     {
@@ -96,11 +119,8 @@ const Search = () => {
           onChange={handleInputChange}
           placeholder="Search..."
         />
-        {loading ? (
-          <div className="absolute right-2 top-1/2 translate-y-[-50%]">
-            <SpinnerIcon width="w-5" height="h-5" />
-          </div>
-        ) : null}
+        {spinner}
+        {clearBtn}
       </div>
       {queryList}
     </div>
