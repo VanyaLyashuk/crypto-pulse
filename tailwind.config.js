@@ -36,6 +36,7 @@ export default {
       },
       fontFamily: {
         "pixelify-sans": ["Pixelify Sans", "serif"],
+        "chakra-petch": ["Chakra Petch", "sans-serif"],
       },
     },
   },
