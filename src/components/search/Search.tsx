@@ -23,7 +23,7 @@ const Search = () => {
     setQuery(value);
 
     if (!value.length) {
-      setData([]);
+      clearQuery();
     }
   };
 
