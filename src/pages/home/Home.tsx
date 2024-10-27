@@ -10,6 +10,7 @@ const Home: React.FC = () => {
       <Header />
       <div className="container flex flex-col justify-center mt-10">
         <div>
+          <h1 className="mb-2 text-3xl font-bold text-center font-chakra-petch sm:text-4xl">YOUR ULTIMATE CRYPTO<br /> INSIGHT PLATFORM</h1>
           <TypeWriter
             sentences={[
               "Start typing to search, or use the table for quick access",
