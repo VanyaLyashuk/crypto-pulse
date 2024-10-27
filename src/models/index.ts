@@ -12,6 +12,7 @@ import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interfa
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
+import { ITypeWriterProps } from "./componentProps/TypeWriterProps.interface";
 import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
 import { TCoinHistoricalChartItem } from "./dataTypes/CoinHistoricalChartItem.type";
 import { TCoinInfoChartData } from "./dataTypes/CoinInfoChartData.type";
@@ -72,6 +73,7 @@ export type {
     TDateOrUndefined,
     TPriceFormatCoinfig,
     TShortMonthName,
-    TTheme
+    TTheme,
+    ITypeWriterProps
 };
 
