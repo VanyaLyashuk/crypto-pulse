@@ -32,6 +32,7 @@ export default {
         "select-bg": "var(--select-bg)",
         "select-bg-hover": "var(--select-bg-hover)",
         "cross-color": "var(--cross-color)",
+        "typewriter-text": "var(--typewriter-text)",
       },
       fontFamily: {
         "pixelify-sans": ["Pixelify Sans", "serif"],

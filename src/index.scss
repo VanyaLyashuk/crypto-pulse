@@ -93,6 +93,7 @@
   --datepicker-border-b-color: var(--gray-200);
   --datepicker-outside-month-color: var(--gray-400);
   --datepicker-mited-color: var(--gray-300);
+  --typewriter-text: #262626;
 }
 
 .dark {
@@ -110,6 +111,7 @@
   --cross-color: var(--secondary-color);
   --datepicker-header-bg: var(--zinc-900);
   --datepicker-border-b-color: var(--gray-700);
+  --typewriter-text: var(--gray-500);
 }
 
 @layer components {
