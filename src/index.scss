@@ -1,19 +1,47 @@
-@import 'variables.scss';
-@import 'react-datepicker/src/stylesheets/datepicker.scss';
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@import "variables.scss";
+@import "react-datepicker/src/stylesheets/datepicker.scss";
 
-
-/* pixelify-sans-700 - latin-ext */
 @font-face {
   font-display: swap;
   font-family: "Pixelify Sans";
   font-style: normal;
   font-weight: 700;
   src: url("assets/fonts/pixelify-sans-v1-latin-ext-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url("assets/fonts/roboto-v32-latin-ext-300.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("assets/fonts/roboto-v32-latin-ext-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 500;
+  src: url("assets/fonts/roboto-v32-latin-ext-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: swap;
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("assets/fonts/roboto-v32-latin-ext-700.woff2") format("woff2");
 }
 
 :root {
@@ -96,6 +124,7 @@
 body {
   color: var(--text-primary-color);
   background-color: var(--primary-bg);
+  font-family: "Roboto", sans-serif;
 }
 
 td {
