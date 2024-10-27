@@ -32,7 +32,7 @@ const Pagination = ({
     });
 
   return (
-    <ul className="flex items-stretch text-base sm:gap-1">
+    <ul className="flex items-stretch justify-center text-base sm:gap-1">
       <li className="flex">
         <button
           onClick={() => !isFirstPage && onPageChange(currentPage - 1)}

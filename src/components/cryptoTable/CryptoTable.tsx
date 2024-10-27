@@ -5,7 +5,6 @@ import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
 import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
-import CryptoTableControls from "../cryptoTableControls/CryptoTableControls";
 import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import CryptoTableView from "../cryptoTableView/CryptoTableView";
@@ -115,15 +114,15 @@ const CryptoTable: React.FC = () => {
       {errMsg ? (
         errMsg
       ) : (
-        <div className="py-5">
-          <CryptoTableControls>
+        <div className="py-5 ">
+          <div className="container">
             <CryptoTableRowsPerPage options={[30, 50, 100]} />
-          </CryptoTableControls>
-          <div className="container px-0 mb-4 overflow-x-auto">
+          </div>
+          <div className="container px-0 mb-4 overflow-x-auto ">
             {skeleton}
             {tableContent}
           </div>
-          <CryptoTableControls>
+          <div className="container">            
             <Pagination
               currentPage={currentPage}
               totalCount={totalCoins}
@@ -132,7 +131,7 @@ const CryptoTable: React.FC = () => {
                 handlePageChange(page, setCurrentPage)
               }
             />
-          </CryptoTableControls>
+          </div>
         </div>
       )}
     </>
