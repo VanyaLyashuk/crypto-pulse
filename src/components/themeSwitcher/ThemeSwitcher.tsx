@@ -21,7 +21,7 @@ const ThemeSwitcher = () => {
 
   return (
     <button
-      className="p-2 rounded-full shadow-sm bg-primary-bg dark:shadow-md focus-visible-outline focus-visible-rounded"
+      className="p-2 rounded-full shadow-md bg-primary-bg dark:shadow-md focus-visible-outline focus-visible-rounded"
       onClick={changeTheme}
     >
       {theme === "dark" ? (

@@ -219,7 +219,7 @@ const CoinInfo: React.FC = () => {
                       <span className="uppercase">{symbol}</span> Price
                     </span>
                   </h3>
-                  <div className="px-2 py-1 text-sm font-normal rounded-md bg-filter-bg shrink-0">
+                  <div className="px-2 py-1 text-sm font-normal rounded-md shadow-md bg-filter-bg shrink-0">
                     #{market_cap_rank}
                   </div>
                 </div>

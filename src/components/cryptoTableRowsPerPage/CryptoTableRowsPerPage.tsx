@@ -11,7 +11,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
     useTableViewStore();
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
-    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10",
+    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
     { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
 
@@ -30,7 +30,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   return (
     <div className="relative ml-auto max-w-fit">
       <button
-        className="flex items-center px-2 py-1 text-base font-medium border rounded-md border-select-border-color focus-visible-outline"
+        className="flex items-center px-2 py-1 text-base font-medium border rounded-md shadow-md border-select-border-color focus-visible-outline"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
