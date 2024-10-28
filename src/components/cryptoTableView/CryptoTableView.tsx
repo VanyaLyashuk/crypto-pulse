@@ -102,7 +102,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
         maxSize: 500,
         enableSorting: true,
         cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => (
-          <div className="flex items-center">
+          <button className="flex items-center focus-visible-outline">
             <img
               src={row.original.image}
               alt={row.original.name}
@@ -115,7 +115,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
                 {row.original.symbol}
               </span>
             </div>
-          </div>
+          </button>
         ),
       },
       {
