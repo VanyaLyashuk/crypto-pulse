@@ -17,7 +17,7 @@ const Home: React.FC = () => {
               ULTIMATE
               <motion.span
                 initial={{ width: "0%", opacity: 0 }}
-                animate={{ width: "101%", opacity: 1 }}
+                animate={{ width: "101%", opacity: 0.8 }}
                 transition={{
                   ease: "linear",
                   delay: 2,
