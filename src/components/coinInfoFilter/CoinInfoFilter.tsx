@@ -59,7 +59,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
     });
 
     return filter === "date range" ? (
-      <div className="relative inline-block" key={filter}>
+      <div className="relative inline-block top-[1px] sm:top-0" key={filter}>
         <button
           className={btnClasses}
           onClick={() => {
@@ -67,7 +67,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
             setIsDatepickerOpen(!isDatepickerOpen);
           }}
         >
-          <BsCalendar2 className="sm:h-5 sm:w-4" />
+          <BsCalendar2 className="w-4 h-4 sm:h-5" />
         </button>
         {isDatepickerOpen && <CoinInfoDatepicker />}
       </div>
