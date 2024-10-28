@@ -234,7 +234,7 @@ const CoinInfo: React.FC = () => {
                   />
                 </div>
               </div>
-              <div className="hidden w-full overflow-x-auto border rounded-lg md:block md:order-1 md:flex-grow lg:overflow-auto xl:hidden">
+              <div className="hidden w-full overflow-x-auto border rounded-lg border-border-color md:block md:order-1 md:flex-grow lg:overflow-auto xl:hidden">
                 <CoinInfoTable data={coin_percentage_table} />
               </div>
             </div>

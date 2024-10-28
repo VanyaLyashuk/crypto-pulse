@@ -30,9 +30,10 @@ export default {
         "skeleton-bg": "var(--skeleton-bg)",
         "filter-bg": "var(--filter-bg)",
         "select-bg": "var(--select-bg)",
-        "select-bg-hover": "var(--select-bg-hover)",
         "cross-color": "var(--cross-color)",
         "typewriter-text": "var(--typewriter-text)",
+        "search-bg": "var(--search-input-bg)",
+        "table-head-bg": "var(--table-head-bg)",
       },
       fontFamily: {
         "pixelify-sans": ["Pixelify Sans", "serif"],

@@ -11,7 +11,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
     useTableViewStore();
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
-    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-[34px]",
+    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10",
     { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
 
@@ -30,7 +30,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   return (
     <div className="relative ml-auto max-w-fit">
       <button
-        className="flex items-center px-2 py-1 text-sm font-medium border rounded-md border-select-border-color focus-visible-outline"
+        className="flex items-center px-2 py-1 text-base font-medium border rounded-md border-select-border-color focus-visible-outline"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
@@ -42,7 +42,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
       <ul className={listClasses}>
         {options.map((item) => {
           const liClasses = clsx(
-            "w-full p-2 text-sm border-b border-b-select-border-color cursor-pointer last:border-b-0 hover-hover:hover:bg-select-bg-hover focus:bg-select-bg-hover focus-visible-outline",
+            "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
             { "bg-select-bg": rowsPerPage === item }
           );
           return (

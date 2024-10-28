@@ -41,7 +41,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => {
-    return clsx("px-2 py-[2px] text-sm bg-primary-bg", {
+    return clsx("px-2 py-[2px] text-base bg-primary-bg", {
       "w-8": cell.column.id === "favorite",
       "table-sticky-cell": cell.column.id === "name",
       "text-right": index > 2,
@@ -204,7 +204,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, index) => {
               const cellClasses = clsx(
-                "px-2 py-[17px] text-sm font-bold tracking-wider bg-primary-bg cursor-pointer group",
+                "px-2 py-[17px] text-base font-bold tracking-wider bg-primary-bg cursor-pointer group text-typewriter-text",
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (

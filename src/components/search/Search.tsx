@@ -95,14 +95,14 @@ const Search = () => {
     !loading && !error && query ? (
       <button
         onClick={clearQuery}
-        className="absolute p-1 top-1/2 translate-y-[-50%] right-0 text-red-500 focus-visible-outline"
+        className="absolute p-1 top-1/2 translate-y-[-50%] right-[2px] text-red-400 focus-visible-outline"
       >
         <MdClear className="w-5 h-5" />
       </button>
     ) : null;
 
   const inputClasses = clsx(
-    "w-full px-2 py-2 pl-8 rounded-md bg-primary-bg placeholder:text-secondary-text outline-none",
+    "w-full px-2 py-2 pl-9 rounded-md bg-primary-bg placeholder:text-secondary-text outline-none bg-search-bg",
     {
       "focus-visible-outline": isFocusVisible,
     }
@@ -111,7 +111,7 @@ const Search = () => {
   return (
     <div>
       <div className="w-[300px] relative m-auto mb-1 border rounded-md border-select-border-color">
-        <FaSearch className="absolute left-2 top-1/2 translate-y-[-50%] text-border-color opacity-70" />
+        <FaSearch className="absolute left-2.5 top-1/2 translate-y-[-50%] text-border-color opacity-70" />
         <input
           className={inputClasses}
           type="text"

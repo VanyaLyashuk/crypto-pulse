@@ -32,7 +32,7 @@ const Pagination = ({
     });
 
   return (
-    <ul className="flex items-stretch justify-center text-base sm:gap-1">
+    <ul className="flex items-stretch justify-center text-lg sm:gap-1">
       <li className="flex">
         <button
           onClick={() => !isFirstPage && onPageChange(currentPage - 1)}
@@ -54,7 +54,7 @@ const Pagination = ({
           <li key={pageNumber}>
             <button
               className={clsx(
-                "px-2.5 py-1 text-base rounded-md cursor-pointer sm:px-4 sm:py-2 focus-visible-outline",
+                "px-2.5 py-1 text-lg rounded-md cursor-pointer sm:px-4 sm:py-2 focus-visible-outline",
                 {
                   "bg-pagination-bg": pageNumber === currentPage,
                 }
