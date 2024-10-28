@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import debounce from "debounce";
-import { button } from "framer-motion/client";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdClear } from "react-icons/md";
+import { fadeInUpAnimation } from "../../animations/animationsVariants";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import { ISearchCoinResult } from "../../models";
 import useCoinGeckoService from "../../services/CoinGeckoService";
@@ -70,17 +71,21 @@ const Search = () => {
   const queryList =
     !loading && !error && data.length ? (
       <ul className="flex flex-wrap justify-center w-full gap-2 p-2 overflow-y-scroll rounded-md">
-        {data.map(({ id, name, thumb, symbol }) => (
-          <li
+        {data.map(({ id, name, thumb, symbol }, index) => (
+          <motion.li
+            initial="hidden"
+            whileInView="visible"
+            variants={fadeInUpAnimation(index * 0.1)}
+            viewport={{ once: true }}
             key={id}
-            className="flex items-center p-2 text-sm rounded-md cursor-pointer gap-x-1 focus-visible-outline bg-filter-bg"
+            className="flex items-center p-2 text-sm rounded-lg cursor-pointer gap-x-1 focus-visible-outline bg-filter-bg"
             onClick={() => openModal(id)}
             tabIndex={0}
           >
             <img className="w-6 h-6 shrink-0" src={thumb} alt={name} />
             <h4>{name}</h4>
             <span className="text-secondary-text">{symbol}</span>
-          </li>
+          </motion.li>
         ))}
       </ul>
     ) : null;
