@@ -41,11 +41,14 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => {
-    return clsx("px-2 py-1 text-base bg-primary-bg hover-hover:group-hover:bg-search-bg", {
-      "w-8": cell.column.id === "favorite",
-      "table-sticky-cell": cell.column.id === "name",
-      "text-right": index > 2,
-    });
+    return clsx(
+      "px-2 py-1 text-base bg-primary-bg hover-hover:group-hover:bg-search-bg",
+      {
+        "w-8": cell.column.id === "favorite",
+        "table-sticky-cell": cell.column.id === "name",
+        "text-right": index > 2,
+      }
+    );
   };
 
   const renderCurrencyCell =
@@ -208,16 +211,21 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (
-                <th
-                  key={header.id}
-                  scope="col"
-                  className={cellClasses}
-                  onClick={header.column.getToggleSortingHandler()}
-                >
+                <th key={header.id} scope="col" className={cellClasses}>
                   <div
-                    className={clsx("flex items-center gap-0.5", {
-                      "justify-end whitespace-nowrap": index > 2,
-                    })}
+                    tabIndex={0}
+                    onClick={header.column.getToggleSortingHandler()}
+                    className={clsx(
+                      "flex items-center gap-0.5 focus-visible-outline max-w-fit",
+                      {
+                        "justify-end whitespace-nowrap": index > 2,
+                      }
+                    )}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        header.column.getToggleSortingHandler()?.(event);
+                      }
+                    }}
                   >
                     <span>
                       {header.column.getIsSorted() ? (
@@ -228,7 +236,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
                         )
                       ) : (
                         header.column.getCanSort() && (
-                          <BiSolidDownArrow className="transition-opacity opacity-0 table-head-arrow group-hover:opacity-100" />
+                          <BiSolidDownArrow className="transition-opacity opacity-0 table-head-arrow group-hover:opacity-100 group-focus-within:opacity-100" />
                         )
                       )}
                     </span>
