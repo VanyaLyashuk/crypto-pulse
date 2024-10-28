@@ -54,7 +54,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   }, 100);
 
   const buttons = filterOptions.map((filter) => {
-    const btnClasses = clsx("px-2 py-1.5 text-sm font-medium", {
+    const btnClasses = clsx("px-1.5 py-1 sm:px-2 sm:py-1.5 text-sm font-medium", {
       "bg-primary-bg rounded-md shadow-sm ": activeFilter === filter,
     });
 
@@ -67,7 +67,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
             setIsDatepickerOpen(!isDatepickerOpen);
           }}
         >
-          <BsCalendar2 className="w-4 h-5" />
+          <BsCalendar2 className="sm:h-5 sm:w-4" />
         </button>
         {isDatepickerOpen && <CoinInfoDatepicker />}
       </div>
@@ -86,7 +86,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   });
 
   return (
-    <div className="flex items-center gap-1 p-1.5 bg-filter-bg rounded-md">
+    <div className="flex items-center gap-[2px] sm:gap-1 p-1.5 bg-filter-bg rounded-md">
       {buttons}
     </div>
   );
