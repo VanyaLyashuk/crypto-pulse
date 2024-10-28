@@ -41,7 +41,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     cell: Cell<ITransformedCoinsMarketData, unknown>,
     index: number
   ) => {
-    return clsx("px-2 py-[2px] text-base bg-primary-bg hover-hover:group-hover:bg-search-bg", {
+    return clsx("px-2 py-1 text-base bg-primary-bg hover-hover:group-hover:bg-search-bg", {
       "w-8": cell.column.id === "favorite",
       "table-sticky-cell": cell.column.id === "name",
       "text-right": index > 2,
