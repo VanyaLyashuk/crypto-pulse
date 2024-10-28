@@ -5,7 +5,7 @@ import { TTheme } from "../../models";
 
 const ThemeSwitcher = () => {
   const [theme, setTheme] = useState<TTheme>(() => {
-    return (localStorage.getItem("theme") as TTheme) || "dark";
+    return (localStorage.getItem("theme") as TTheme) || "light";
   });
 
   useEffect(() => {
