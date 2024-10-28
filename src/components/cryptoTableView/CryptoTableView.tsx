@@ -207,7 +207,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, index) => {
               const cellClasses = clsx(
-                "px-2 py-[17px] text-base font-bold tracking-wider bg-primary-bg cursor-pointer group text-typewriter-text",
+                "px-2 py-[17px] text-base font-bold tracking-wider bg-primary-bg group text-typewriter-text",
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (
@@ -216,7 +216,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
                     tabIndex={0}
                     onClick={header.column.getToggleSortingHandler()}
                     className={clsx(
-                      "flex items-center gap-0.5 focus-visible-outline max-w-fit",
+                      "flex items-center gap-0.5 focus-visible-outline max-w-fit cursor-pointer",
                       {
                         "justify-end whitespace-nowrap": index > 2,
                       }
