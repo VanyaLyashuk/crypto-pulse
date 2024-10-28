@@ -81,10 +81,21 @@ const CoinInfo: React.FC = () => {
   };
 
   useEffect(() => {
+    const handleEscapePress = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        handleClose();
+      }
+    };
+
     document.body.classList.add("overflow-hidden");
     onCoinDataRequest();
 
-    return () => document.body.classList.remove("overflow-hidden");
+    document.addEventListener("keydown", handleEscapePress);
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      document.removeEventListener("keydown", handleEscapePress);
+    };
   }, []);
 
   useEffect(() => {
