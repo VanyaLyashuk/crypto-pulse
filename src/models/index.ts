@@ -11,6 +11,7 @@ import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.int
 import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interface";
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
+import { IScrollToTopButtonProps } from "./componentProps/SCrollToTopButtonProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
 import { ITypeWriterProps } from "./componentProps/TypeWriterProps.interface";
 import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
@@ -42,7 +43,9 @@ import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
     IArrowIconProps,
-    ICoinHistoricalChartDataById, ICoinInfoChartProps, ICoinInfoFilterProps,
+    ICoinHistoricalChartDataById,
+    ICoinInfoChartProps,
+    ICoinInfoFilterProps,
     ICoinInfoListProps,
     ICoinInfoProps,
     ICoinInfoStore,
@@ -56,14 +59,17 @@ export type {
     ICryptoTableViewProps,
     IErrorBoundaryProps,
     IErrorBoundaryState,
-    IErrorMessageProps, IHttpRequestOptions, IPaginationComponentProps,
+    IErrorMessageProps,
+    IHttpRequestOptions,
+    IPaginationComponentProps,
     IPaginationProps,
     IPaginationStore,
-    IPriceChangeIndicatorProps, ISearchCoinData, ISearchCoinResult, ISparklineChartProps,
+    IPriceChangeIndicatorProps, IScrollToTopButtonProps, ISearchCoinData,
+    ISearchCoinResult,
+    ISparklineChartProps,
     ITableViewStore,
     ITransformedCoinHistoricalChartDataById,
-    ITransformedCoinsMarketData,
-    TCoinHistoricalChartItem,
+    ITransformedCoinsMarketData, ITypeWriterProps, TCoinHistoricalChartItem,
     TCoinInfoChartData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
@@ -73,7 +79,6 @@ export type {
     TDateOrUndefined,
     TPriceFormatCoinfig,
     TShortMonthName,
-    TTheme,
-    ITypeWriterProps
+    TTheme
 };
 
