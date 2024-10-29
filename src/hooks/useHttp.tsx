@@ -20,6 +20,12 @@ export const useHttp = () => {
         const response = await fetch(url, { method, body, headers });
 
         if (!response.ok) {
+          if (response.status === 429) {
+            setError(
+              "Too many requests. I'm using a free API version with rate limits. Please wait a moment and try again."
+            );
+            throw new Error("429");
+          }
           throw new Error(`Could not fetch ${url}, status: ${response.status}`);
         }
 
@@ -28,7 +34,6 @@ export const useHttp = () => {
         setLoading(false);
         return data;
       } catch (e: any) {
-        
         setLoading(false);
         setError(e.message);
         throw e;
