@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useRef } from 'react';
 import CryptoTable from "../../components/cryptoTable/CryptoTable";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
+import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
 import ScrollToTopButton from "../../components/scrollToTopButton/ScrollToTopButton";
 import Search from "../../components/search/Search";
@@ -12,7 +13,7 @@ const Home: React.FC = () => {
   
   return (
     <>
-      <div className="pt-[64px] pb-5">
+      <div className="pt-[64px]">
         <Header />
         <div className="container flex flex-col justify-center pt-10 md:pt-20">
           <div>
@@ -45,6 +46,7 @@ const Home: React.FC = () => {
         <ErrorBoundary>
           <CryptoTable />
         </ErrorBoundary>
+        <Footer />
       </div>
       <ScrollToTopButton targetRef={headingRef} />
     </>
