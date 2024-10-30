@@ -10,10 +10,12 @@ import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonP
 import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.interface";
 import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interface";
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
+import { IFavoritesButtonProps } from "./componentProps/FavoritesButtonProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { IScrollToTopButtonProps } from "./componentProps/SCrollToTopButtonProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
 import { ITypeWriterProps } from "./componentProps/TypeWriterProps.interface";
+import { TButtonClickHandler } from "./dataTypes/ButtonClickHandler.type";
 import { ICoinHistoricalChartDataById } from "./dataTypes/CoinHistoricalChartDataById.interface";
 import { TCoinHistoricalChartItem } from "./dataTypes/CoinHistoricalChartItem.type";
 import { TCoinInfoChartData } from "./dataTypes/CoinInfoChartData.type";
@@ -25,6 +27,7 @@ import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
 import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
+import { IFavoritesButtonViewProps } from "./dataTypes/FavoritesButtonViewProps.interface";
 import { IHttpRequestOptions } from "./dataTypes/HttpRequestOptions.interface";
 import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
 import { ISearchCoinData } from "./dataTypes/SearchCoinData.interface";
@@ -39,6 +42,7 @@ import { IPaginationStore } from "./pagination/PaginationStore.interface";
 import { ICoinInfoStore } from "./stateAndErrors/CoinInfoStore.interface";
 import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
+import { IFavoritesStore } from "./stateAndErrors/Favorites.store.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
@@ -60,16 +64,24 @@ export type {
     IErrorBoundaryProps,
     IErrorBoundaryState,
     IErrorMessageProps,
+    IFavoritesButtonProps,
+    IFavoritesButtonViewProps,
+    IFavoritesStore,
     IHttpRequestOptions,
     IPaginationComponentProps,
     IPaginationProps,
     IPaginationStore,
-    IPriceChangeIndicatorProps, IScrollToTopButtonProps, ISearchCoinData,
+    IPriceChangeIndicatorProps,
+    IScrollToTopButtonProps,
+    ISearchCoinData,
     ISearchCoinResult,
     ISparklineChartProps,
     ITableViewStore,
     ITransformedCoinHistoricalChartDataById,
-    ITransformedCoinsMarketData, ITypeWriterProps, TCoinHistoricalChartItem,
+    ITransformedCoinsMarketData,
+    ITypeWriterProps,
+    TButtonClickHandler,
+    TCoinHistoricalChartItem,
     TCoinInfoChartData,
     TCoinInfoMetric,
     TCoinInfoTimeRange,
