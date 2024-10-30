@@ -90,7 +90,7 @@ const CryptoTable: React.FC = () => {
       ids = favorites.join("%2C");
     }
 
-    getCoinsListWithMarketData("usd", rowsPerPage, currentPage, ids).then(
+    getCoinsListWithMarketData(rowsPerPage, currentPage, ids).then(
       (res) => {
         setCoins(res);
       }

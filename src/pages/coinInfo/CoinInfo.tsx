@@ -105,7 +105,7 @@ const CoinInfo: React.FC = () => {
   }, [endDate, coinId]);
 
   const onCoinDataRequest = () => {
-    getCoinsListWithMarketData("usd", 30, 1, coinId).then((data) => {
+    getCoinsListWithMarketData(30, 1, coinId).then((data) => {
       setCoin(data[0]);
     });
   };
