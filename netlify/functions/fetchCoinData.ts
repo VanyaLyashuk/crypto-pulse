@@ -1,5 +1,4 @@
 import { Handler } from "@netlify/functions";
-import fetch from "node-fetch";
 
 interface FetchEvent {
   endpoint: string;
