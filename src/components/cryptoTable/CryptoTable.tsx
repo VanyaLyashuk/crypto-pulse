@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
 import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinsStore from "../../store/coins.store";
+import useFavoritesStore from "../../store/favorites.store";
 import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
 import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
@@ -39,12 +40,19 @@ const CryptoTable: React.FC = () => {
       }))
     );
 
+  const { favorites, showFavorites } = useFavoritesStore(
+    useShallow((state) => ({
+      favorites: state.favorites,
+      showFavorites: state.showFavorites,
+    }))
+  );
+
   const { loading, error, getCoinsListWithMarketData, getCoinsListLength } =
     useCoinGeckoService();
 
   useEffect(() => {
     onTotalCoinsRequest();
-  }, []);
+  }, [showFavorites]);
 
   useEffect(() => {
     setLastPage(Math.ceil(totalCoins / rowsPerPage));
@@ -57,7 +65,7 @@ const CryptoTable: React.FC = () => {
       onCoinsDataRequest();
       setIsRowsSelectOpen(false);
     }
-  }, [currentPage, lastPage]);
+  }, [currentPage, lastPage, showFavorites]);
 
   useEffect(() => {
     if (lastPage && currentPage > lastPage) {
@@ -76,16 +84,27 @@ const CryptoTable: React.FC = () => {
 
   const onCoinsDataRequest = () => {
     setLoadingDelay(true);
+    let ids = "";
 
-    getCoinsListWithMarketData("usd", rowsPerPage, currentPage).then((res) => {
-      setCoins(res);
-    });
+    if (showFavorites) {
+      ids = favorites.join("%2C");
+    }
+
+    getCoinsListWithMarketData("usd", rowsPerPage, currentPage, ids).then(
+      (res) => {
+        setCoins(res);
+      }
+    );
   };
 
   const onTotalCoinsRequest = () => {
-    getCoinsListLength().then((res) => {
-      setTotalCoins(res);
-    });
+    if (showFavorites) {
+      setTotalCoins(favorites.length);
+    } else {      
+      getCoinsListLength().then((res) => {
+        setTotalCoins(res);
+      });
+    }
   };
 
   const handlePageChange = debounce(
@@ -122,7 +141,7 @@ const CryptoTable: React.FC = () => {
             {skeleton}
             {tableContent}
           </div>
-          <div className="container">            
+          <div className="container">
             <Pagination
               currentPage={currentPage}
               totalCount={totalCoins}
