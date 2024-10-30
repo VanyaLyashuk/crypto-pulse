@@ -15,21 +15,16 @@ import {
 const useCoinGeckoService = () => {
   const { loading, request, error } = useHttp();
 
-  const _apiKey: string = import.meta.env.VITE_COINGECKO_API_KEY;
-  const _apiBase: string = import.meta.env.VITE_COINGECKO_API_BASE;
-
   const getCoinsListWithMarketData = async (
     perPage: number = 30,
     page: number = 1,
     id?: string
   ): Promise<ITransformedCoinsMarketData[]> => {
-    const url = `${_apiBase}coins/markets?vs_currency=usd${
-      id ? "&ids=" + id : ""
-    }&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2&x_cg_demo_api_key=${_apiKey}`;
-    const data = await request<ICoinsMarketData[]>(url, {});
-    const transformedData = transformCoinsListWithMarketData(data);
-
-    return transformedData;
+    const endpoint = `/coins/markets`;
+    const params = `vs_currency=usd${id ? "&ids=" + id : ""}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
+    
+    const data = await request<ICoinsMarketData[]>(endpoint, params);
+    return transformCoinsListWithMarketData(data);
   };
 
   const getCoinHistoricalChartDataById = async (
@@ -37,24 +32,26 @@ const useCoinGeckoService = () => {
     from: number,
     to: number
   ): Promise<ICoinHistoricalChartDataById> => {
-    const url = `${_apiBase}coins/${id}/market_chart/range?vs_currency=usd&from=${from}&to=${to}&x_cg_demo_api_key=${_apiKey}`;
-    const data = await request<ICoinHistoricalChartDataById>(url, {});
-    const labeledData = transformCoinHistoricalChartDataById(data);
-
-    return labeledData;
+    const endpoint = `/coins/${id}/market_chart/range`;
+    const params = `vs_currency=usd&from=${from}&to=${to}`;
+    
+    const data = await request<ICoinHistoricalChartDataById>(endpoint, params);
+    return transformCoinHistoricalChartDataById(data);
   };
 
   const getCoinsListLength = async (): Promise<number> => {
-    const url = `${_apiBase}coins/list?x_cg_demo_api_key=${_apiKey}`;
-    const data = await request<ICoinsListData[]>(url, {});
-
+    const endpoint = `/coins/list`;
+    const params = ``;
+    
+    const data = await request<ICoinsListData[]>(endpoint, params);
     return data.length;
   };
 
   const searchCoin = async (query: string): Promise<ISearchCoinResult[]> => {
-    const url = `${_apiBase}search?query=${query}&x_cg_demo_api_key=${_apiKey}`;
-    const data = await request<ISearchCoinData>(url, {});
-
+    const endpoint = `/search`;
+    const params = `query=${query}`;
+    
+    const data = await request<ISearchCoinData>(endpoint, params);
     return data.coins;
   };
 
