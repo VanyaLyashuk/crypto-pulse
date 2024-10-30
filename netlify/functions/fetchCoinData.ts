@@ -7,11 +7,9 @@ interface FetchEvent {
 
 export const handler: Handler = async (event) => {
   const { endpoint, params } = JSON.parse(event.body || "{}") as FetchEvent;
-
-  const apiBase = process.env.COINGECKO_API_BASE;
   const apiKey = process.env.COINGECKO_API_KEY;
 
-  const url = `${apiBase}${endpoint}?${params}&x_cg_demo_api_key=${apiKey}`;
+  const url = `https://api.coingecko.com/api/v3${endpoint}?${params}&x_cg_demo_api_key=${apiKey}`;
 
   try {
     const response = await fetch(url);
