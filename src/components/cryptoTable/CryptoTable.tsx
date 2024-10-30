@@ -129,19 +129,19 @@ const CryptoTable: React.FC = () => {
     ) : null;
 
   return (
-    <>
+    <div className="pt-4">
       {errMsg ? (
         errMsg
       ) : (
-        <div className="py-5 ">
+        <>
           <div className="container">
             <CryptoTableRowsPerPage options={[30, 50, 100]} />
           </div>
-          <div className="container px-0 mb-4 overflow-x-auto ">
+          <div className="container px-0 mb-4 overflow-x-auto lg:mb-6">
             {skeleton}
             {tableContent}
           </div>
-          <div className="container">
+          <div className="container mb-6 md:mb-8">
             <Pagination
               currentPage={currentPage}
               totalCount={totalCoins}
@@ -151,9 +151,9 @@ const CryptoTable: React.FC = () => {
               }
             />
           </div>
-        </div>
+        </>
       )}
-    </>
+    </div>
   );
 };
 
