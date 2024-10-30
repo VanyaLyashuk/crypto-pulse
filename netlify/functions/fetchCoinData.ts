@@ -10,7 +10,7 @@ export const handler: Handler = async (event) => {
   const apiKey = process.env.COINGECKO_API_KEY;
 
   const url = `https://api.coingecko.com/api/v3${endpoint}?${params}&x_cg_demo_api_key=${apiKey}`;
-  console.log(url)
+
   try {
     const response = await fetch(url);
 
