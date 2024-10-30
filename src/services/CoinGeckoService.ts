@@ -16,7 +16,7 @@ const useCoinGeckoService = () => {
   const { loading, request, error } = useHttp();
 
   const _apiKey: string = import.meta.env.VITE_COINGECKO_API_KEY;
-  const _apiBase: string = "https://api.coingecko.com/api/v3/";
+  const _apiBase: string = import.meta.env.VITE_COINGECKO_API_BASE;
 
   const getCoinsListWithMarketData = async (
     perPage: number = 30,
@@ -35,7 +35,7 @@ const useCoinGeckoService = () => {
   const getCoinHistoricalChartDataById = async (
     id: string,
     from: number,
-    to: number,
+    to: number
   ): Promise<ICoinHistoricalChartDataById> => {
     const url = `${_apiBase}coins/${id}/market_chart/range?vs_currency=usd&from=${from}&to=${to}&x_cg_demo_api_key=${_apiKey}`;
     const data = await request<ICoinHistoricalChartDataById>(url, {});
@@ -54,7 +54,7 @@ const useCoinGeckoService = () => {
   const searchCoin = async (query: string): Promise<ISearchCoinResult[]> => {
     const url = `${_apiBase}search?query=${query}&x_cg_demo_api_key=${_apiKey}`;
     const data = await request<ISearchCoinData>(url, {});
-    
+
     return data.coins;
   };
 
