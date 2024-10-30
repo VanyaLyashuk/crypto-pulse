@@ -10,7 +10,6 @@ import {
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
-import { FaRegStar } from "react-icons/fa";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import useFormattedSmallCurrency from "../../hooks/useFormattedSmallCurrency";
 import {
@@ -22,6 +21,7 @@ import {
 import useCoinsStore from "../../store/coins.store";
 import { formatCurrencyValue } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
+import FavoritesButton from "../favoritesButton/FavoritesButton";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
 
 const renderPriceChangeCell = () => (info: TCryptoTableCellContext) => {
@@ -35,6 +35,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   ]);
 
   const coins = useCoinsStore((state) => state.coins);
+
   const { openModal } = useCoinInfoModal();
 
   const getCellClasses = (
@@ -75,12 +76,10 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   const columns = useMemo(
     () => [
       {
-        header: () => "",
+        header: () => <FavoritesButton isHeader={true} />,
         id: "favorite",
-        cell: () => (
-          <button disabled>
-            <FaRegStar />
-          </button>
+        cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => (
+          <FavoritesButton coinId={row.original.id} />
         ),
         size: 32,
         enableSorting: false,
@@ -207,7 +206,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
           <tr key={headerGroup.id}>
             {headerGroup.headers.map((header, index) => {
               const cellClasses = clsx(
-                "px-2 py-[17px] text-base font-bold tracking-wider bg-primary-bg group text-typewriter-text",
+                "px-2 py-3 text-base font-bold tracking-wider bg-primary-bg group text-typewriter-text",
                 { "table-sticky-cell": header.column.id === "name" }
               );
               return (
@@ -218,7 +217,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
                     className={clsx(
                       "flex items-center gap-0.5 focus-visible-outline max-w-fit cursor-pointer",
                       {
-                        "justify-end whitespace-nowrap": index > 2,
+                        "justify-end whitespace-nowrap ml-auto": index > 2,
                       }
                     )}
                     onKeyDown={(event) => {
