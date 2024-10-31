@@ -70,7 +70,7 @@ const Search = () => {
 
   const queryList =
     !loading && !error && data.length ? (
-      <ul className="flex flex-wrap justify-center w-full gap-2 p-2 overflow-y-scroll rounded-md">
+      <ul className="flex flex-wrap justify-center w-full gap-2 p-2 rounded-md">
         {data.map(({ id, name, thumb, symbol }, index) => (
           <motion.li
             initial="hidden"
