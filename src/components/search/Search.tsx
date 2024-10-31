@@ -107,7 +107,7 @@ const Search = () => {
     ) : null;
 
   const inputClasses = clsx(
-    "w-full px-2 py-2 pl-9 rounded-md bg-primary-bg placeholder:text-secondary-text outline-none bg-search-bg",
+    "w-full px-2 py-2 pl-[34px] pr-[30px] rounded-md bg-primary-bg placeholder:text-secondary-text outline-none bg-search-bg",
     {
       "focus-visible-outline": isFocusVisible,
     }
