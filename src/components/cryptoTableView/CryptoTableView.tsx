@@ -111,7 +111,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
               className="object-contain w-6 h-6 mr-2"
               style={{ flexShrink: 0 }}
             />
-            <div className="overflow-hidden break-words">
+            <div className="overflow-hidden text-left break-words">
               <span className="font-medium">{row.original.name}</span>{" "}
               <span className="uppercase text-secondary-text">
                 {row.original.symbol}
