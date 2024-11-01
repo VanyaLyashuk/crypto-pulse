@@ -71,7 +71,7 @@ const CryptoTable: React.FC = () => {
   useEffect(() => {
     if (lastPage && currentPage > lastPage) {
       setCurrentPage(lastPage);
-    } else if (lastPage) {
+    } else if (lastPage && !showFavorites) {
       onCoinsDataRequest();
       setIsRowsSelectOpen(false);
     }
