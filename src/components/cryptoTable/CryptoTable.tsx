@@ -40,10 +40,11 @@ const CryptoTable: React.FC = () => {
       }))
     );
 
-  const { favorites, showFavorites } = useFavoritesStore(
+  const { favorites, showFavorites, hideFavorites } = useFavoritesStore(
     useShallow((state) => ({
       favorites: state.favorites,
       showFavorites: state.showFavorites,
+      hideFavorites: state.hideFavorites,
     }))
   );
 
@@ -59,13 +60,22 @@ const CryptoTable: React.FC = () => {
   }, [totalCoins, rowsPerPage]);
 
   useEffect(() => {
+    if (showFavorites) {
+      onCoinsDataRequest();
+    }
+    if (!favorites.length) {
+      hideFavorites();
+    }
+  },[showFavorites, favorites])
+
+  useEffect(() => {
     if (lastPage && currentPage > lastPage) {
       setCurrentPage(lastPage);
     } else if (lastPage) {
       onCoinsDataRequest();
       setIsRowsSelectOpen(false);
     }
-  }, [currentPage, lastPage, showFavorites]);
+  }, [currentPage, lastPage]);
 
   useEffect(() => {
     if (lastPage && currentPage > lastPage) {
@@ -86,7 +96,7 @@ const CryptoTable: React.FC = () => {
     setLoadingDelay(true);
     let ids = "";
 
-    if (showFavorites) {
+    if (showFavorites && favorites.length) {
       ids = favorites.join("%2C");
     }
 
