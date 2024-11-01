@@ -60,7 +60,7 @@ const CryptoTable: React.FC = () => {
   }, [totalCoins, rowsPerPage]);
 
   useEffect(() => {
-    if (showFavorites) {
+    if (showFavorites && favorites.length) {
       onCoinsDataRequest();
     }
     if (!favorites.length) {
