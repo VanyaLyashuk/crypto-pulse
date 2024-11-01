@@ -28,7 +28,7 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
     if (coinId) {
       setIsFavorite(favorites.includes(coinId));
     }
-  }, [favorites, coinId]);
+  }, [coinId]);
 
   const onToggleFavorites: TButtonClickHandler = (event) => {
     event.stopPropagation();
