@@ -43,7 +43,7 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
     <ButtonView
       handleClick={(event) => handleFavorites(event)}
       isFilled={showFavorites}
-      disabled={!favorites.length}
+      disabled={!favorites.length && !showFavorites}
     />
   ) : (
     <ButtonView
