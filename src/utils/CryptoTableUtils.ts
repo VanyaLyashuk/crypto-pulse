@@ -1,6 +1,8 @@
+import useFormattedSmallCurrency from "../hooks/useFormattedSmallCurrency";
 import {
   TCoinHistoricalChartItem,
   TCoinInfoTimeRange,
+  TCryptoTableCellContext,
   TCryptoTableCurrency,
   TDateOrUndefined,
   TShortMonthName,
@@ -158,3 +160,24 @@ export function formatYAxisLabel(value: number, currency: string = "$") {
 
   return currency + formattedValue;
 }
+
+export const renderCurrencyCell =
+(currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
+(info: TCryptoTableCellContext) => {
+  const value = info.getValue<number>();
+
+  if (value === null) {
+    return "-";
+  }
+
+  if (value < 1) {
+    const fractionalPart = value.toString().split(".")[1] || "";
+    const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
+
+    if (leadingZeros >= 4) {
+      return useFormattedSmallCurrency(value, currency, options);
+    }
+  }
+
+  return formatCurrencyValue(value, currency, options);
+};

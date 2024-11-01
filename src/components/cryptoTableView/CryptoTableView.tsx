@@ -11,15 +11,13 @@ import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
-import useFormattedSmallCurrency from "../../hooks/useFormattedSmallCurrency";
 import {
   ICryptoTableViewProps,
   ITransformedCoinsMarketData,
   TCryptoTableCellContext,
-  TCryptoTableCurrency,
 } from "../../models";
 import useCoinsStore from "../../store/coins.store";
-import { formatCurrencyValue } from "../../utils/CryptoTableUtils";
+import { renderCurrencyCell } from "../../utils/CryptoTableUtils";
 import CryptoTableSparklineChart from "../cryptoTableSparklineChart/CryptoTableSparklineChart";
 import FavoritesButton from "../favoritesButton/FavoritesButton";
 import PriceChangeIndicator from "../priceChangeIndicator/PriceChangeIndicator";
@@ -51,27 +49,6 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
       }
     );
   };
-
-  const renderCurrencyCell =
-    (currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
-    (info: TCryptoTableCellContext) => {
-      const value = info.getValue<number>();
-
-      if (value === null) {
-        return "-";
-      }
-
-      if (value < 1) {
-        const fractionalPart = value.toString().split(".")[1] || "";
-        const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
-
-        if (leadingZeros >= 4) {
-          return useFormattedSmallCurrency(value, currency, options);
-        }
-      }
-
-      return formatCurrencyValue(value, currency, options);
-    };
 
   const columns = useMemo(
     () => [
