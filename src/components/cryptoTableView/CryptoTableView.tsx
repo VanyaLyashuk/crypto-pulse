@@ -10,6 +10,7 @@ import {
 import clsx from "clsx";
 import { useMemo, useState } from "react";
 import { BiSolidDownArrow, BiSolidUpArrow } from "react-icons/bi";
+import { useShallow } from "zustand/react/shallow";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import {
   ICryptoTableViewProps,
@@ -32,7 +33,9 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
     { id: "market_cap_rank", desc: false },
   ]);
 
-  const coins = useCoinsStore((state) => state.coins);
+  const { coins } = useCoinsStore(
+    useShallow((state) => ({ coins: state.coins }))
+  );
 
   const { openModal } = useCoinInfoModal();
 
