@@ -19,6 +19,7 @@ const useFavoritesStore = create<IFavoritesStore>()(
         set((state) => ({
           showFavorites: !state.showFavorites,
         })),
+      hideFavorites: () => set({ showFavorites: false }),
     }),
     { name: "FavoritesStore" }
   )

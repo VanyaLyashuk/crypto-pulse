@@ -3,4 +3,5 @@ export interface IFavoritesStore {
   toggleFavorites: (coinId: string) => void;
   showFavorites: boolean;
   toggleShowFavorites: () => void;
+  hideFavorites: () => void;
 }
