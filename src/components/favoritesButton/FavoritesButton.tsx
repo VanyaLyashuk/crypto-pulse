@@ -1,6 +1,7 @@
 import { clsx } from "clsx";
 import { useEffect, useState } from "react";
 import { GoStar, GoStarFill } from "react-icons/go";
+import { useShallow } from "zustand/react/shallow";
 import {
   IFavoritesButtonProps,
   IFavoritesButtonViewProps,
@@ -14,7 +15,14 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
 }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { favorites, toggleFavorites, showFavorites, toggleShowFavorites } =
-    useFavoritesStore();
+    useFavoritesStore(
+      useShallow((state) => ({
+        favorites: state.favorites,
+        toggleFavorites: state.toggleFavorites,
+        showFavorites: state.showFavorites,
+        toggleShowFavorites: state.toggleShowFavorites,
+      }))
+    );
 
   useEffect(() => {
     if (coinId) {
