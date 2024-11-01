@@ -108,8 +108,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
             <img
               src={row.original.image}
               alt={row.original.name}
-              className="object-contain w-6 h-6 mr-2"
-              style={{ flexShrink: 0 }}
+              className="object-contain w-6 h-6 mr-2 shrink-0"
             />
             <div className="overflow-hidden text-left break-words">
               <span className="font-medium">{row.original.name}</span>{" "}
