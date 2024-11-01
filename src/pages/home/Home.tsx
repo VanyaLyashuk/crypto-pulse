@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   
   return (
     <>
-      <div className="pt-[64px]">
+      <div className="flex flex-col pt-[64px] min-h-screen">
         <Header />
         <div className="container flex flex-col justify-center pt-10 md:pt-20">
           <div>
