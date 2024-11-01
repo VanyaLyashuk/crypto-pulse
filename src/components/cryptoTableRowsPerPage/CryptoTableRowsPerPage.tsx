@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { useShallow } from "zustand/react/shallow";
 import { ICryptoTableRowsPerPageProps } from "../../models";
 import useTableViewStore from "../../store/tableView.store";
 
@@ -8,7 +9,14 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   options,
 }) => {
   const { rowsPerPage, setRowsPerPage, isRowsSelectOpen, setIsRowsSelectOpen } =
-    useTableViewStore();
+    useTableViewStore(
+      useShallow((state) => ({
+        rowsPerPage: state.rowsPerPage,
+        setRowsPerPage: state.setRowsPerPage,
+        isRowsSelectOpen: state.isRowsSelectOpen,
+        setIsRowsSelectOpen: state.setIsRowsSelectOpen,
+      }))
+    );
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
     "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
