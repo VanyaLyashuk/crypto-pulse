@@ -10,6 +10,10 @@
   <img src="https://img.shields.io/badge/CoinGecko-5C8DF8?style=for-the-badge&logo=coingecko&logoColor=white" alt="CoinGecko"/>
 </p>
 
+## Live Demo
+
+You can view the live demo of the project at: [Crypto Pulse on Netlify](https://ccrypto-pulse.netlify.app)
+
 ## Project Description
 
 **Crypto Pulse** is a web application for tracking real-time cryptocurrency prices. Users can find specific coins through the search field or explore various coins in the main table, which provides quick information about popular cryptocurrencies. The application allows users to filter cryptocurrencies and add them to a favorites list, which will be saved even after the page is reloaded. By selecting a coin from the table or search results, users can view detailed information, including a price chart over a selected period.
@@ -46,6 +50,6 @@ The project will be available at http://localhost:8888.
 
 **Note**: Netlify CLI allows you to run the project locally with serverless functions as they would work on deployment.
 
-**License**
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://opensource.org/licenses/MIT) file for more information.
