@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"/>
   <img src="https://img.shields.io/badge/Framer_Motion-EA4C89?style=for-the-badge&logo=framer&logoColor=white" alt="Framer Motion"/>
 </p>
+
 You can view the live demo of the project at: [Crypto Pulse on Netlify](https://ccrypto-pulse.netlify.app)
 
 ## Project Description
