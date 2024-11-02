@@ -9,6 +9,14 @@
 
 You can view the live demo of the project at: [Crypto Pulse on Netlify](https://ccrypto-pulse.netlify.app)
 
+## Screenshots
+
+### Home Page
+![Home Page](./screenshots/main-page.png)
+
+### Detail Page
+![Detail Page](./screenshots/coin-info.png)
+
 ## Project Description
 
 **Crypto Pulse** is a web application for tracking real-time cryptocurrency prices. Users can find specific coins through the search field or explore various coins in the main table, which provides quick information about popular cryptocurrencies. The application allows users to filter cryptocurrencies and add them to a favorites list, which will be saved even after the page is reloaded. By selecting a coin from the table or search results, users can view detailed information, including a price chart over a selected period.
