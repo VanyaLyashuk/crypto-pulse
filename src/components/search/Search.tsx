@@ -115,7 +115,7 @@ const Search = () => {
 
   return (
     <div>
-      <div className="w-[300px] relative m-auto mb-1 border rounded-md border-select-border-color md:mb-3">
+      <div className="w-[300px] relative m-auto mb-1 border rounded-md border-select-border-color md:mb-3 shadow-md dark:shadow-lg">
         <FaSearch className="absolute left-2.5 top-1/2 translate-y-[-50%] text-border-color opacity-70" />
         <input
           className={inputClasses}
