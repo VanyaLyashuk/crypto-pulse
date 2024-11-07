@@ -78,7 +78,7 @@ const Search = () => {
             variants={fadeInUpAnimation(index * 0.1)}
             viewport={{ once: true }}
             key={id}
-            className="flex items-center p-2 text-sm rounded-lg cursor-pointer gap-x-1 focus-visible-outline bg-filter-bg"
+            className="flex items-center p-2 text-sm rounded-lg shadow-md cursor-pointer gap-x-1 focus-visible-outline bg-filter-bg"
             onClick={() => openModal(id)}
             tabIndex={0}
           >
