@@ -144,10 +144,10 @@ const CryptoTable: React.FC = () => {
         errMsg
       ) : (
         <>
-          <div className="container">
+          <div className="container mb-2">
             <CryptoTableRowsPerPage options={[30, 50, 100]} />
           </div>
-          <div className="container px-0 mb-4 overflow-x-auto lg:mb-6">
+          <div className="container px-0 mb-4 overflow-x-auto lg:mb-6 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
             {skeleton}
             {tableContent}
           </div>

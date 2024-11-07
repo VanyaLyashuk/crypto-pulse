@@ -179,7 +179,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   });
 
   return (
-    <table className="min-w-full transition-all table-auto crypto-table sm:rounded-lg">
+    <table className="min-w-full transition-all table-auto crypto-table">
       <thead>
         {table.getHeaderGroups().map((headerGroup) => (
           <tr key={headerGroup.id}>
