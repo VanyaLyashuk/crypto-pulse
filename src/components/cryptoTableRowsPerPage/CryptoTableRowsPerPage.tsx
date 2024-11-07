@@ -38,7 +38,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   return (
     <div className="relative ml-auto max-w-fit">
       <button
-        className="flex items-center px-2 py-1 text-base font-medium border rounded-md border-select-border-color focus-visible-outline"
+        className="flex items-center px-2 py-1 text-base font-medium border rounded-md border-select-border-color focus-visible-outline bg-primary-bg"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
