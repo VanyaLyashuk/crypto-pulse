@@ -155,7 +155,7 @@ const CoinInfo: React.FC = () => {
       animate={{ opacity: 1 }}
       onClick={handleClose}
       ref={scope}
-      className="fixed inset-0 z-50 bg-black bg-opacity-50 md:overflow-y-scroll md:justify-end md:flex md:px-6 md:py-10 md:items-center"
+      className="fixed inset-0 z-50 bg-black bg-opacity-50 md:overflow-y-scroll md:justify-end md:flex md:px-6 md:py-10 md:items-center xl:overflow-hidden"
     >
       <motion.div
         ref={modalBodyRef}
