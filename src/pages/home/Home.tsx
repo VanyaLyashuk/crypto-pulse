@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useRef } from 'react';
+import { useRef } from "react";
 import CryptoTable from "../../components/cryptoTable/CryptoTable";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import Footer from "../../components/footer/Footer";
@@ -10,14 +10,18 @@ import TypeWriter from "../../components/typeWriter/TypeWriter";
 
 const Home: React.FC = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  
+
   return (
     <>
+      <div className="fixed inset-0 w-full h-full bg-primary-bg bg-[radial-gradient(var(--grid-color)_1px,transparent_1px)] [background-size:16px_16px] z-[-1]"></div>
       <div className="flex flex-col pt-[64px] min-h-screen">
         <Header />
         <div className="container flex flex-col justify-center pt-10 md:pt-20">
           <div>
-            <h1 ref={headingRef} className="mb-2 text-3xl font-bold text-center font-chakra-petch sm:text-4xl md:text-5xl">
+            <h1
+              ref={headingRef}
+              className="mb-2 text-3xl font-bold text-center font-chakra-petch sm:text-4xl md:text-5xl"
+            >
               YOUR{" "}
               <span className="relative">
                 ULTIMATE
