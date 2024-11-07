@@ -22,32 +22,32 @@ const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({
       <table className="crypto-table min-w-[129px] shadow table-auto sm:rounded-lg">
         <thead>
           <tr>
-            <th className="px-2 py-3 bg-primary-bg "></th>
-            <th className="px-2 py-3 bg-primary-bg ">
+            <th className="px-2 py-[17px] bg-primary-bg "></th>
+            <th className="px-2 py-[17px] bg-primary-bg ">
               <div className="w-6 h-6 rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="w-full px-2 py-3 bg-primary-bg min-w-[200px]">
+            <th className="w-full px-2 py-[17px] bg-primary-bg min-w-[200px]">
               <div className="h-6 rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg ">
+            <th className="px-2 py-[17px] bg-primary-bg ">
               <div className="h-6 ml-auto rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[71px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
               <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[71px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
               <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[71px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
               <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[145px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[145px]">
               <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[145px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[145px]">
               <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
-            <th className="px-2 py-3 bg-primary-bg w-[151px]">
+            <th className="px-2 py-[17px] bg-primary-bg w-[151px]">
               <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
             </th>
           </tr>
