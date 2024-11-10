@@ -1,4 +1,5 @@
 import { FC, lazy, Suspense } from "react";
+import 'react-datepicker/dist/react-datepicker.css';
 import { Route, Routes, useLocation } from "react-router-dom";
 import SpinnerIcon from "./components/UI/SpinnerIcon";
 
