@@ -1,12 +1,14 @@
+import { FC, useEffect, useRef, useState } from "react";
+import { Line } from "react-chartjs-2";
+import { useShallow } from "zustand/react/shallow";
+
 import {
   CategoryScale,
   Chart as ChartJS,
-  ChartOptions,
   Filler,
   Legend,
   LinearScale,
   LineElement,
-  Plugin,
   PointElement,
   TimeScale,
   Title,
@@ -14,13 +16,14 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 
-import { FC, useEffect, useRef, useState } from "react";
-import { Line } from "react-chartjs-2";
-import { useShallow } from "zustand/react/shallow";
+import { verticalLinePlugin } from "./VerticalLinePlugin";
+
+import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
+import { getThemeColors } from "./chartConfig";
+import { getChartOptions } from "./chartOptions";
+
 import { ICoinInfoChartProps } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
-import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
-import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
 
 ChartJS.register(
   CategoryScale,
@@ -33,34 +36,6 @@ ChartJS.register(
   TimeScale,
   Filler
 );
-
-const verticalLinePlugin: Plugin = {
-  id: "verticalLine",
-  afterDraw: (chart) => {
-    const activeElements = (chart.tooltip as any)?._active;
-    if (activeElements?.length) {
-      const ctx = chart.ctx;
-      const x = activeElements[0].element.x;
-      const topY = chart.scales.y.top;
-      const bottomY = chart.scales.y.bottom;
-      const isDarkTheme = document
-        .querySelector("html")
-        ?.classList.contains("dark");
-      const lineColor = isDarkTheme
-        ? "rgba(55, 65, 81, 1)"
-        : "rgb(229, 231, 235)";
-
-      ctx.save();
-      ctx.beginPath();
-      ctx.moveTo(x, topY);
-      ctx.lineTo(x, bottomY);
-      ctx.lineWidth = 1;
-      ctx.strokeStyle = lineColor;
-      ctx.stroke();
-      ctx.restore();
-    }
-  },
-};
 
 const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
@@ -89,8 +64,7 @@ const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
   const isDarkTheme = document
     .querySelector("html")
     ?.classList.contains("dark");
-  const gridColor = isDarkTheme ? "rgba(55, 65, 81, 1)" : "rgb(229, 231, 235)";
-  const labelColor = "rgb(107, 114, 128)";
+  const { gridColor, red, green, label } = getThemeColors(isDarkTheme);
 
   useEffect(() => {
     if (!chartRef.current) return;
@@ -99,18 +73,14 @@ const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
     if (!chartCanvas) return;
 
     const gradient = chartCanvas.createLinearGradient(0, 0, 0, 500);
-    const chartColor =
+    const chartColor = (
       selectedData[0][1] > selectedData[selectedData.length - 1][1]
-        ? "rgba(220, 38, 38, 1)"
-        : "rgba(34, 197, 94, 1)";
+        ? red
+        : green
+    ).slice(0, -2);
 
-    if (chartColor === "rgba(220, 38, 38, 1)") {
-      gradient.addColorStop(0, "rgba(220, 38, 38, 0.5)");
-      gradient.addColorStop(1, "rgba(220, 38, 38, 0)");
-    } else {
-      gradient.addColorStop(0, "rgba(34, 197, 94, 0.5)");
-      gradient.addColorStop(1, "rgba(34, 197, 94, 0)");
-    }
+    gradient.addColorStop(0, `${chartColor} 0.5)`);
+    gradient.addColorStop(1, `${chartColor} 0)`);
 
     setBackgroundColor(gradient);
   }, [selectedData]);
@@ -127,8 +97,8 @@ const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
         data: selectedData.map(([, value]) => value),
         borderColor:
           selectedData[0][1] > selectedData[selectedData.length - 1][1]
-            ? "rgba(220, 38, 38, 1)"
-            : "rgba(34, 197, 94, 1)",
+            ? red
+            : green,
         backgroundColor: backgroundColor,
         borderWidth: 2,
         fill: true,
@@ -138,95 +108,14 @@ const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
     ],
   };
 
-  const options: ChartOptions<"line"> = {
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        type: "time",
-        time: {
-          displayFormats: {
-            year: "MMM yy",
-          },
-        },
-        grid: {
-          display: true,
-          drawOnChartArea: false,
-          color: gridColor,
-          lineWidth: 1,
-          z: 1,
-        },
-        ticks: {
-          autoSkip: true,
-          maxTicksLimit: 12,
-          color: labelColor,
-        },
-      },
-      y: {
-        position: "right",
-        grid: {
-          display: true,
-          drawOnChartArea: true,
-          drawTicks: false,
-          color: (context) => {
-            if (context.index === 0) {
-              return "transparent";
-            }
-            return gridColor;
-          },
-          lineWidth: 1,
-          z: 0,
-        },
-        ticks: {
-          callback: function (_value: any, index: number) {
-            return selectedYAxisLabels[index] || "";
-          },
-          maxTicksLimit: selectedYAxisLabels.length,
-          color: labelColor,
-        },
-        border: {
-          display: false,
-        },
-        suggestedMin: Math.min(...selectedData.map(([, value]) => value)),
-        suggestedMax: Math.max(...selectedData.map(([, value]) => value)),
-      },
-    },
-    plugins: {
-      tooltip: {
-        displayColors: false,
-        callbacks: {
-          title: (tooltipItems) => {
-            const timestamp = selectedData[tooltipItems[0].dataIndex][0];
-            const formattedDate = formatDate(timestamp, true);
-            return `${formattedDate}`;
-          },
-
-          label: (tooltipItem) => {
-            const price = selectedData[tooltipItem.dataIndex][1];
-            const volume = total_volumes[tooltipItem.dataIndex][1];
-
-            return [
-              `${selectedMetric}: ${formatCurrencyValue(price, "$")}`,
-              `Volume: ${formatCurrencyValue(volume, "$")}`,
-            ];
-          },
-        },
-      },
-
-      legend: {
-        display: false,
-      },
-    },
-    interaction: {
-      intersect: false,
-      mode: "index",
-    },
-    elements: {
-      point: {
-        radius: 0,
-      },
-    },
-  };
+  const options = getChartOptions(
+    selectedYAxisLabels,
+    selectedData,
+    total_volumes,
+    selectedMetric,
+    label,
+    gridColor
+  );
 
   return (
     <div className="relative w-full h-[500px]">
