@@ -10,7 +10,16 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
   const { label, price } = value;
 
   const formattedPrice =
-    typeof price === "number" ? useFormattedSmallCurrency(price, "$") : price;
+    typeof price === "number" ? (
+      useFormattedSmallCurrency(price, "$")
+    ) : Array.isArray(price) ? (
+      <div>
+        {useFormattedSmallCurrency(price[0], "$")}-
+        {useFormattedSmallCurrency(price[1], "$")}
+      </div>
+    ) : (
+      <div>{price}</div>
+    );
 
   if ("percentage" in value) {
     const { percentage, date } = value;
@@ -28,19 +37,11 @@ const CoinInfoListItem: React.FC<ICoinListItemProps> = ({ value }) => {
       </li>
     );
   }
-  const priceRange = Array.isArray(price) ? (
-    <div>
-      {useFormattedSmallCurrency(price[0], "$")}-
-      {useFormattedSmallCurrency(price[1], "$")}
-    </div>
-  ) : (
-    <div>{price}</div>
-  );
 
   return (
     <li className={liClasses}>
       <h5 className="mr-2 text-secondary-text lg:mr-4">{label}</h5>
-      {priceRange}
+      {formattedPrice}
     </li>
   );
 };
