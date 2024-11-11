@@ -1,3 +1,3 @@
-export interface ICoinInfoChartProps {
+export interface ICoinInfoChartSkeletonProps {
   message?: string;
 }

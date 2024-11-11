@@ -14,10 +14,10 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 
-import React, { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
 import { useShallow } from "zustand/react/shallow";
-import { ITransformedCoinHistoricalChartDataById } from "../../models";
+import { ICoinInfoChartProps } from "../../models";
 import useCoinInfoStore from "../../store/coinInfo.store";
 import { formatCurrencyValue, formatDate } from "../../utils/CryptoTableUtils";
 import CoinInfoChartSkeleton from "../coinInfoChartSkeleton/CoinInfoChartSkeleton";
@@ -33,10 +33,6 @@ ChartJS.register(
   TimeScale,
   Filler
 );
-
-interface CoinInfoChartProps {
-  data: ITransformedCoinHistoricalChartDataById;
-}
 
 const verticalLinePlugin: Plugin = {
   id: "verticalLine",
@@ -66,7 +62,7 @@ const verticalLinePlugin: Plugin = {
   },
 };
 
-const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
+const CoinInfoChart: FC<ICoinInfoChartProps> = ({ data }) => {
   const chartRef = useRef<ChartJS<"line">>(null);
   const [backgroundColor, setBackgroundColor] = useState<
     string | CanvasGradient
@@ -93,9 +89,7 @@ const CoinInfoChart: React.FC<CoinInfoChartProps> = ({ data }) => {
   const isDarkTheme = document
     .querySelector("html")
     ?.classList.contains("dark");
-  const gridColor = isDarkTheme
-    ? "rgba(55, 65, 81, 1)"
-    : "rgb(229, 231, 235)";
+  const gridColor = isDarkTheme ? "rgba(55, 65, 81, 1)" : "rgb(229, 231, 235)";
   const labelColor = "rgb(107, 114, 128)";
 
   useEffect(() => {
