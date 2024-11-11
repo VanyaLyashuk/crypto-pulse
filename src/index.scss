@@ -104,7 +104,7 @@
   --search-input-bg: var(--zinc-50);
   --table-head-bg: var(--zinc-50);
   --typewriter-text: #262626;
-  --grid-color: #e5e7eb;
+  --dots-color: #e5e7eb;
 }
 
 .dark {
@@ -124,7 +124,7 @@
   --typewriter-text: var(--gray-500);
   --search-input-bg: var(--zinc-900);
   --table-head-bg: var(--zinc-900);
-  --grid-color: #4f4f4f;
+  --dots-color: #4f4f4f;
 }
 
 @layer components {
