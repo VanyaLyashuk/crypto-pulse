@@ -6,7 +6,11 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   activeFilter,
 }) => {
   const buttons = filterOptions.map((filter) => (
-    <CoinInfoFilterButton filter={filter} activeFilter={activeFilter} />
+    <CoinInfoFilterButton
+      key={filter}
+      filter={filter}
+      activeFilter={activeFilter}
+    />
   ));
 
   return (
