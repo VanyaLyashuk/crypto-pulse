@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { useShallow } from "zustand/react/shallow";
+
 import useCoinInfoStore from "../../store/coinInfo.store";
 import CoinInfoFilter from "../coinInfoFilter/CoinInfoFilter";
 
@@ -10,6 +11,7 @@ const CoinInfoFilters: FC = () => {
       selectedTimeRange: state.selectedTimeRange,
     }))
   );
+  
   return (
     <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
       <CoinInfoFilter
