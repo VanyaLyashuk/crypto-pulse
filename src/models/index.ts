@@ -1,8 +1,10 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
 import { ICoinInfoChartProps } from "./componentProps/CoinInfoChartProps.interface";
 import { ICoinInfoChartSkeletonProps } from "./componentProps/CoinInfoChartSkeletonProps.interface";
+import { ICoinInfoCloseProps } from "./componentProps/CoinInfoCloseProps.interface";
 import { ICoinInfoFilterButtonProps } from "./componentProps/CoinInfoFilterButtonProps.interface";
 import { ICoinInfoFilterProps } from "./componentProps/CoinInfoFilterProps.interface";
+import { ICoinInfoHeaderProps } from "./componentProps/CoinInfoHeaderProps.interface";
 import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface";
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICoinInfoTableProps } from "./componentProps/CoinInfoTableProps.interface";
@@ -51,10 +53,8 @@ export type {
   IArrowIconProps,
   ICoinHistoricalChartDataById,
   ICoinInfoChartProps,
-  ICoinInfoChartSkeletonProps,
-  ICoinInfoFilterButtonProps,
-  ICoinInfoFilterProps,
-  ICoinInfoListProps,
+  ICoinInfoChartSkeletonProps, ICoinInfoCloseProps, ICoinInfoFilterButtonProps,
+  ICoinInfoFilterProps, ICoinInfoHeaderProps, ICoinInfoListProps,
   ICoinInfoProps,
   ICoinInfoStore,
   ICoinInfoTableProps,
