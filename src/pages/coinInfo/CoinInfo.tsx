@@ -1,16 +1,8 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
-import {
-  motion,
-  useAnimate,
-  useDragControls,
-  useMotionValue,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { IoClose } from "react-icons/io5";
-import useMeasure from "react-use-measure";
 import { useShallow } from "zustand/react/shallow";
 import CoinInfoChart from "../../components/coinInfoChart/CoinInfoChart";
 import CoinInfoChartSkeleton from "../../components/coinInfoChartSkeleton/CoinInfoChartSkeleton";
@@ -20,58 +12,21 @@ import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import SpinnerIcon from "../../components/UI/SpinnerIcon";
 import useCoinInfoData from "../../hooks/useCoinInfoData";
 
+import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
 import useCoinInfoStore from "../../store/coinInfo.store";
 
 const CoinInfo: React.FC = () => {
   const { coin, chartData, loading, error } = useCoinInfoData();
+  const { closeModal, scope, controls, modalBodyRef, y } = useCoinInfoModal();
 
-  const { selectedMetric, selectedTimeRange, setIsDatepickerOpen } =
-    useCoinInfoStore(
-      useShallow((state) => ({
-        selectedMetric: state.selectedMetric,
-        selectedTimeRange: state.selectedTimeRange,
-        setIsDatepickerOpen: state.setIsDatepickerOpen,
-      }))
-    );
-
-  const [scope, animate] = useAnimate();
-  const [modalBodyRef, { height }] = useMeasure();
-  const constrols = useDragControls();
-  const y = useMotionValue(0);
-  const navigate = useNavigate();
-
-  const handleClose = async () => {
-    animate(scope.current, {
-      opacity: [1, 0],
-    });
-
-    const yStart = typeof y.get() === "number" ? y.get() : 0;
-
-    await animate("#modal-body", {
-      y: [yStart, height],
-    });
-
-    navigate("/");
-    setIsDatepickerOpen(false);
-  };
-
-  useEffect(() => {
-    const handleEscapePress = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        handleClose();
-      }
-    };
-
-    document.body.classList.add("overflow-hidden");
-    document.addEventListener("keydown", handleEscapePress);
-
-    return () => {
-      document.body.classList.remove("overflow-hidden");
-      document.removeEventListener("keydown", handleEscapePress);
-    };
-  }, []);
+  const { selectedMetric, selectedTimeRange } = useCoinInfoStore(
+    useShallow((state) => ({
+      selectedMetric: state.selectedMetric,
+      selectedTimeRange: state.selectedTimeRange,
+    }))
+  );
 
   if (!coin) return <SpinnerIcon />;
 
@@ -87,11 +42,20 @@ const CoinInfo: React.FC = () => {
     coin_percentage_table = [],
   } = coin ?? {};
 
+  const chart =
+    !loading && !error && chartData[selectedTimeRange] ? (
+      <ErrorBoundary>
+        <CoinInfoChart data={chartData[selectedTimeRange]} />
+      </ErrorBoundary>
+    ) : (
+      <CoinInfoChartSkeleton />
+    );
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      onClick={handleClose}
+      onClick={closeModal}
       ref={scope}
       className="fixed inset-0 z-50 bg-black bg-opacity-50 md:overflow-y-scroll md:justify-end md:flex md:px-6 md:py-10 md:items-center xl:overflow-hidden"
     >
@@ -106,10 +70,10 @@ const CoinInfo: React.FC = () => {
           ease: "easeIn",
         }}
         onDragEnd={() => {
-          if (y.get() >= 100) handleClose();
+          if (y.get() >= 100) closeModal();
         }}
         drag="y"
-        dragControls={constrols}
+        dragControls={controls}
         dragListener={false}
         dragConstraints={{
           top: 0,
@@ -123,11 +87,11 @@ const CoinInfo: React.FC = () => {
       >
         <div
           onPointerDown={(e) => {
-            constrols.start(e);
+            controls.start(e);
           }}
           className="absolute top-0 left-0 right-0 z-10 flex justify-center py-5 bg-primary-bg  md:bg-transparent md:top-[-38px] md:right-[-16px] md:p-2 md:left-auto md:z-[100] md:cursor-pointer"
         >
-          <button className="hidden md:block" onClick={handleClose}>
+          <button className="hidden md:block" onClick={closeModal}>
             <IoClose className="w-8 h-8 text-cross-color" />
           </button>
           <button className="w-20 h-1.5 rounded cursor-grab touch-none-full bg-neutral-600 active:cursor-grabbing md:hidden" />
@@ -145,13 +109,7 @@ const CoinInfo: React.FC = () => {
                   activeFilter={selectedTimeRange}
                 />
               </div>
-              {!loading && !error && chartData[selectedTimeRange] ? (
-                <ErrorBoundary>
-                  <CoinInfoChart data={chartData[selectedTimeRange]} />
-                </ErrorBoundary>
-              ) : (
-                <CoinInfoChartSkeleton />
-              )}
+              {chart}
             </div>
             <div className="mb-6 overflow-x-auto border rounded-lg border-border-color md:hidden xl:block xl:mb-0">
               <CoinInfoTable data={coin_percentage_table} />
