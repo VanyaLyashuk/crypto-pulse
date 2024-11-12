@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import CoinInfoTable from "../../components/coinInfoTable/CoinInfoTable";
 import PriceChangeIndicator from "../../components/priceChangeIndicator/PriceChangeIndicator";
 
@@ -18,46 +18,23 @@ import CoinInfoFilter from "../../components/coinInfoFilter/CoinInfoFilter";
 import CoinInfoList from "../../components/coinInfoList/CoinInfoList";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import SpinnerIcon from "../../components/UI/SpinnerIcon";
-import {
-  ITransformedCoinsMarketData,
-  TCoinInfoChartData,
-  TCoinInfoTimeRange,
-} from "../../models";
+import useCoinInfoData from "../../hooks/useCoinInfoData";
+
 import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
-import useCoinGeckoService from "../../services/CoinGeckoService";
 import useCoinInfoStore from "../../store/coinInfo.store";
-import { getUnixTimestamp } from "../../utils/CryptoTableUtils";
 
 const CoinInfo: React.FC = () => {
-  const [chartData, setChartData] = useState<
-    TCoinInfoChartData | Record<TCoinInfoTimeRange, any>
-  >({});
-  const [coin, setCoin] = useState<ITransformedCoinsMarketData | null>(null);
-  const { coinId } = useParams<{ coinId: string }>();
+  const { coin, chartData, loading, error } = useCoinInfoData();
 
-  const {
-    selectedMetric,
-    selectedTimeRange,
-    setIsDatepickerOpen,
-    startDate,
-    endDate,
-  } = useCoinInfoStore(
-    useShallow((state) => ({
-      selectedMetric: state.selectedMetric,
-      selectedTimeRange: state.selectedTimeRange,
-      setIsDatepickerOpen: state.setIsDatepickerOpen,
-      startDate: state.startDate,
-      endDate: state.endDate,
-    }))
-  );
-
-  const {
-    loading,
-    error,
-    getCoinsListWithMarketData,
-    getCoinHistoricalChartDataById,
-  } = useCoinGeckoService();
+  const { selectedMetric, selectedTimeRange, setIsDatepickerOpen } =
+    useCoinInfoStore(
+      useShallow((state) => ({
+        selectedMetric: state.selectedMetric,
+        selectedTimeRange: state.selectedTimeRange,
+        setIsDatepickerOpen: state.setIsDatepickerOpen,
+      }))
+    );
 
   const [scope, animate] = useAnimate();
   const [modalBodyRef, { height }] = useMeasure();
@@ -88,8 +65,6 @@ const CoinInfo: React.FC = () => {
     };
 
     document.body.classList.add("overflow-hidden");
-    onCoinDataRequest();
-
     document.addEventListener("keydown", handleEscapePress);
 
     return () => {
@@ -98,44 +73,7 @@ const CoinInfo: React.FC = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (endDate && coinId) {
-      onHistoricalDataRequest(selectedTimeRange);
-    }
-  }, [endDate, coinId]);
-
-  const onCoinDataRequest = () => {
-    getCoinsListWithMarketData(30, 1, coinId).then((data) => {
-      setCoin(data[0]);
-    });
-  };
-
-  const onHistoricalDataRequest = (period: TCoinInfoTimeRange) => {
-    if (hasDataForPeriod(period)) {
-      setChartData({
-        ...chartData,
-        ["date range"]: chartData[period],
-      });
-      return;
-    }
-
-    const from = getUnixTimestamp(startDate);
-    const to = getUnixTimestamp(endDate);
-
-    getCoinHistoricalChartDataById(coinId as string, from, to).then((data) => {
-      const newChartData = {
-        ...chartData,
-        [period]: data,
-        ["date range"]: data,
-      };
-
-      setChartData(newChartData);
-    });
-  };
-
-  const hasDataForPeriod = (period: TCoinInfoTimeRange): boolean => {
-    return chartData[period] && period !== "date range";
-  };
+  if (!coin) return <SpinnerIcon />;
 
   const {
     name = "",
@@ -149,7 +87,7 @@ const CoinInfo: React.FC = () => {
     coin_percentage_table = [],
   } = coin ?? {};
 
-  return coin ? (
+  return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -265,8 +203,6 @@ const CoinInfo: React.FC = () => {
         </div>
       </motion.div>
     </motion.div>
-  ) : (
-    <SpinnerIcon />
   );
 };
 
