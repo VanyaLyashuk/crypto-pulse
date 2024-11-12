@@ -12,6 +12,7 @@ import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import SpinnerIcon from "../../components/UI/SpinnerIcon";
 import useCoinInfoData from "../../hooks/useCoinInfoData";
 
+import CoinInfoFilters from "../../components/coinInfoFilters/CoinInfoFilters";
 import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import { ICoinStatisticsData } from "../../models/dataTypes/CoinStatisticsData.interface";
 import { IHistoricalPriceData } from "../../models/dataTypes/HistoricalPriceData.interface";
@@ -21,9 +22,8 @@ const CoinInfo: React.FC = () => {
   const { coin, chartData, loading, error } = useCoinInfoData();
   const { closeModal, scope, controls, modalBodyRef, y } = useCoinInfoModal();
 
-  const { selectedMetric, selectedTimeRange } = useCoinInfoStore(
+  const { selectedTimeRange } = useCoinInfoStore(
     useShallow((state) => ({
-      selectedMetric: state.selectedMetric,
       selectedTimeRange: state.selectedTimeRange,
     }))
   );
@@ -99,16 +99,7 @@ const CoinInfo: React.FC = () => {
         <div className="relative z-0 w-full h-full px-2 pt-12 overflow-y-auto md:overflow-hidden pb-9 sm:px-4 md:p-0 xl:flex xl:items-start xl:gap-6">
           <div className="w-full xl:order-2">
             <div className="mb-4 md:mb-5">
-              <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                <CoinInfoFilter
-                  filterOptions={["Price", "Market Cap"]}
-                  activeFilter={selectedMetric}
-                />
-                <CoinInfoFilter
-                  filterOptions={["24h", "7d", "1m", "3m", "1y", "date range"]}
-                  activeFilter={selectedTimeRange}
-                />
-              </div>
+              <CoinInfoFilters />
               {chart}
             </div>
             <div className="mb-6 overflow-x-auto border rounded-lg border-border-color md:hidden xl:block xl:mb-0">
