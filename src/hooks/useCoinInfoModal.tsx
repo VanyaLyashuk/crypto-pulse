@@ -1,5 +1,4 @@
 import { useAnimate, useDragControls, useMotionValue } from "framer-motion";
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useMeasure from "react-use-measure";
 import { useShallow } from "zustand/react/shallow";
