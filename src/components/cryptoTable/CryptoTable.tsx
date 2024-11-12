@@ -6,7 +6,7 @@ import useCoinsStore from "../../store/coins.store";
 import useFavoritesStore from "../../store/favorites.store";
 import usePaginationStore from "../../store/pagination.store";
 import useTableViewStore from "../../store/tableView.store";
-import CryptoTableRowsPerPage from "../cryptoTableRowsPerPage/CryptoTableRowsPerPage";
+import CryptoTableRows from "../cryptoTableRows/CryptoTableRows";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import CryptoTableView from "../cryptoTableView/CryptoTableView";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -23,9 +23,9 @@ const CryptoTable: React.FC = () => {
     }))
   );
 
-  const { rowsPerPage, setIsRowsSelectOpen } = useTableViewStore(
+  const { rows, setIsRowsSelectOpen } = useTableViewStore(
     useShallow((state) => ({
-      rowsPerPage: state.rowsPerPage,
+      rows: state.rows,
       setIsRowsSelectOpen: state.setIsRowsSelectOpen,
     }))
   );
@@ -56,8 +56,8 @@ const CryptoTable: React.FC = () => {
   }, [showFavorites]);
 
   useEffect(() => {
-    setLastPage(Math.ceil(totalCoins / rowsPerPage));
-  }, [totalCoins, rowsPerPage]);
+    setLastPage(Math.ceil(totalCoins / rows));
+  }, [totalCoins, rows]);
 
   useEffect(() => {
     if (showFavorites && favorites.length) {
@@ -81,7 +81,7 @@ const CryptoTable: React.FC = () => {
     if (lastPage && currentPage > lastPage) {
       setCurrentPage(lastPage);
     }
-  }, [rowsPerPage]);
+  }, [rows]);
 
   useEffect(() => {
     if (loading) {
@@ -100,7 +100,7 @@ const CryptoTable: React.FC = () => {
       ids = favorites.join("%2C");
     }
 
-    getCoinsListWithMarketData(rowsPerPage, currentPage, ids).then(
+    getCoinsListWithMarketData(rows, currentPage, ids).then(
       (res) => {
         setCoins(res);
       }
@@ -130,7 +130,7 @@ const CryptoTable: React.FC = () => {
 
   const skeleton =
     loading || (loadingDelay && !error) ? (
-      <CryptoTableSkeleton rowsPerPage={rowsPerPage} />
+      <CryptoTableSkeleton rowsPerPage={rows} />
     ) : null;
 
   const tableContent =
@@ -145,7 +145,7 @@ const CryptoTable: React.FC = () => {
       ) : (
         <>
           <div className="container mb-2">
-            <CryptoTableRowsPerPage options={[30, 50, 100]} />
+            <CryptoTableRows options={[30, 50, 100]} />
           </div>
           <div className="container px-0 mb-4 overflow-x-auto lg:mb-6 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
             {skeleton}
@@ -155,7 +155,7 @@ const CryptoTable: React.FC = () => {
             <Pagination
               currentPage={currentPage}
               totalCount={totalCoins}
-              pageSize={rowsPerPage}
+              pageSize={rows}
               onPageChange={(page: number) =>
                 handlePageChange(page, setCurrentPage)
               }

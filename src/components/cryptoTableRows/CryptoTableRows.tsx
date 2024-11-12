@@ -2,21 +2,21 @@ import clsx from "clsx";
 import React from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { useShallow } from "zustand/react/shallow";
-import { ICryptoTableRowsPerPageProps } from "../../models";
+
+import { ICryptoTableRowsProps } from "../../models";
 import useTableViewStore from "../../store/tableView.store";
 
-const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
-  options,
-}) => {
-  const { rowsPerPage, setRowsPerPage, isRowsSelectOpen, setIsRowsSelectOpen } =
+const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
+  const { rows, setRows, isRowsSelectOpen, setIsRowsSelectOpen } =
     useTableViewStore(
       useShallow((state) => ({
-        rowsPerPage: state.rowsPerPage,
-        setRowsPerPage: state.setRowsPerPage,
+        rows: state.rows,
+        setRows: state.setRows,
         isRowsSelectOpen: state.isRowsSelectOpen,
         setIsRowsSelectOpen: state.setIsRowsSelectOpen,
       }))
     );
+
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
     "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
@@ -26,7 +26,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   const onRowsChange = (
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
   ) => {
-    setRowsPerPage(Number(e.currentTarget.getAttribute("data-value")));
+    setRows(Number(e.currentTarget.getAttribute("data-value")));
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLLIElement>) => {
@@ -42,7 +42,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >
-        {rowsPerPage}
+        {rows}
         <span>
           <MdOutlineKeyboardArrowDown className={arrowClasses} />
         </span>
@@ -51,7 +51,7 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
         {options.map((item) => {
           const liClasses = clsx(
             "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
-            { "bg-select-bg": rowsPerPage === item }
+            { "bg-select-bg": rows === item }
           );
           return (
             <li
@@ -71,4 +71,4 @@ const CryptoTableRowsPerPage: React.FC<ICryptoTableRowsPerPageProps> = ({
   );
 };
 
-export default CryptoTableRowsPerPage;
+export default CryptoTableRows;

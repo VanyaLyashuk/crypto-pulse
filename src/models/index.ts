@@ -9,7 +9,7 @@ import { ICoinInfoListProps } from "./componentProps/CoinInfoListProps.interface
 import { ICoinInfoProps } from "./componentProps/CoinInfoProps.interface";
 import { ICoinInfoTableProps } from "./componentProps/CoinInfoTableProps.interface";
 import { ICoinListItemProps } from "./componentProps/CoinListItemProps.interface";
-import { ICryptoTableRowsPerPageProps } from "./componentProps/CryptoTableRowsPerPageProps.interface";
+import { ICryptoTableRowsProps } from "./componentProps/CryptoTableRowsProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
 import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.interface";
 import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interface";
@@ -62,7 +62,7 @@ export type {
   ICoinsListData,
   ICoinsMarketData,
   ICoinsStore,
-  ICryptoTableRowsPerPageProps,
+  ICryptoTableRowsProps,
   ICryptoTableSkeletonProps,
   ICryptoTableViewProps,
   IErrorBoundaryProps,

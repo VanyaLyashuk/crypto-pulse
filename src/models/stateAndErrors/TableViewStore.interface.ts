@@ -1,6 +1,6 @@
 export interface ITableViewStore {
-  rowsPerPage: number;
-  setRowsPerPage: (rows: number) => void;
+  rows: number;
+  setRows: (rows: number) => void;
   isRowsSelectOpen: boolean;
   setIsRowsSelectOpen: (isOpen: boolean) => void;
 }
