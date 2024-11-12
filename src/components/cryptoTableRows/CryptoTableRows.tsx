@@ -17,12 +17,6 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
       }))
     );
 
-  const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
-  const listClasses = clsx(
-    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
-    { "invisible opacity-0 top-0": !isRowsSelectOpen }
-  );
-
   const onRowsChange = (
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
   ) => {
@@ -34,6 +28,31 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
       onRowsChange(e);
     }
   };
+
+  const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
+  const listClasses = clsx(
+    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
+    { "invisible opacity-0 top-0": !isRowsSelectOpen }
+  );
+
+  const listItems = options.map((item) => {
+    const liClasses = clsx(
+      "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
+      { "bg-select-bg": rows === item }
+    );
+    return (
+      <li
+        className={liClasses}
+        onClick={onRowsChange}
+        onKeyUp={handleKeyUp}
+        key={item}
+        data-value={item}
+        tabIndex={0}
+      >
+        {item}
+      </li>
+    );
+  });
 
   return (
     <div className="relative ml-auto max-w-fit">
@@ -48,24 +67,7 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
         </span>
       </button>
       <ul className={listClasses}>
-        {options.map((item) => {
-          const liClasses = clsx(
-            "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
-            { "bg-select-bg": rows === item }
-          );
-          return (
-            <li
-              className={liClasses}
-              onClick={onRowsChange}
-              onKeyUp={handleKeyUp}
-              key={item}
-              data-value={item}
-              tabIndex={0}
-            >
-              {item}
-            </li>
-          );
-        })}
+        {listItems}
       </ul>
     </div>
   );
