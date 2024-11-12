@@ -17,76 +17,80 @@ const CryptoTableSkeleton: React.FC<ICryptoTableSkeletonProps> = ({
     length: showFavorites ? favorites.length : rowsPerPage,
   });
 
+  const baseClasses = "rounded-sm bg-skeleton-bg animate-pulse";
+  const divClasses = "h-6 " + baseClasses;
+  const tableCellClasses = "px-2 py-[17px] bg-primary-bg";
+
   return (
     <div className="overflow-x-auto max-w-[1300px] m-auto">
       <table className="crypto-table min-w-[129px] shadow table-auto sm:rounded-lg">
         <thead>
           <tr>
-            <th className="px-2 py-[17px] bg-primary-bg "></th>
-            <th className="px-2 py-[17px] bg-primary-bg ">
-              <div className="w-6 h-6 rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={tableCellClasses}></th>
+            <th className={tableCellClasses}>
+              <div className={`w-6 ${divClasses}`}></div>
             </th>
-            <th className="w-full px-2 py-[17px] bg-primary-bg min-w-[200px]">
-              <div className="h-6 rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
+            <th className={`w-full min-w-[200px] ${tableCellClasses}`}>
+              <div className={`w-14 ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg ">
-              <div className="h-6 ml-auto rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
+            <th className={tableCellClasses}>
+              <div className={`ml-auto w-14 ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
-              <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[71px] ${tableCellClasses}`}>
+              <div className={`w-8 ml-auto ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
-              <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[71px] ${tableCellClasses}`}>
+              <div className={`w-8 ml-auto ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[71px]">
-              <div className="w-8 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[71px] ${tableCellClasses}`}>
+              <div className={`w-8 ml-auto ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[145px]">
-              <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[145px] ${tableCellClasses}`}>
+              <div className={`w-24 ml-auto ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[145px]">
-              <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[145px] ${tableCellClasses}`}>
+              <div className={`w-24 ml-auto ${divClasses}`}></div>
             </th>
-            <th className="px-2 py-[17px] bg-primary-bg w-[151px]">
-              <div className="w-24 h-6 ml-auto rounded-sm bg-skeleton-bg animate-pulse"></div>
+            <th className={`w-[151px] ${tableCellClasses}`}>
+              <div className={`w-24 ml-auto ${divClasses}`}></div>
             </th>
           </tr>
         </thead>
-        <tbody className="bg-primary-bg ">
+        <tbody>
           {rows.map((_, index) => (
             <tr key={index}>
-              <td className="px-2 py-[17px] w-[32px]">
-                <div className="w-4 h-4 rounded-sm bg-skeleton-bg animate-pulse"></div>
+              <td className={`w-[32px] ${tableCellClasses}`}>
+                <div className={`w-4 h-4 ${baseClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[50px]">
-                <div className="w-6 h-6 rounded-sm bg-skeleton-bg animate-pulse"></div>
+              <td className={`w-[50px] ${tableCellClasses}`}>
+                <div className={`w-6 ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-full min-w-[200px]">
+              <td className={`w-full min-w-[200px] ${tableCellClasses}`}>
                 <div className="flex items-center">
-                  <div className="w-6 h-6 mr-2 rounded-full bg-skeleton-bg animate-pulse"></div>
-                  <div className="flex-1 h-6 bg-skeleton-bg   max-w-[280px] animate-pulse rounded-sm"></div>
+                  <div className={`w-6 h-6 mr-2 ${baseClasses}`}></div>
+                  <div className={`flex-1 max-w-[280px] ${divClasses}`}></div>
                 </div>
               </td>
-              <td className="px-2 py-[17px] w-[145px]">
-                <div className="w-[129px] h-6 ml-auto bg-skeleton-bg   animate-pulse rounded-sm"></div>
+              <td className={`w-[145px] ${tableCellClasses}`}>
+                <div className={`w-[129px] ml-auto ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[71px]">
-                <div className="h-6 rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
+              <td className={`w-[71px] ${tableCellClasses}`}>
+                <div className={`w-14 ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[71px]">
-                <div className="h-6 rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
+              <td className={`w-[71px] ${tableCellClasses}`}>
+                <div className={`w-14 ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[71px]">
-                <div className="h-6 rounded-sm bg-skeleton-bg w-14 animate-pulse"></div>
+              <td className={`w-[71px] ${tableCellClasses}`}>
+                <div className={`w-14 ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[145px]">
-                <div className="w-[129px] h-6 bg-skeleton-bg   animate-pulse rounded-sm"></div>
+              <td className={`w-[145px] ${tableCellClasses}`}>
+                <div className={`w-[129px] ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[145px]">
-                <div className="w-[129px] h-6 bg-skeleton-bg   animate-pulse rounded-sm"></div>
+              <td className={`w-[145px] ${tableCellClasses}`}>
+                <div className={`w-[129px] ${divClasses}`}></div>
               </td>
-              <td className="px-2 py-[17px] w-[151px]">
-                <div className="w-[135px] h-6 bg-skeleton-bg   animate-pulse rounded-sm"></div>
+              <td className={`w-[151px] ${tableCellClasses}`}>
+                <div className={`w-[135px] ${divClasses}`}></div>
               </td>
             </tr>
           ))}
