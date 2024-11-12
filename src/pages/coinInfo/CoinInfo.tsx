@@ -9,6 +9,7 @@ import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import SpinnerIcon from "../../components/UI/SpinnerIcon";
 import useCoinInfoData from "../../hooks/useCoinInfoData";
 
+import { useEffect } from "react";
 import CoinInfoClose from "../../components/coinInfoClose/CoinInfoClose";
 import CoinInfoFilters from "../../components/coinInfoFilters/CoinInfoFilters";
 import CoinInfoHeader from "../../components/coinInfoHeader/CoinInfoHeader";
@@ -26,6 +27,22 @@ const CoinInfo: React.FC = () => {
       selectedTimeRange: state.selectedTimeRange,
     }))
   );
+
+  useEffect(() => {
+    const handleEscapePress = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.body.classList.add("overflow-hidden");
+    document.addEventListener("keydown", handleEscapePress);
+
+    return () => {
+      document.body.classList.remove("overflow-hidden");
+      document.removeEventListener("keydown", handleEscapePress);
+    };
+  }, []);
 
   if (!coin) return <SpinnerIcon />;
 
