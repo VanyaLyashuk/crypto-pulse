@@ -136,7 +136,7 @@ const CryptoTable: React.FC = () => {
 
   const tableContent =
     !error && !loading && !loadingDelay ? (
-      <CryptoTableView currency="$" />
+      <CryptoTableView  />
     ) : null;
 
   return (
