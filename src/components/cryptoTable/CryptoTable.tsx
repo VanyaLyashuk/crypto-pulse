@@ -63,10 +63,11 @@ const CryptoTable: React.FC = () => {
     if (showFavorites && favorites.length) {
       onCoinsDataRequest();
     }
-    if (!favorites.length) {
-      hideFavorites();
-    }
-  },[showFavorites, favorites])
+  },[showFavorites]);
+
+  if (!favorites.length && showFavorites) {
+    hideFavorites();
+  }
 
   useEffect(() => {
     if (lastPage && currentPage > lastPage) {
