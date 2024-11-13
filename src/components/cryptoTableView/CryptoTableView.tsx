@@ -56,7 +56,7 @@ const CryptoTableView: React.FC<ICryptoTableViewProps> = ({ currency }) => {
   const columns = useMemo(
     () => [
       {
-        header: () => <FavoritesButton isHeader={true} />,
+        header: () => <FavoritesButton isShowFavorites={true} />,
         id: "favorite",
         cell: ({ row }: { row: Row<ITransformedCoinsMarketData> }) => (
           <FavoritesButton coinId={row.original.id} />

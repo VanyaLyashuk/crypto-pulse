@@ -12,7 +12,7 @@ import useFavoritesStore from "../../store/favorites.store";
 
 const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
   coinId,
-  isHeader,
+  isShowFavorites,
 }) => {
   const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const { favorites, toggleFavorites, showFavorites, toggleShowFavorites } =
@@ -58,7 +58,7 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
     toggleShowFavorites();
   };
 
-  const button = isHeader ? (
+  const button = isShowFavorites ? (
     <ButtonView
       handleClick={(event) => handleFavorites(event)}
       isFilled={showFavorites && !!favorites.length}
