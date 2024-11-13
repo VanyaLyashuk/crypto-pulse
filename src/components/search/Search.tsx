@@ -9,6 +9,7 @@ import useCoinInfoModal from "../../hooks/useCoinInfoModal";
 import { ISearchCoinResult } from "../../models";
 import useCoinGeckoService from "../../services/CoinGeckoService";
 import SpinnerIcon from "../UI/SpinnerIcon";
+import FavoritesButton from "../favoritesButton/FavoritesButton";
 
 const Search = () => {
   const [query, setQuery] = useState<string>("");
@@ -85,6 +86,7 @@ const Search = () => {
             <img className="w-6 h-6 shrink-0" src={thumb} alt={name} />
             <h4>{name}</h4>
             <span className="text-secondary-text">{symbol}</span>
+            <FavoritesButton coinId={id} />
           </motion.li>
         ))}
       </ul>
