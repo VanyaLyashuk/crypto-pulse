@@ -11,7 +11,6 @@ import { ICoinInfoTableProps } from "./componentProps/CoinInfoTableProps.interfa
 import { ICoinListItemProps } from "./componentProps/CoinListItemProps.interface";
 import { ICryptoTableRowsProps } from "./componentProps/CryptoTableRowsProps.interface";
 import { ICryptoTableSkeletonProps } from "./componentProps/CryptoTableSkeletonProps.interface";
-import { ICryptoTableViewProps } from "./componentProps/CryptoTableViewProps.interface";
 import { IErrorBoundaryProps } from "./componentProps/ErrorBoundaryProps.interface";
 import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface";
 import { IFavoritesButtonProps } from "./componentProps/FavoritesButtonProps.interface";
@@ -64,7 +63,6 @@ export type {
   ICoinsStore,
   ICryptoTableRowsProps,
   ICryptoTableSkeletonProps,
-  ICryptoTableViewProps,
   IErrorBoundaryProps,
   IErrorBoundaryState,
   IErrorMessageProps,
