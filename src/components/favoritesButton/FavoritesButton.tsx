@@ -1,77 +1,39 @@
 import { clsx } from "clsx";
-import { useEffect, useState } from "react";
 import { GoStar, GoStarFill } from "react-icons/go";
 import { useShallow } from "zustand/react/shallow";
-import {
-  IFavoritesButtonProps,
-  IFavoritesButtonViewProps,
-  TButtonClickHandler,
-} from "../../models";
-import useCoinsStore from "../../store/coins.store";
+import useFavoritesButton from "../../hooks/useFavoritesButton";
+import { IFavoritesButtonProps, IFavoritesButtonViewProps } from "../../models";
 import useFavoritesStore from "../../store/favorites.store";
 
 const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
   coinId,
   isShowFavorites,
 }) => {
-  const [isFavorite, setIsFavorite] = useState<boolean>(false);
-  const { favorites, toggleFavorites, showFavorites, toggleShowFavorites } =
-    useFavoritesStore(
-      useShallow((state) => ({
-        favorites: state.favorites,
-        toggleFavorites: state.toggleFavorites,
-        showFavorites: state.showFavorites,
-        toggleShowFavorites: state.toggleShowFavorites,
-      }))
-    );
+  const { isFavorite, onToggleFavorites, handleFavorites } =
+    useFavoritesButton(coinId);
 
-  const { removeCoin } = useCoinsStore(
+  const { favorites, showFavorites } = useFavoritesStore(
     useShallow((state) => ({
-      removeCoin: state.removeCoin,
+      favorites: state.favorites,
+      showFavorites: state.showFavorites,
     }))
   );
 
-  useEffect(() => {
-    if (coinId) {
-      setIsFavorite(favorites.includes(coinId));
-    }
-  }, [coinId]);
+  const isShowFavoritesFilled = showFavorites && !!favorites.length;
+  const isShowFavoritesDisabled = !favorites.length;
 
-  const onToggleFavorites: TButtonClickHandler = (event) => {
-    event.stopPropagation();
-
-    if (coinId && showFavorites) {
-      removeCoin(coinId);
-    }
-
-    if (coinId) {
-      toggleFavorites(coinId);
-    }
-
-    setIsFavorite(!isFavorite);
-  };
-
-  const handleFavorites: TButtonClickHandler = (event) => {
-    event.stopPropagation();
-
-    setIsFavorite(!isFavorite);
-    toggleShowFavorites();
-  };
-
-  const button = isShowFavorites ? (
+  return isShowFavorites ? (
     <ButtonView
-      handleClick={(event) => handleFavorites(event)}
-      isFilled={showFavorites && !!favorites.length}
-      disabled={!favorites.length}
+      handleClick={(e) => handleFavorites(e)}
+      isFilled={isShowFavoritesFilled}
+      disabled={isShowFavoritesDisabled}
     />
   ) : (
     <ButtonView
-      handleClick={(event) => onToggleFavorites(event)}
+      handleClick={(e) => onToggleFavorites(e)}
       isFilled={isFavorite}
     />
   );
-
-  return button;
 };
 
 const ButtonView: React.FC<IFavoritesButtonViewProps> = ({
