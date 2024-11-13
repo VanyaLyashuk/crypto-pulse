@@ -7,6 +7,7 @@ import {
   IFavoritesButtonViewProps,
   TButtonClickHandler,
 } from "../../models";
+import useCoinsStore from "../../store/coins.store";
 import useFavoritesStore from "../../store/favorites.store";
 
 const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
@@ -24,6 +25,12 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
       }))
     );
 
+  const { removeCoin } = useCoinsStore(
+    useShallow((state) => ({
+      removeCoin: state.removeCoin,
+    }))
+  );
+
   useEffect(() => {
     if (coinId) {
       setIsFavorite(favorites.includes(coinId));
@@ -32,6 +39,10 @@ const FavoritesButton: React.FC<IFavoritesButtonProps> = ({
 
   const onToggleFavorites: TButtonClickHandler = (event) => {
     event.stopPropagation();
+
+    if (coinId && showFavorites) {
+      removeCoin(coinId);
+    }
 
     if (coinId) {
       toggleFavorites(coinId);
