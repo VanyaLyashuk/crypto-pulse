@@ -21,6 +21,7 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
   ) => {
     setRows(Number(e.currentTarget.getAttribute("data-value")));
+    setIsRowsSelectOpen(false);
   };
 
   const handleKeyUp = (e: React.KeyboardEvent<HTMLLIElement>) => {
