@@ -1,5 +1,8 @@
+import { Cell } from "@tanstack/react-table";
+import clsx from "clsx";
 import useFormattedSmallCurrency from "../hooks/useFormattedSmallCurrency";
 import {
+  ITransformedCoinsMarketData,
   TCoinHistoricalChartItem,
   TCoinInfoTimeRange,
   TCryptoTableCellContext,
@@ -172,22 +175,36 @@ export function formatYAxisLabel(value: number, currency: string = "$") {
 }
 
 export const renderCurrencyCell =
-(currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
-(info: TCryptoTableCellContext) => {
-  const value = info.getValue<number>();
+  (currency: TCryptoTableCurrency, options?: Intl.NumberFormatOptions) =>
+  (info: TCryptoTableCellContext) => {
+    const value = info.getValue<number>();
 
-  if (value === null) {
-    return "-";
-  }
-
-  if (value < 1) {
-    const fractionalPart = value.toString().split(".")[1] || "";
-    const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
-
-    if (leadingZeros >= 4) {
-      return useFormattedSmallCurrency(value, currency, options);
+    if (value === null) {
+      return "-";
     }
-  }
 
-  return formatCurrencyValue(value, currency, options);
+    if (value < 1) {
+      const fractionalPart = value.toString().split(".")[1] || "";
+      const leadingZeros = fractionalPart.match(/^0+/)?.[0].length || 0;
+
+      if (leadingZeros >= 4) {
+        return useFormattedSmallCurrency(value, currency, options);
+      }
+    }
+
+    return formatCurrencyValue(value, currency, options);
+  };
+
+export const getCellClasses = (
+  cell: Cell<ITransformedCoinsMarketData, unknown>,
+  index: number
+) => {
+  return clsx(
+    "px-2 py-1 text-base bg-primary-bg hover-hover:group-hover:bg-search-bg",
+    {
+      "w-8": cell.column.id === "favorite",
+      "table-sticky-cell": cell.column.id === "name",
+      "text-right": index > 2,
+    }
+  );
 };
