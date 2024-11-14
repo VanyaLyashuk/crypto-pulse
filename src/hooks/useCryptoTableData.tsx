@@ -5,7 +5,8 @@ import useCoinGeckoService from "../services/CoinGeckoService";
 import useCoinsStore from "../store/coins.store";
 import useFavoritesStore from "../store/favorites.store";
 import usePaginationStore from "../store/pagination.store";
-import useTableViewStore from "../store/tableView.store";
+import useRowsStore from "../store/rows.store";
+import useRowsSelectStore from "../store/rowsSelect.store";
 
 const useCryptoTableData = () => {
   const [loadingDelay, setLoadingDelay] = useState<boolean>(true);
@@ -18,12 +19,8 @@ const useCryptoTableData = () => {
     }))
   );
 
-  const { rows, setIsRowsSelectOpen } = useTableViewStore(
-    useShallow((state) => ({
-      rows: state.rows,
-      setIsRowsSelectOpen: state.setIsRowsSelectOpen,
-    }))
-  );
+  const rows = useRowsStore((state) => state.rows);
+  const setIsRowsSelectOpen = useRowsSelectStore((state) => state.setIsRowsSelectOpen);
 
   const { currentPage, setCurrentPage, lastPage, setLastPage } =
     usePaginationStore(
