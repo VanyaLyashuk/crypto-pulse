@@ -45,7 +45,9 @@ const Home: React.FC = () => {
               ]}
             />
           </div>
-          <Search />
+          <ErrorBoundary>
+            <Search />
+          </ErrorBoundary>
         </div>
         <ErrorBoundary>
           <CryptoTable />
