@@ -46,14 +46,23 @@ import { ICoinInfoStore } from "./stateAndErrors/CoinInfoStore.interface";
 import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 import { IFavoritesStore } from "./stateAndErrors/Favorites.store.interface";
+import { IRowsSelectStore } from "./stateAndErrors/RowsSelectStore.interface";
+import { IRowsStore } from "./stateAndErrors/RowsStore.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 import { IThemeStore } from "./stateAndErrors/ThemeStore.interface";
 
 export type {
-  IArrowIconProps, ICoinBadgeListProps, ICoinBadgeProps, ICoinHistoricalChartDataById,
+  IArrowIconProps,
+  ICoinBadgeListProps,
+  ICoinBadgeProps,
+  ICoinHistoricalChartDataById,
   ICoinInfoChartProps,
-  ICoinInfoChartSkeletonProps, ICoinInfoCloseProps, ICoinInfoFilterButtonProps,
-  ICoinInfoFilterProps, ICoinInfoHeaderProps, ICoinInfoListProps,
+  ICoinInfoChartSkeletonProps,
+  ICoinInfoCloseProps,
+  ICoinInfoFilterButtonProps,
+  ICoinInfoFilterProps,
+  ICoinInfoHeaderProps,
+  ICoinInfoListProps,
   ICoinInfoProps,
   ICoinInfoStore,
   ICoinInfoTableProps,
@@ -72,11 +81,15 @@ export type {
   IPaginationComponentProps,
   IPaginationProps,
   IPaginationStore,
-  IPriceChangeIndicatorProps,
-  IScrollToTopButtonProps, ISearchClearButton, ISearchCoinData,
+  IPriceChangeIndicatorProps, IRowsSelectStore,
+  IRowsStore, IScrollToTopButtonProps,
+  ISearchClearButton,
+  ISearchCoinData,
   ISearchCoinResult,
   ISparklineChartProps,
-  ITableViewStore, IThemeStore, ITransformedCoinHistoricalChartDataById,
+  ITableViewStore,
+  IThemeStore,
+  ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
   ITypeWriterProps,
   TButtonClickHandler,
