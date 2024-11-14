@@ -3,7 +3,7 @@ import ErrorIcon from "../UI/ErrorIcon";
 
 const ErrorMessage: React.FC<IErrorMessageProps> = ({ message }) => {
   return (
-    <div className="grid place-items-center bg-primary-bg">
+    <div className="grid place-items-center">
       <div className="grid gap-1 place-items-center">
         <ErrorIcon />
         <h2 className="text-lg font-bold text-center text-primary-text">
