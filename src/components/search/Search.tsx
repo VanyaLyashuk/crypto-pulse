@@ -1,112 +1,21 @@
 import clsx from "clsx";
-import debounce from "debounce";
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import { MdClear } from "react-icons/md";
-import { fadeInUpAnimation } from "../../animations/animationsVariants";
-import useCoinInfoModal from "../../hooks/useCoinInfoModal";
-import { ISearchCoinResult } from "../../models";
-import useCoinGeckoService from "../../services/CoinGeckoService";
+import useSearch from "../../hooks/useSearch";
 import SpinnerIcon from "../UI/SpinnerIcon";
-import FavoritesButton from "../favoritesButton/FavoritesButton";
+import CoinBadgeList from "../coinBadgeList/CoinBadgeList";
+import SearchClearButton from "../searchClearButton/SearchClearButton";
 
 const Search = () => {
-  const [query, setQuery] = useState<string>("");
-  const [isFocusVisible, setIsFocusVisible] = useState<boolean>(false);
-  const [data, setData] = useState<ISearchCoinResult[]>([]);
-
-  const { loading, error, searchCoin } = useCoinGeckoService();
-  const { openModal } = useCoinInfoModal();
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.trim();
-
-    setQuery(value);
-
-    if (!value.length) {
-      clearQuery();
-    }
-  };
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Tab" || e.key.includes("Arrow")) {
-      setIsFocusVisible(true);
-    }
-  };
-
-  const handleMouseDowm = () => {
-    setIsFocusVisible(false);
-  };
-
-  const clearQuery = () => {
-    setQuery("");
-    setData([]);
-  };
-
-  const onRequest = (query: string) => {
-    searchCoin(query).then((res) => {
-      setData(res);
-    });
-  };
-
-  const debouncedSearch = debounce(onRequest, 500);
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("mousedown", handleMouseDowm);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("mousedown", handleMouseDowm);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (query) {
-      debouncedSearch(query);
-    }
-    return debouncedSearch.clear;
-  }, [query]);
-
-  const queryList =
-    !loading && !error && data.length ? (
-      <ul className="flex flex-wrap justify-center w-full gap-2 p-2 rounded-md">
-        {data.map(({ id, name, thumb, symbol }, index) => (
-          <motion.li
-            initial="hidden"
-            whileInView="visible"
-            variants={fadeInUpAnimation(index * 0.1)}
-            viewport={{ once: true }}
-            key={id}
-            className="flex items-center p-2 text-sm rounded-lg shadow-md cursor-pointer gap-x-1 focus-visible-outline bg-filter-bg"
-            onClick={() => openModal(id)}
-            tabIndex={0}
-          >
-            <img className="w-6 h-6 shrink-0" src={thumb} alt={name} />
-            <h4>{name}</h4>
-            <span className="text-secondary-text">{symbol}</span>
-            <FavoritesButton coinId={id} />
-          </motion.li>
-        ))}
-      </ul>
-    ) : null;
-
-  const spinner = loading ? (
-    <div className="absolute right-2 top-1/2 translate-y-[-50%]">
-      <SpinnerIcon width="w-5" height="h-5" />
-    </div>
-  ) : null;
-
-  const clearBtn =
-    !loading && !error && query ? (
-      <button
-        onClick={clearQuery}
-        className="absolute p-1 top-1/2 translate-y-[-50%] right-[2px] text-red-400 focus-visible-outline"
-      >
-        <MdClear className="w-5 h-5" />
-      </button>
-    ) : null;
+  const {
+    loading,
+    query,
+    isFocusVisible,
+    data,
+    handleInputChange,
+    clearQuery,
+    showClearButton,
+    showQueryList,
+  } = useSearch();
 
   const inputClasses = clsx(
     "w-full px-2 py-2 pl-[34px] pr-[30px] rounded-md bg-primary-bg placeholder:text-secondary-text outline-none bg-search-bg",
@@ -114,6 +23,12 @@ const Search = () => {
       "focus-visible-outline": isFocusVisible,
     }
   );
+
+  const spinner = loading ? <SpinnerIcon width="w-5" height="h-5" /> : null;
+  const clearBtn = showClearButton ? (
+    <SearchClearButton clearQuery={clearQuery} />
+  ) : null;
+  const queryList = showQueryList ? <CoinBadgeList data={data} /> : null;
 
   return (
     <div>
@@ -126,7 +41,9 @@ const Search = () => {
           onChange={handleInputChange}
           placeholder="Search..."
         />
-        {spinner}
+        <div className="absolute right-2 top-1/2 translate-y-[-50%]">
+          {spinner}
+        </div>
         {clearBtn}
       </div>
       {queryList}
