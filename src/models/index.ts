@@ -31,11 +31,8 @@ import { ICoinsListData } from "./dataTypes/CoinsListData.interface";
 import { ICoinsMarketData } from "./dataTypes/CoinsMarketData.interface";
 import { TCryptoTableCellContext } from "./dataTypes/CryptoTableCellContext.type";
 import { TCryptoTableCurrency } from "./dataTypes/CryptoTableCurrency.type";
-import { TDateOrNull } from "./dataTypes/DateOrNull.type";
 import { TDateOrUndefined } from "./dataTypes/DateOrUndefined.type";
 import { IFavoritesButtonViewProps } from "./dataTypes/FavoritesButtonViewProps.interface";
-import { IHttpRequestOptions } from "./dataTypes/HttpRequestOptions.interface";
-import { TPriceFormatCoinfig } from "./dataTypes/PriceFormatConfig.type";
 import { ISearchCoinData } from "./dataTypes/SearchCoinData.interface";
 import { ISearchCoinResult } from "./dataTypes/SearchCoinResult.interface";
 import { TShortMonthName } from "./dataTypes/ShortMonthName.type";
@@ -52,8 +49,7 @@ import { IFavoritesStore } from "./stateAndErrors/Favorites.store.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 
 export type {
-  IArrowIconProps,
-  ICoinHistoricalChartDataById,
+  IArrowIconProps, ICoinBadgeListProps, ICoinBadgeProps, ICoinHistoricalChartDataById,
   ICoinInfoChartProps,
   ICoinInfoChartSkeletonProps, ICoinInfoCloseProps, ICoinInfoFilterButtonProps,
   ICoinInfoFilterProps, ICoinInfoHeaderProps, ICoinInfoListProps,
@@ -72,13 +68,11 @@ export type {
   IFavoritesButtonProps,
   IFavoritesButtonViewProps,
   IFavoritesStore,
-  IHttpRequestOptions,
   IPaginationComponentProps,
   IPaginationProps,
   IPaginationStore,
   IPriceChangeIndicatorProps,
-  IScrollToTopButtonProps,
-  ISearchCoinData,
+  IScrollToTopButtonProps, ISearchClearButton, ISearchCoinData,
   ISearchCoinResult,
   ISparklineChartProps,
   ITableViewStore,
@@ -92,13 +86,8 @@ export type {
   TCoinInfoTimeRange,
   TCryptoTableCellContext,
   TCryptoTableCurrency,
-  TDateOrNull,
   TDateOrUndefined,
-  TPriceFormatCoinfig,
   TShortMonthName,
-  TTheme,
-  ICoinBadgeProps,
-  ISearchClearButton,
-  ICoinBadgeListProps
+  TTheme
 };
 
