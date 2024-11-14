@@ -48,7 +48,6 @@ import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interfa
 import { IFavoritesStore } from "./stateAndErrors/Favorites.store.interface";
 import { IRowsSelectStore } from "./stateAndErrors/RowsSelectStore.interface";
 import { IRowsStore } from "./stateAndErrors/RowsStore.interface";
-import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
 import { IThemeStore } from "./stateAndErrors/ThemeStore.interface";
 
 export type {
@@ -81,13 +80,14 @@ export type {
   IPaginationComponentProps,
   IPaginationProps,
   IPaginationStore,
-  IPriceChangeIndicatorProps, IRowsSelectStore,
-  IRowsStore, IScrollToTopButtonProps,
+  IPriceChangeIndicatorProps,
+  IRowsSelectStore,
+  IRowsStore,
+  IScrollToTopButtonProps,
   ISearchClearButton,
   ISearchCoinData,
   ISearchCoinResult,
   ISparklineChartProps,
-  ITableViewStore,
   IThemeStore,
   ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
