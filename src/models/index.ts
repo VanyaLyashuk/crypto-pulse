@@ -1,4 +1,6 @@
 import { IArrowIconProps } from "./componentProps/ArrowIconProps.interface";
+import { ICoinBadgeListProps } from "./componentProps/CoinBadgeListProps.interface";
+import { ICoinBadgeProps } from "./componentProps/CoinBadgeProps.interface";
 import { ICoinInfoChartProps } from "./componentProps/CoinInfoChartProps.interface";
 import { ICoinInfoChartSkeletonProps } from "./componentProps/CoinInfoChartSkeletonProps.interface";
 import { ICoinInfoCloseProps } from "./componentProps/CoinInfoCloseProps.interface";
@@ -16,6 +18,7 @@ import { IErrorMessageProps } from "./componentProps/ErrorMessageProps.interface
 import { IFavoritesButtonProps } from "./componentProps/FavoritesButtonProps.interface";
 import { IPriceChangeIndicatorProps } from "./componentProps/PriceChangeIndicatorProps.interface";
 import { IScrollToTopButtonProps } from "./componentProps/SCrollToTopButtonProps.interface";
+import { ISearchClearButton } from "./componentProps/SearchClearButtonProps.interface";
 import { ISparklineChartProps } from "./componentProps/SparklineChartProps.interface";
 import { ITypeWriterProps } from "./componentProps/TypeWriterProps.interface";
 import { TButtonClickHandler } from "./dataTypes/ButtonClickHandler.type";
@@ -93,6 +96,9 @@ export type {
   TDateOrUndefined,
   TPriceFormatCoinfig,
   TShortMonthName,
-  TTheme
+  TTheme,
+  ICoinBadgeProps,
+  ISearchClearButton,
+  ICoinBadgeListProps
 };
 
