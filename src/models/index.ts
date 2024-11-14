@@ -47,6 +47,7 @@ import { ICoinsStore } from "./stateAndErrors/CoinsStore.interface";
 import { IErrorBoundaryState } from "./stateAndErrors/ErrorBoundaryState.interface";
 import { IFavoritesStore } from "./stateAndErrors/Favorites.store.interface";
 import { ITableViewStore } from "./stateAndErrors/TableViewStore.interface";
+import { IThemeStore } from "./stateAndErrors/ThemeStore.interface";
 
 export type {
   IArrowIconProps, ICoinBadgeListProps, ICoinBadgeProps, ICoinHistoricalChartDataById,
@@ -75,8 +76,7 @@ export type {
   IScrollToTopButtonProps, ISearchClearButton, ISearchCoinData,
   ISearchCoinResult,
   ISparklineChartProps,
-  ITableViewStore,
-  ITransformedCoinHistoricalChartDataById,
+  ITableViewStore, IThemeStore, ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
   ITypeWriterProps,
   TButtonClickHandler,
