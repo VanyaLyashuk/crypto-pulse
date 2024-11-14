@@ -1,34 +1,18 @@
 import clsx from "clsx";
 import React from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { useShallow } from "zustand/react/shallow";
 
+import useCryptoTableRows from "../../hooks/useCryptoTableRows";
 import { ICryptoTableRowsProps } from "../../models";
-import useTableViewStore from "../../store/tableView.store";
 
 const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
-  const { rows, setRows, isRowsSelectOpen, setIsRowsSelectOpen } =
-    useTableViewStore(
-      useShallow((state) => ({
-        rows: state.rows,
-        setRows: state.setRows,
-        isRowsSelectOpen: state.isRowsSelectOpen,
-        setIsRowsSelectOpen: state.setIsRowsSelectOpen,
-      }))
-    );
-
-  const onRowsChange = (
-    e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
-  ) => {
-    setRows(Number(e.currentTarget.getAttribute("data-value")));
-    setIsRowsSelectOpen(false);
-  };
-
-  const handleKeyUp = (e: React.KeyboardEvent<HTMLLIElement>) => {
-    if (e.key === "" || e.key === "Enter") {
-      onRowsChange(e);
-    }
-  };
+  const {
+    rows,
+    isRowsSelectOpen,
+    onRowsChange,
+    handleKeyUp,
+    setIsRowsSelectOpen,
+  } = useCryptoTableRows();
 
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
@@ -41,6 +25,7 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
       "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
       { "bg-select-bg": rows === item }
     );
+
     return (
       <li
         className={liClasses}
@@ -67,9 +52,7 @@ const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
           <MdOutlineKeyboardArrowDown className={arrowClasses} />
         </span>
       </button>
-      <ul className={listClasses}>
-        {listItems}
-      </ul>
+      <ul className={listClasses}>{listItems}</ul>
     </div>
   );
 };
