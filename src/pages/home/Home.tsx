@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { useRef } from "react";
 import CryptoTable from "../../components/cryptoTable/CryptoTable";
+import CryptoTableRows from "../../components/cryptoTableRows/CryptoTableRows";
 import ErrorBoundary from "../../components/errorBoundary/ErrorBoundary";
 import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
@@ -48,6 +49,9 @@ const Home: React.FC = () => {
           <ErrorBoundary>
             <Search />
           </ErrorBoundary>
+        </div>
+        <div className="container mb-2">
+          <CryptoTableRows options={[30, 50, 100]} />
         </div>
         <ErrorBoundary>
           <CryptoTable />

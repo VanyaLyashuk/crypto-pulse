@@ -1,5 +1,4 @@
 import useCryptoTableData from "../../hooks/useCryptoTableData";
-import CryptoTableRows from "../cryptoTableRows/CryptoTableRows";
 import CryptoTableSkeleton from "../cryptoTableSkeleton/CryptoTableSkeleton";
 import CryptoTableView from "../cryptoTableView/CryptoTableView";
 import ErrorMessage from "../errorMessage/ErrorMessage";
@@ -34,9 +33,6 @@ const CryptoTable: React.FC = () => {
       {errorMessage}
       {!error && (
         <>
-          <div className="container mb-2">
-            <CryptoTableRows options={[30, 50, 100]} />
-          </div>
           <div className="container px-0 mb-4 overflow-x-auto overflow-y-hidden lg:mb-6 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
             {loadingSekeleton}
             {tableView}
