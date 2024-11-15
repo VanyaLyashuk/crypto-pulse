@@ -19,8 +19,8 @@ const useCryptoTableData = () => {
     }))
   );
 
-  const rows = useRowsStore((state) => state.rows);
-  const setIsRowsSelectOpen = useRowsSelectStore((state) => state.setIsRowsSelectOpen);
+  const rows = useRowsStore(useShallow((state) => state.rows));
+  const setIsRowsSelectOpen = useRowsSelectStore(useShallow((state) => state.setIsRowsSelectOpen));
 
   const { currentPage, setCurrentPage, lastPage, setLastPage } =
     usePaginationStore(

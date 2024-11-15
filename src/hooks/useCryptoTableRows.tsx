@@ -1,12 +1,17 @@
+import { useShallow } from "zustand/react/shallow";
 import useRowsStore from "../store/rows.store";
 import useRowsSelectStore from "../store/rowsSelect.store";
 
 const useCryptoTableRows = () => {
-  const rows = useRowsStore((state) => state.rows);
-  const setRows = useRowsStore((state) => state.setRows);
+  const rows = useRowsStore(useShallow((state) => state.rows));
+  const setRows = useRowsStore(useShallow((state) => state.setRows));
 
-  const isRowsSelectOpen = useRowsSelectStore((state) => state.isRowsSelectOpen);
-  const setIsRowsSelectOpen = useRowsSelectStore((state) => state.setIsRowsSelectOpen);
+  const isRowsSelectOpen = useRowsSelectStore(
+    useShallow((state) => state.isRowsSelectOpen)
+  );
+  const setIsRowsSelectOpen = useRowsSelectStore(
+    useShallow((state) => state.setIsRowsSelectOpen)
+  );
 
   const onRowsChange = (
     e: React.MouseEvent<HTMLLIElement> | React.KeyboardEvent<HTMLLIElement>
