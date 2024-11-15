@@ -1,11 +1,11 @@
 import clsx from "clsx";
-import React from "react";
+import { FC } from "react";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 import useCryptoTableRows from "../../hooks/useCryptoTableRows";
 import { ICryptoTableRowsProps } from "../../models";
 
-const CryptoTableRows: React.FC<ICryptoTableRowsProps> = ({ options }) => {
+const CryptoTableRows: FC<ICryptoTableRowsProps> = ({ options }) => {
   const {
     rows,
     isRowsSelectOpen,
