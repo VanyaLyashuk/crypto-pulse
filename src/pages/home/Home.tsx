@@ -50,7 +50,7 @@ const Home: React.FC = () => {
             <Search />
           </ErrorBoundary>
         </div>
-        <div className="container mb-2">
+        <div className="container">
           <CryptoTableRows options={[30, 50, 100]} />
         </div>
         <ErrorBoundary>
