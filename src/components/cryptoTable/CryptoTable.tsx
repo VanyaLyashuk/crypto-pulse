@@ -33,11 +33,11 @@ const CryptoTable: React.FC = () => {
       {errorMessage}
       {!error && (
         <>
-          <div className="container px-0 mb-4 overflow-x-auto overflow-y-hidden lg:mb-6 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
+          <div className="container px-0 mb-8 overflow-x-auto overflow-y-hidden lg:mb-10 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
             {loadingSekeleton}
             {tableView}
           </div>
-          <div className="container mb-6 md:mb-8">
+          <div className="container md:mb-8">
             <Pagination
               currentPage={currentPage}
               totalCount={totalCoins}
