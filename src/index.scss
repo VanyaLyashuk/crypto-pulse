@@ -173,6 +173,10 @@ td:after {
   background-color: var(--primary-bg) !important;
   border: none !important;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  position: absolute;
+  z-index: 50;
+  right: -36px;
+  top: 49px;
 }
 
 .focus-visible-outline:focus-visible {
@@ -185,4 +189,10 @@ td:after {
 
 .focus-visible-outline.focus-visible-rounded:focus-visible {
   border-radius: 50%;
+}
+
+@media (min-width: 372px) {
+  .react-datepicker {
+    right: 0;
+  }
 }
