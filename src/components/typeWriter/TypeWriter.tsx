@@ -22,7 +22,7 @@ const TypeWriter: React.FC<ITypeWriterProps> = ({ sentences }) => {
   }, []);
 
   return (
-    <p className="mb-2.5 text-base font-light uppercase text-center md:mb-4">
+    <p className="mb-4 text-base font-light text-center uppercase md:mb-6">
       <span className="ml-3">
         {sentences[sentencesIndex].split("").map((l, i) => {
           return (
