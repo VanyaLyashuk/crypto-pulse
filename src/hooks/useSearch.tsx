@@ -8,7 +8,7 @@ const useSearch = () => {
   const [isFocusVisible, setIsFocusVisible] = useState<boolean>(false);
   const [data, setData] = useState<ISearchCoinResult[]>([]);
 
-  const { loading, error, searchCoin } = useCoinGeckoService();
+  const { loading, error, searchCoin, getTrendingSearchList } = useCoinGeckoService();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
@@ -41,7 +41,14 @@ const useSearch = () => {
     });
   };
 
+  const onTrendingListRequest = () => {
+    getTrendingSearchList().then((res) => {
+      setData(res);
+    })
+  }
+
   const debouncedSearch = debounce(onRequest, 500);
+  const debouncedTrendingRequest = debounce(onTrendingListRequest, 500);
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown);
@@ -56,6 +63,8 @@ const useSearch = () => {
   useEffect(() => {
     if (query) {
       debouncedSearch(query);
+    } else {
+      debouncedTrendingRequest();
     }
     return debouncedSearch.clear;
   }, [query]);
