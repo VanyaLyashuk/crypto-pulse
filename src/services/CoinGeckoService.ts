@@ -10,6 +10,7 @@ import {
 import {
   transformCoinHistoricalChartDataById,
   transformCoinsListWithMarketData,
+  transformTrendingSearchList,
 } from "../utils/CoinGeckoServiceUtils";
 
 const useCoinGeckoService = () => {
@@ -21,8 +22,10 @@ const useCoinGeckoService = () => {
     id?: string
   ): Promise<ITransformedCoinsMarketData[]> => {
     const endpoint = `/coins/markets`;
-    const params = `vs_currency=usd${id ? "&ids=" + id : ""}&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
-    
+    const params = `vs_currency=usd${
+      id ? "&ids=" + id : ""
+    }&per_page=${perPage}&page=${page}&sparkline=true&price_change_percentage=1h%2C24h%2C7d%2C14d%2C30d%2C1y&precision=2`;
+
     const data = await request<ICoinsMarketData[]>(endpoint, params);
     return transformCoinsListWithMarketData(data);
   };
@@ -34,7 +37,7 @@ const useCoinGeckoService = () => {
   ): Promise<ICoinHistoricalChartDataById> => {
     const endpoint = `/coins/${id}/market_chart/range`;
     const params = `vs_currency=usd&from=${from}&to=${to}`;
-    
+
     const data = await request<ICoinHistoricalChartDataById>(endpoint, params);
     return transformCoinHistoricalChartDataById(data);
   };
@@ -42,7 +45,7 @@ const useCoinGeckoService = () => {
   const getCoinsListLength = async (): Promise<number> => {
     const endpoint = `/coins/list`;
     const params = ``;
-    
+
     const data = await request<ICoinsListData[]>(endpoint, params);
     return data.length;
   };
@@ -50,9 +53,17 @@ const useCoinGeckoService = () => {
   const searchCoin = async (query: string): Promise<ISearchCoinResult[]> => {
     const endpoint = `/search`;
     const params = `query=${query}`;
-    
+
     const data = await request<ISearchCoinData>(endpoint, params);
     return data.coins;
+  };
+
+  const getTrendingSearchList = async (): Promise<ISearchCoinResult[]> => {
+    const endpoint = `/search/trending`;
+    const params = ``;
+    const data = await request(endpoint, params);
+
+    return transformTrendingSearchList(data);
   };
 
   return {
@@ -62,6 +73,7 @@ const useCoinGeckoService = () => {
     getCoinHistoricalChartDataById,
     getCoinsListLength,
     searchCoin,
+    getTrendingSearchList,
   };
 };
 
