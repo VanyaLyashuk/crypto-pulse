@@ -202,9 +202,10 @@ export const getCellClasses = (
   return clsx(
     "px-2 py-1 text-base bg-primary-bg hover-hover:group-hover:bg-search-bg",
     {
-      "w-8": cell.column.id === "favorite",
+      "w-8 pl-4": cell.column.id === "favorite",
       "table-sticky-cell": cell.column.id === "name",
       "text-right": index > 2,
+      "pr-4": cell.column.id === "sparkline_in_7d",
     }
   );
 };

@@ -13,7 +13,11 @@ const TableHeader: FC<TableHeaderProps> = ({ headerGroup }) => {
       {headerGroup.headers.map((header, index) => {
         const cellClasses = clsx(
           "px-2 py-[17px] text-base font-bold tracking-wider bg-primary-bg group text-typewriter-text",
-          { "table-sticky-cell": header.column.id === "name" }
+          {
+            "table-sticky-cell": header.column.id === "name",
+            "pl-4": header.column.id === "favorite",
+            "pr-4": header.column.id === "sparkline_in_7d",
+          }
         );
         return (
           <th key={header.id} scope="col" className={cellClasses}>
