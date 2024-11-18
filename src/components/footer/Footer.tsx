@@ -2,7 +2,7 @@ import logo from "../../assets/images/coingecko.png";
 
 const Footer = () => {
   return (
-    <footer className="container flex flex-col items-center justify-center w-full py-6 mt-auto text-base text-center sm:flex-row sm:justify-between sm:text-left">
+    <footer className="container flex flex-col items-center justify-center w-full py-8 mt-auto text-base text-center sm:flex-row sm:justify-between sm:text-left lg:py-10">
       <p>© 2024. All rights reserved</p>
       <p className="flex gap-1">
         Powered by <img className="w-6 h-6" src={logo} alt="Coingecko logo" />{" "}
