@@ -1,6 +1,7 @@
 import {
   ICoinHistoricalChartDataById,
   ICoinsMarketData,
+  ISearchCoinResult,
   ITransformedCoinHistoricalChartDataById,
   ITransformedCoinsMarketData,
 } from "../models";
@@ -185,6 +186,18 @@ export function transformCoinsListWithMarketData(
       ],
     })
   );
+}
+
+export function transformTrendingSearchList<T>(
+  data: T
+): ISearchCoinResult[] {
+  const coins = (data as { coins: [item: any] }).coins;
+
+  return coins.map(({ item }) => {
+    const { id, name, symbol, thumb } = item;
+
+    return { id, name, symbol, thumb };
+  });
 }
 
 export const convertScientificToStandard = (x: number): string => {
