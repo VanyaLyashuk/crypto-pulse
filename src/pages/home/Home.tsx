@@ -17,7 +17,7 @@ const Home: React.FC = () => {
       <div className="fixed inset-0 w-full h-full bg-primary-bg bg-[radial-gradient(var(--dots-color)_1px,transparent_1px)] [background-size:16px_16px] z-[-1] dark:hidden"></div>
       <div className="flex flex-col pt-[64px] min-h-screen">
         <Header />
-        <div className="container flex flex-col justify-center pt-10 md:pt-20">
+        <div className="container flex flex-col justify-center pt-20 lg:pt-[100px]">
           <div>
             <h1
               ref={headingRef}
