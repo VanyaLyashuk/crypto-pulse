@@ -14,7 +14,7 @@ const CoinInfoFilter: React.FC<ICoinInfoFilterProps> = ({
   ));
 
   return (
-    <div className="flex items-center gap-[2px] sm:gap-1 p-1.5 bg-filter-bg rounded-md md:rounded-lg">
+    <div className="flex items-center gap-[2px] sm:gap-1 p-1.5 bg-filter-bg rounded-md md:rounded-lg relative">
       {buttons}
     </div>
   );

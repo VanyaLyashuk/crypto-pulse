@@ -26,7 +26,7 @@ const CoinInfoDatepicker: React.FC = () => {
 
   return (
     <div
-      className="absolute z-50 right-[-5px] top-[45px]"
+      className="absolute z-50 left-0 top-[50px] sm:left-[-1px]"
     >
       <DatePicker
         wrapperClassName="CoinInfoDatePicker"
