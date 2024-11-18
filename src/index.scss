@@ -196,3 +196,9 @@ td:after {
     right: 0;
   }
 }
+
+@media (min-width: 640px) {
+  .react-datepicker {
+    top: 52px;
+  }
+}
