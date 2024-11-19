@@ -16,13 +16,13 @@ const CryptoTableRows: FC<ICryptoTableRowsProps> = ({ options }) => {
 
   const arrowClasses = clsx({ "rotate-180": isRowsSelectOpen });
   const listClasses = clsx(
-    "absolute right-0 z-40 bg-primary-bg border border-select-border-color rounded-md w-36 transition-all top-10 shadow-lg",
+    "absolute right-0 z-40 bg-primary-bg rounded-md w-36 transition-all top-10 shadow-lg",
     { "invisible opacity-0 top-0": !isRowsSelectOpen }
   );
 
   const listItems = options.map((item) => {
     const liClasses = clsx(
-      "w-full p-2 text-base border-b border-b-select-border-color cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
+      "w-full p-2 text-base border-b border-b-select-border-color font-medium cursor-pointer last:border-b-0 focus-visible-outline relative first:rounded-t-md last:rounded-b-md",
       { "bg-select-bg": rows === item }
     );
 
@@ -43,7 +43,7 @@ const CryptoTableRows: FC<ICryptoTableRowsProps> = ({ options }) => {
   return (
     <div className="relative ml-auto max-w-fit">
       <button
-        className="flex items-center px-2 py-1 text-base font-medium border rounded-md border-select-border-color focus-visible-outline bg-primary-bg"
+        className="flex items-center px-2 py-1 text-base font-medium rounded-md shadow-md focus-visible-outline bg-select-bg"
         type="button"
         onClick={() => setIsRowsSelectOpen(!isRowsSelectOpen)}
       >

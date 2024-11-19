@@ -32,7 +32,7 @@ const Search = () => {
 
   return (
     <div>
-      <div className="w-[300px] relative m-auto mb-6 border rounded-md border-select-border-color md:mb-7 shadow-md dark:shadow-lg">
+      <div className="w-[300px] relative m-auto mb-6 rounded-md md:mb-7 shadow-md dark:shadow-lg">
         <FaSearch className="absolute left-2.5 top-1/2 translate-y-[-50%] text-border-color opacity-70" />
         <input
           className={inputClasses}

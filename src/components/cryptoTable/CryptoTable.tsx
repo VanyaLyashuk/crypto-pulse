@@ -33,7 +33,7 @@ const CryptoTable: React.FC = () => {
       {errorMessage}
       {!error && (
         <>
-          <div className="container px-0 mb-8 overflow-x-auto overflow-y-hidden lg:mb-10 max-w-[1284px] border border-select-border-color xl:rounded-md xl:shadow-md">
+          <div className="container px-0 mb-8 overflow-x-auto overflow-y-hidden lg:mb-10 max-w-[1284px] xl:rounded-md xl:shadow-md dark:shadow-lg">
             {loadingSekeleton}
             {tableView}
           </div>
