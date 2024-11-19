@@ -38,7 +38,7 @@ const Home: React.FC = () => {
                     ease: "linear",
                     delay: 2,
                   }}
-                  className="absolute bottom-[18%] left-0 h-[24%] bg-secondary z-[-1]"
+                  className="absolute bottom-[18%] left-0 h-[24%] bg-primary z-[-1]"
                 />
               </span>{" "}
               CRYPTO
