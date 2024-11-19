@@ -105,6 +105,7 @@
   --table-head-bg: var(--zinc-50);
   --typewriter-text: #262626;
   --dots-color: #e5e7eb;
+  --table-head-color: var(--typewriter-text);
 }
 
 .dark {
@@ -124,7 +125,7 @@
   --typewriter-text: var(--gray-500);
   --search-input-bg: var(--zinc-900);
   --table-head-bg: var(--zinc-900);
-  --dots-color: #4f4f4f;
+  --table-head-color: #71717a
 }
 
 @layer components {

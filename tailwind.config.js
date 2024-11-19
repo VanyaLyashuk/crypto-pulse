@@ -34,6 +34,7 @@ export default {
         "typewriter-text": "var(--typewriter-text)",
         "search-bg": "var(--search-input-bg)",
         "table-head-bg": "var(--table-head-bg)",
+        "table-head-color": "var(--table-head-color)",
       },
       fontFamily: {
         "pixelify-sans": ["Pixelify Sans", "serif"],
