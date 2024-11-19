@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { AiOutlineToTop } from "react-icons/ai";
+import { RxPinTop } from "react-icons/rx";
+
 import { IScrollToTopButtonProps } from "../../models";
 
 const ScrollToTopButton: React.FC<IScrollToTopButtonProps> = ({
@@ -35,9 +36,9 @@ const ScrollToTopButton: React.FC<IScrollToTopButtonProps> = ({
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed z-50 p-3 text-white rounded-full shadow-lg bg-secondary bottom-4 right-4"
+          className="fixed z-50 p-3 rounded-full shadow-lg text-typewriter-text bg-filter-bg bottom-4 right-4 focus-visible-outline focus-visible-rounded"
         >
-          <AiOutlineToTop className="w-6 h-6" />
+          <RxPinTop className="w-6 h-6" />
         </button>
       )}
     </>
