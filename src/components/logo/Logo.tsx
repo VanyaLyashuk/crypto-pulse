@@ -1,11 +1,22 @@
-import coinImg from "../../assets/images/coin.png";
+import { motion } from "framer-motion";
+import { IoMdPulse } from "react-icons/io";
 
 const Logo = () => {
   return (
-    <div className="flex items-center gap-1 text-[26px] font-pixelify-sans">
-      <img className="w-9" src={coinImg} alt="coin image" />
-      <span className="text-primary-logo crypto-shadow">rypto</span>
-      <span className="font-bold font-chakra-petch text-secondary">pulse</span>
+    <div className="flex items-center">
+      <span className="text-[23px] font-chakra-petch uppercase mr-[2px] relative">
+        Crypto{" "}
+        <motion.span
+          initial={{ width: "0%", opacity: 0 }}
+          animate={{ width: "101%", opacity: 0.8 }}
+          transition={{
+            ease: "linear",
+            delay: 2,
+          }}
+          className="absolute bottom-[18%] left-0 h-[24%] bg-primary z-[-1]"
+        />
+      </span>
+      <IoMdPulse className="relative text-3xl text-primary right-1" />
     </div>
   );
 };
