@@ -16,7 +16,6 @@ export default {
       },
       colors: {
         primary: "var(--primary-color)",
-        secondary: "var(--secondary-color)",
         "primary-logo": "var(--logo-primary-color)",
         "primary-text": "var(--text-primary-color)",
         "secondary-text": "var(--text-secondary-color)",
@@ -37,7 +36,6 @@ export default {
         "table-head-color": "var(--table-head-color)",
       },
       fontFamily: {
-        "pixelify-sans": ["Pixelify Sans", "serif"],
         "chakra-petch": ["Chakra Petch", "sans-serif"],
       },
     },
