@@ -47,7 +47,7 @@ const ButtonView: React.FC<IFavoritesButtonViewProps> = ({
 
   return (
     <button onClick={handleClick} className={buttonClasses} disabled={disabled}>
-      {isFilled ? <GoStarFill className="fill-primary-logo" /> : <GoStar />}
+      {isFilled ? <GoStarFill className="fill-yellow-400" /> : <GoStar />}
     </button>
   );
 };
