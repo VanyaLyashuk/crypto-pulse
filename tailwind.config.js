@@ -16,7 +16,6 @@ export default {
       },
       colors: {
         primary: "var(--primary-color)",
-        "primary-logo": "var(--logo-primary-color)",
         "primary-text": "var(--text-primary-color)",
         "secondary-text": "var(--text-secondary-color)",
         "spinner-fill": "var(--spinner-fill-color)",
